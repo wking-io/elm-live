@@ -21,6 +21,9 @@
     "readme:commit": "git reset && git commit --message=\"Auto-update the readme\" Readme.md || echo \"npm run readme: Nothing to update.\"",
     "test": "eslint . && echo \"Only linting supported at the moment!\""
   },
+  "engines": {
+    "node": ">= 4.0.0"
+  },
   "files": [
     "**/*.js",
     "/Readme.md",
