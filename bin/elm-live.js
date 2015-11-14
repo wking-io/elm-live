@@ -21,7 +21,7 @@ if (flags.h || flags.help) process.exit(0);
 // Spawn elm-reactor
 const reactorArgs = flags._;
 const cwd = process.cwd();
-const reactor = spawnSync('elm-reactor', {stdio: 'inherit'});
+const reactor = spawnSync('elm-reactor', reactorArgs, {stdio: 'inherit'});
 if (reactor.error) {
   if (reactor.error.code = 'ENOENT') {
     process.stderr.write(
