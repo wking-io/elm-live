@@ -1,4 +1,4 @@
 export default
-`Usage: …
-   or: … (-h|--help)
+`Usage: elm-live
+   or: elm-live (-h|--help)
 `;
