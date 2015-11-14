@@ -1,0 +1,36 @@
+#
+# Text editor configuration
+# =========================
+#
+# This file describes the end-of-line character, indentation and other rules for
+# text files – in a format compatible with virtually any text editor. It really
+# helps to have all that consistent, without manual labor. You'll probably want
+# a plugin for your editor. Go get one from <http://editorconfig.org>.
+#
+
+root = true
+
+
+# General rules
+# -------------
+# - Unicode
+# - Unix-style line endings
+# - Newline before EOF
+# - No sloppy trailing spaces
+# - Two-space indentation
+
+[*]
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+
+# Files that need whitespace at the end of lines
+# ----------------------------------------------
+# - Markdown
+
+[*.md]
+trim_trailing_whitespace = false

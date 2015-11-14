@@ -1,0 +1,112 @@
+#
+# File type specific Git settings
+# ===============================
+#
+
+
+# Default
+# -------
+# If a file doesn’t match anything below, fall back to autodetection.
+# <http://davidlaing.com/2012/09/19/customise-your-gitattributes-to-become-a-git-ninja/>.
+* text=auto
+
+
+# Text files
+# ----------
+# Always perform CRLF → LF normalization on these.
+
+# * Source code
+*.js    text
+*.sh    text
+*.fish  text
+
+# * Docs
+*.md  text
+
+# * Config and data files
+*.json          text
+*.{yml,yaml}    text
+.editorconfig   text
+.gitattributes  text
+.gitignore      text
+.jscsrc         text
+.jshintignore   text
+.jshintrc       text
+.npmignore      text
+
+# * Web stuff
+*.html      text
+*.svg       text
+*.mustache  text
+
+# * Other text files
+*.csv  text
+*.xml  text
+
+
+# Smart diffs
+# -----------
+# Show approximate diffs for binary files by converting them to plain text.
+
+# * Show PDF and *MS Office* documents as text
+#   – if you’re not on *Git Bash*, put this into your .gitconfig:
+#       [diff "astextplain"]
+#           textconv = pdf2txt
+#           binary = true
+*.pdf   diff=astextplain
+*.doc   diff=astextplain
+*.docx  diff=astextplain
+*.dot   diff=astextplain
+*.rtf   diff=astextplain
+
+# * Show ODF documents as text
+#   – install *odt2txt* and put this into your .gitconfig:
+#       [diff "odf"]
+#           textconv=odt2txt
+#           binary = true
+.odt  diff=odf
+.ods  diff=odf
+.odp  diff=odf
+.odb  diff=odf
+.odg  diff=odf
+.odf  diff=odf
+
+# * Show EXIF data from JPEG images
+#   – install *exif* and put this into your .gitconfig:
+#       [diff "jpg"]
+#           textconv = exif
+#           binary = true
+*.{jpg,jpeg}  diff=exif
+
+
+# Plain binary files
+# ------------------
+# Just treat them as blobs.
+
+# * Binary image formats
+*.png     binary
+*.gif     binary
+*.xcf     binary
+*.ico     binary
+*.psd     binary
+*.ai      binary
+*.sketch  binary
+
+# * Video and audio files
+*.mov  binary
+*.mp4  binary
+*.mp3  binary
+*.flv  binary
+*.fla  binary
+*.swf  binary
+
+# * Archives
+*.gz   binary
+*.zip  binary
+*.7z   binary
+*.tar  binary
+*.rar  binary
+
+# * Fonts
+*.ttf  binary
+*.otf  binary
