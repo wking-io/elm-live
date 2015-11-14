@@ -1,6 +1,6 @@
 {
   "name": "elm-live",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Elm development with LiveReload. Feels lightning-fast!",
   "bin": {
     "elm-live": "bin/elm-live.js"
