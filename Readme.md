@@ -37,11 +37,13 @@ Installation
 
 ```sh
 # Globally for a user:
-npm install --global elm-live
+npm install --global elm@0 elm-live
 
 # …or locally for a project:
-npm install --save-dev elm-live
+npm install --save-dev elm@0 elm-live
 ```
+
+(By the way, if [this issue](https://github.com/elm-lang/elm-platform/issues/100#issuecomment-155547605) is resolved you can replace `elm@0` with `elm`.)
 
 
 
