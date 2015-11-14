@@ -15,8 +15,7 @@
   },
   "scripts": {
     "docs": "echo \"[]\" | doxie --append \"$(./bin/elm-live.js --help)\n\" --inject",
-    "lint": "eslint .",
-    "test": "npm run lint && echo \"No test specfied!\" && exit 1"
+    "test": "eslint . && echo \"Only linting supported at the moment!\""
   },
   "files": [
     "**.js",
