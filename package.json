@@ -22,7 +22,7 @@
     "test": "eslint . && echo \"Only linting supported at the moment!\""
   },
   "files": [
-    "**.js",
+    "**/*.js",
     "/Readme.md",
     "/License.md"
   ],
