@@ -5,25 +5,15 @@
   "bin": {
     "elm-live": "bin/elm-live.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "minimist": "^1.2.0"
+  },
   "scripts": {
-    "clean": "git reset && echo '/node_modules/' > .gitignore && git add .gitignore && git stash save --include-untracked --keep-index '`npm run clean` trash can' && git clean --force -d && git reset --hard && echo '\nclean: Uncommitted and ignored files have been moved to git’s stash. To restore them run `git stash pop --quiet; git checkout .gitignore`.'",
-    "coverage": "rm -rf coverage && npm run test:transpile && cd .es5 && istanbul cover test.js && mv coverage ..",
-    "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls",
-    "develop": "nodangel --ignore node_modules --ignore coverage --exec 'npm run --silent test:lite'",
-    "prepublish": "npm run --silent clean && npm run transpile",
-    "test": "eslint . && npm run test:transpile && node .es5/test.js | tap-spec",
-    "test:lite": "babel-node test.js | tap-spec",
-    "test:transpile": "rm -rf .es5 && babel test.js module/*.js --out-dir .es5",
-    "transpile": "babel --loose es6.modules module --out-dir .",
-    "view-coverage": "echo 'Generating coverage reports...'; npm run coverage >/dev/null && echo '...done.' && opn ./coverage/lcov-report/index.html >/dev/null",
-    "_bootstrap": "npm install --save chalk minimist && npm install --save-dev --save-exact babel babel-eslint coveralls istanbul eslint eslint-config-airbnb eslint-plugin-react nodangel tap-spec@2 tape-catch tape-spawn opn-cli; npm install json; json --in-place -f package.json -e 'delete this.scripts._bootstrap'; npm rm json"
+    "test": "eslint . && echo \"No tests specfied\" && exit 1"
   },
   "files": [
-    "/*.js",
-    "/bin/",
-    "/module/",
-    "/test/",
+    "**.js",
     "/Readme.md",
     "/License.md"
   ],

@@ -11,8 +11,8 @@ if (flags.h) stdout.write(require('./help/usage'));
 
 if (flags.help) stdout.write([
   require('./help/synopsis'),
+  require('./help/what-it-does'),
   require('./help/options'),
-  require('./help/examples'),
 ].join('\n\n'));
 
 // Exit early
