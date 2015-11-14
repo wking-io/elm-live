@@ -2,7 +2,8 @@
 
 const Gaze = require('gaze').Gaze;
 const path = require('path');
-const spawnSync = require('child_process').spawnSync;
+const spawn = require('child_process').spawn;
+const tinyLr = require('tiny-lr');
 
 // Process info
 const flags = require('minimist')(process.argv.slice(2), {boolean: true});
@@ -20,10 +21,9 @@ if (flags.h || flags.help) process.exit(0);
 
 // Spawn elm-reactor
 const reactorArgs = flags._;
-const cwd = process.cwd();
-const reactor = spawnSync('elm-reactor', reactorArgs, {stdio: 'inherit'});
-if (reactor.error) {
-  if (reactor.error.code === 'ENOENT') {
+const reactor = spawn('elm-reactor', reactorArgs, {stdio: 'inherit'});
+reactor.on('error', (error) => {
+  if (error.code === 'ENOENT') {
     process.stderr.write(
 `elm-live: I can’t find the command \`elm-reactor\`! Looks like elm-platform
   isn’t installed. Make sure you’ve followed the steps at http://npm.im/elm
@@ -36,13 +36,30 @@ if (reactor.error) {
     );
     process.exit(1);
   } else {
-    throw reactor.error;
+    throw error;
   }
-}
+});
 
 // Watch
-const gaze = new Gaze('**/*.elm');
+const cwd = process.cwd();
+const port = 35729;  // Standard http://livereload.com port
+const livereload = tinyLr();
+livereload.listen(port, (error) => {
+  if (error) throw error;
+  process.stdout.write(
+`elm-live: LiveReload running on the default port (${ port }).
+`
+  );
 
-gaze.on('all', (_, filePath) => {
-  console.log(path.relative(cwd, filePath));
+  const gaze = new Gaze();
+  gaze.on('error', (gazeError) => { throw gazeError; });
+  gaze.add('**/*.elm');
+
+  gaze.on('all', (event, filePath) => {
+    process.stdout.write(
+`elm-live: \`${ path.relative(cwd, filePath) }\` ${ event }. Reloading!
+`
+    );
+    livereload.changed({ body: { files: 'elm.js' } });
+  });
 });
