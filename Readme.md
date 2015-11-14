@@ -48,6 +48,8 @@ npm install --save-dev elm@0.15 elm-live
 
 (By the way, if [this issue](https://github.com/elm-lang/elm-platform/issues/100#issuecomment-155547605) is resolved by now, you can leave out `@0.15` and [drop me a PR](https://github.com/tomekwi/elm-live#fork-destination-box).)
 
+Note that you need *node 4.0+* to run the code natively. But if you’re stuck on an older version, don’t worry! [Rumour has it](https://github.com/tomekwi/elm-live/issues/2#issuecomment-156698732) that you can transpile the code to ES5!
+
 
 
 
