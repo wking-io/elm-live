@@ -1,15 +1,9 @@
-[![Coveralls – test coverage
-](https://img.shields.io/coveralls/tomekwi/elm-live.svg?style=flat-square)
-](https://coveralls.io/r/tomekwi/elm-live)
- [![Travis – build status
+[![Travis – build status
 ](https://img.shields.io/travis/tomekwi/elm-live/master.svg?style=flat-square)
 ](https://travis-ci.org/tomekwi/elm-live)
  [![David – status of dependencies
 ](https://img.shields.io/david/tomekwi/elm-live.svg?style=flat-square)
 ](https://david-dm.org/tomekwi/elm-live)
- [![Stability: experimental
-](https://img.shields.io/badge/stability-experimental-yellow.svg?style=flat-square)
-](https://nodejs.org/api/documentation.html#documentation_stability_index)
  [![Code style: airbnb
 ](https://img.shields.io/badge/code%20style-airbnb-777777.svg?style=flat-square)
 ](https://github.com/airbnb/javascript)
@@ -20,13 +14,17 @@
 elm-live
 ========
 
-**Lightning-fast Elm development with LiveReload**
+**Elm development with LiveReload**  
+**Feels lightning-fast!**
 
 
-**Heads up!** This is totally a work in progress. [Thoughts and ideas][] are very welcome.
-
-[Thoughts and ideas]:  https://github.com/tomekwi/elm-live/issues
-
+<p align="center"><img
+  alt="Screenshot"
+  src="https://cdn.rawgit.com/tomekwi/elm-live/e851ffd/shot.png"
+  title="Sweet, isn’t it?"
+  width="656"
+  height="308"
+/></p>
 
 
 
