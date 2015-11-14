@@ -13,6 +13,7 @@
     "elm": "*"
   },
   "scripts": {
+    "docs": "echo \"[]\" | doxie --append \"$(./bin/elm-live.js --help)\n\" --inject",
     "test": "eslint . && echo \"No tests specfied\" && exit 1"
   },
   "files": [
@@ -29,5 +30,10 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:tomekwi/elm-live"
+  },
+  "devDependencies": {
+    "doxie": "0.2.3",
+    "doxie.append": "0.1.0",
+    "doxie.inject": "0.1.1"
   }
 }

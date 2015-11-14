@@ -1,4 +1,3 @@
-export default
-`Usage: elm-live
-   or: elm-live (-h|--help)
+module.exports =
+`Usage:  elm-live (-h|--help)
 `;

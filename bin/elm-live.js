@@ -1,19 +1,17 @@
 #! /usr/bin/env node
 
-const {stdout, stderr, exit, argv} = process;
-
-const flags = require('minimist')(argv.slice(2), {boolean: true});
+const flags = require('minimist')(process.argv.slice(2), {boolean: true});
 const files = flags._;
 
 // Print usage
-if (flags.h) stdout.write(require('./help/usage'));
-if (flags.help) stdout.write([
+if (flags.h) process.stdout.write(require('./help/usage'));
+if (flags.help) process.stdout.write([
   require('./help/synopsis'),
   require('./help/what-it-does'),
   require('./help/options'),
 ].join('\n\n'));
 
 // Exit early
-if (flags.h || flags.help) exit(0);
+if (flags.h || flags.help) process.exit(0);
 
 // TODO

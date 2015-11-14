@@ -1,4 +1,4 @@
-const {bold} = require('chalk');
+const bold = require('chalk').bold;
 
 module.exports =
 `  ${bold('OPTIONS')}
