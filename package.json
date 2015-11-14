@@ -15,7 +15,8 @@
   },
   "scripts": {
     "docs": "echo \"[]\" | doxie --append \"$(./bin/elm-live.js --help)\n\" --inject",
-    "test": "eslint . && echo \"No tests specfied\" && exit 1"
+    "lint": "eslint .",
+    "test": "npm run lint && echo \"No test specfied!\" && exit 1"
   },
   "files": [
     "**.js",
@@ -35,6 +36,8 @@
   "devDependencies": {
     "doxie": "0.2.3",
     "doxie.append": "0.1.0",
-    "doxie.inject": "0.1.1"
+    "doxie.inject": "0.1.1",
+    "eslint": "^1.9.0",
+    "eslint-config-airbnb": "^1.0.0"
   }
 }

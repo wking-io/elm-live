@@ -23,7 +23,7 @@ const reactorArgs = flags._;
 const cwd = process.cwd();
 const reactor = spawnSync('elm-reactor', reactorArgs, {stdio: 'inherit'});
 if (reactor.error) {
-  if (reactor.error.code = 'ENOENT') {
+  if (reactor.error.code === 'ENOENT') {
     process.stderr.write(
 `elm-live: I can’t find the command \`elm-reactor\`! Looks like elm-platform
   isn’t installed. Make sure you’ve followed the steps at http://npm.im/elm
@@ -38,7 +38,7 @@ if (reactor.error) {
   } else {
     throw reactor.error;
   }
-};
+}
 
 // Watch
 const gaze = new Gaze('**/*.elm');
