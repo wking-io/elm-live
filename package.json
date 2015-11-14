@@ -14,7 +14,10 @@
     "elm": "*"
   },
   "scripts": {
-    "docs": "echo \"[]\" | doxie --append \"$(./bin/elm-live.js --help)\n\" --inject",
+    "preversion": "npm run readme",
+    "readme": "npm run readme:render && npm run readme:commit",
+    "readme:render": "echo \"[]\" | doxie --append \"$(./bin/elm-live.js --help)\n\" --inject",
+    "readme:commit": "git reset && git commit --message=\"Auto-update the readme\" Readme.md",
     "test": "eslint . && echo \"Only linting supported at the moment!\""
   },
   "files": [
