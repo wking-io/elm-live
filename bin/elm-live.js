@@ -25,7 +25,8 @@ const reactor = spawn('elm-reactor', reactorArgs, {stdio: 'inherit'});
 reactor.on('error', (error) => {
   if (error.code === 'ENOENT') {
     process.stderr.write(
-`elm-live: I can’t find the command \`elm-reactor\`! Looks like elm-platform
+`elm-live:
+  I can’t find the command \`elm-reactor\`! Looks like elm-platform
   isn’t installed. Make sure you’ve followed the steps at http://npm.im/elm
   and that you can call \`elm-reactor\` on your command line.
 
@@ -47,7 +48,12 @@ const livereload = tinyLr();
 livereload.listen(port, (error) => {
   if (error) throw error;
   process.stdout.write(
-`elm-live: LiveReload running on the default port (${ port }).
+`elm-live:
+  LiveReload running on the default port (${ port }).
+
+  Remember to switch on LiveReload in your browser. More info:
+  http://livereload.com/extensions .
+
 `
   );
 
