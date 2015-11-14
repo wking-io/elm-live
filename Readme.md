@@ -20,7 +20,7 @@
 elm-live
 ========
 
-**Elm development with LiveReload**
+**Lightning-fast Elm development with LiveReload**
 
 
 **Heads up!** This is totally a work in progress. [Thoughts and ideas][] are very welcome.
