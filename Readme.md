@@ -1,12 +1,12 @@
 [![Coveralls – test coverage
-](https://img.shields.io/coveralls/tomekwi/<!--name-->.svg?style=flat-square)
-](https://coveralls.io/r/tomekwi/<!--name-->)
+](https://img.shields.io/coveralls/tomekwi/elm-live.svg?style=flat-square)
+](https://coveralls.io/r/tomekwi/elm-live)
  [![Travis – build status
-](https://img.shields.io/travis/tomekwi/<!--name-->/master.svg?style=flat-square)
-](https://travis-ci.org/tomekwi/<!--name-->)
+](https://img.shields.io/travis/tomekwi/elm-live/master.svg?style=flat-square)
+](https://travis-ci.org/tomekwi/elm-live)
  [![David – status of dependencies
-](https://img.shields.io/david/tomekwi/<!--name-->.svg?style=flat-square)
-](https://david-dm.org/tomekwi/<!--name-->)
+](https://img.shields.io/david/tomekwi/elm-live.svg?style=flat-square)
+](https://david-dm.org/tomekwi/elm-live)
  [![Stability: experimental
 ](https://img.shields.io/badge/stability-experimental-yellow.svg?style=flat-square)
 ](https://nodejs.org/api/documentation.html#documentation_stability_index)
@@ -17,15 +17,15 @@
 
 
 
-<!--title-->
-<!--title-underline-->
+elm-live
+========
 
-**<!--description-->**
+**Elm development with LiveReload**
 
 
 **Heads up!** This is totally a work in progress. [Thoughts and ideas][] are very welcome.
 
-[Thoughts and ideas]:  https://github.com/tomekwi/<!--name-->/issues
+[Thoughts and ideas]:  https://github.com/tomekwi/elm-live/issues
 
 
 
@@ -37,10 +37,10 @@ Installation
 
 ```sh
 # Globally for a user:
-npm install --global <!--name-->
+npm install --global elm-live
 
 # …or locally for a project:
-npm install --save-dev <!--name-->
+npm install --save-dev elm-live
 ```
 
 

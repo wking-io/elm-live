@@ -1,9 +1,9 @@
 {
-  "name": "<!--name-->",
+  "name": "elm-live",
   "version": "0.0.0-work-in-progress",
-  "description": "<!--description-->",
+  "description": "Elm development with LiveReload",
   "bin": {
-    "<!--name-->": "bin/<!--name-->.js"
+    "elm-live": "bin/elm-live.js"
   },
   "dependencies": {},
   "scripts": {
@@ -35,6 +35,6 @@
   "author": "Tomek Wiszniewski <t.wiszniewski@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "<!--repo-->"
+    "url": "git@github.com:tomekwi/elm-live"
   }
 }
