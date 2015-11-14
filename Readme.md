@@ -55,7 +55,7 @@ Usage
 <!-- Don’t remove or change the comment above – that can break automatic updates. -->
   SYNOPSIS
 
-    Usage:  elm-live (-h|--help)
+    Usage:  elm-live (-h|--help) (-- ...ARGS)
 
 
   WHAT IT DOES
@@ -70,7 +70,8 @@ Usage
 
   OPTIONS
 
-    -h  --help   Print a short synopsis (-h) or this help text (--help)
+    ARGS          Arguments passed straight on to `elm-reactor`
+    -h  --help    Print a short synopsis (-h) or this help text (--help)
 <!-- Don’t remove or change the comment below – that can break automatic updates. More info at <http://npm.im/doxie.inject>. -->
 <!-- @doxie.inject end -->
 
