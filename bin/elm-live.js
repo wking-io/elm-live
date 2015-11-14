@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const gaze = require('gaze');
+const Gaze = require('gaze').Gaze;
 const path = require('path');
 
 // Process info
@@ -20,9 +20,8 @@ if (flags.h || flags.help) process.exit(0);
 
 // Watch
 const cwd = process.cwd();
+const gaze = new Gaze('**/*.elm');
 
-gaze('**/*.elm', function () {
-  this.on('all', (_, filePath) => {
-    console.log(path.relative(cwd, filePath));
-  });
+gaze.on('all', (_, filePath) => {
+  console.log(path.relative(cwd, filePath));
 });
