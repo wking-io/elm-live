@@ -37,13 +37,13 @@ Installation
 
 ```sh
 # Globally for a user:
-npm install --global elm@0 elm-live
+npm install --global elm@0.15 elm-live
 
 # …or locally for a project:
-npm install --save-dev elm@0 elm-live
+npm install --save-dev elm@0.15 elm-live
 ```
 
-(By the way, if [this issue](https://github.com/elm-lang/elm-platform/issues/100#issuecomment-155547605) is resolved you can replace `elm@0` with `elm`.)
+(By the way, if [this issue](https://github.com/elm-lang/elm-platform/issues/100#issuecomment-155547605) is resolved by now, you can leave out `@0.15` and [drop me a PR](https://github.com/tomekwi/elm-live#fork-destination-box).)
 
 
 
