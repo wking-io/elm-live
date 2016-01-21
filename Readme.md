@@ -15,7 +15,7 @@ elm-live
 ========
 
 **Elm development with LiveReload**  
-**Feels lightning-fast!**
+**Lightning-fast!**
 
 
 
