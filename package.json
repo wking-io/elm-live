@@ -18,7 +18,7 @@
     "preversion": "npm run readme",
     "readme": "npm run readme:render && npm run readme:commit",
     "readme:render": "echo \"[]\" | doxie --append \"$(./bin/elm-live.js --help)\n\" --inject",
-    "readme:commit": "git reset && git commit --message=\"Auto-update the readme\" Readme.md || echo \"npm run readme: Nothing to update.\"",
+    "readme:commit": "git reset && git commit --message=\"[npm run readme] Update the readme\" Readme.md || echo \"npm run readme: Nothing to update.\"",
     "test": "eslint . && echo \"Only linting supported at the moment!\""
   },
   "engines": {
