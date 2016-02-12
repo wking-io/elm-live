@@ -15,11 +15,12 @@
     "elm": "*"
   },
   "scripts": {
+    "develop": "node-dev --respawn --no-notify --no-deps test.js",
     "preversion": "npm run readme",
     "readme": "npm run readme:render && npm run readme:commit",
     "readme:render": "echo \"[]\" | doxie --append \"$(./bin/elm-live.js --help)\n\" --inject",
     "readme:commit": "git reset && git commit --message=\"[npm run readme] Update the readme\" Readme.md || echo \"npm run readme: Nothing to update.\"",
-    "test": "eslint . && echo \"Only linting supported at the moment!\""
+    "test": "eslint . && node test.js"
   },
   "engines": {
     "node": ">= 4.0.0"
@@ -40,10 +41,12 @@
     "url": "git@github.com:tomekwi/elm-live"
   },
   "devDependencies": {
-    "doxie": "0.2.3",
-    "doxie.append": "0.1.0",
-    "doxie.inject": "0.1.1",
+    "doxie": "^0.2.3",
+    "doxie.append": "^0.1.0",
+    "doxie.inject": "^0.1.1",
     "eslint": "^1.9.0",
-    "eslint-config-airbnb": "^1.0.0"
+    "eslint-config-airbnb": "^1.0.0",
+    "node-dev": "github:tomekwi/node-dev#39f8c44",
+    "prova": "^2.1.2"
   }
 }
