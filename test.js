@@ -10,7 +10,9 @@ const naked = require('strip-ansi');
 
 const dummyConfig = { inputStream: devnull(), outputStream: devnull() };
 const dummyCp = { spawnSync: () => { return { status: 0 }; } };
-const dummyBudo = { on: () => {} };
+const dummyBudoServer = { on: () => {} };
+const dummyBudo = () => dummyBudoServer;
+const dummyGaze = () => {};
 
 
 test('Prints `--help`', (assert) => {
@@ -65,6 +67,37 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
 
   assert.equal(exitCode, 1,
     'fails'
+  );
+});
+
+
+test('Exits if `--no-recover`', (assert) => {
+  assert.plan(4);
+
+  const status = 59;
+
+  const child = { spawnSync: (command) => {
+    assert.equal(command, 'elm-make',
+      'spawns `elm-make`'
+    );
+
+    return { status };
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', {
+    'child_process': child, budo: dummyBudo, gaze: dummyGaze,
+  });
+
+  assert.equal(
+    elmLive(['--no-recover'], dummyConfig),
+    status,
+    'exits with the same status as `elm-make`'
+  );
+
+  assert.equal(
+    elmLive([], dummyConfig),
+    null,
+    'keeps running otherwise'
   );
 });
 
@@ -241,7 +274,7 @@ test('Starts budo and gaze with correct config', (assert) => {
       'directs all output to `outputStream`'
     );
 
-    return dummyBudo;
+    return dummyBudoServer;
   };
 
   const gaze = (glob) => {
@@ -267,13 +300,11 @@ test('`--open`s the default browser', (assert) => {
       'passes `--open` to budo'
     );
 
-    return dummyBudo;
+    return dummyBudoServer;
   };
 
-  const gaze = () => {};
-
   const elmLive = proxyquire('./source/elm-live', {
-    budo, gaze, 'child_process': dummyCp,
+    budo, gaze: dummyGaze, 'child_process': dummyCp,
   });
 
   elmLive(['--open'], dummyConfig);
@@ -290,13 +321,11 @@ test('Serves at the specified `--port`', (assert) => {
       'passes `--port` to budo'
     );
 
-    return dummyBudo;
+    return dummyBudoServer;
   };
 
-  const gaze = () => {};
-
   const elmLive = proxyquire('./source/elm-live', {
-    budo, gaze, 'child_process': dummyCp,
+    budo, gaze: dummyGaze, 'child_process': dummyCp,
   });
 
   elmLive([`--port=${ portNumber }`], dummyConfig);
