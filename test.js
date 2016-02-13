@@ -162,6 +162,11 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
   elmLive(allArgs, { stream: devnull() });
 });
 
+
 // Starts budo at the specified `--port`
 
+
 // `--open`s the default browser
+
+
+// Reruns elm-make whenever an Elm file is changes
