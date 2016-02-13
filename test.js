@@ -7,6 +7,8 @@ const proxyquire = require('proxyquire').noPreserveCache().noCallThru();
 const devnull = require('dev-null');
 const qs = require('q-stream');
 
+const dummyConfig = { inputStream: devnull(), outputStream: devnull() };
+
 
 test('Prints `--help`', (assert) => {
   assert.plan(3);
@@ -25,7 +27,7 @@ test('Prints `--help`', (assert) => {
 
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
 
-  const exitCode = elmLive(['--help'], { outputStream: devnull() });
+  const exitCode = elmLive(['--help'], dummyConfig);
 
   assert.equal(exitCode, 0,
     'succeeds'
@@ -56,7 +58,7 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
       expectedMessage.test(chunk),
       'prints an informative message'
     );
-  }) });
+  }), inputStream: devnull() });
 
   assert.equal(exitCode, 1,
     'fails'
@@ -91,7 +93,7 @@ test('Prints any other `elm-make` error', (assert) => {
       ),
       'prints the error’s output'
     );
-  }) });
+  }), inputStream: devnull() });
 
   assert.equal(exitCode, status,
     'exits with whatever code `elm-make` returned'
@@ -122,7 +124,7 @@ test('Passes correct args to `elm-make`', (assert) => {
   } };
 
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
-  elmLive(elmLiveArgs.concat(otherArgs), { outputStream: devnull() });
+  elmLive(elmLiveArgs.concat(otherArgs), dummyConfig);
 });
 
 
@@ -159,7 +161,7 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
   } };
 
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
-  elmLive(allArgs, { outputStream: devnull() });
+  elmLive(allArgs, dummyConfig);
 });
 
 
