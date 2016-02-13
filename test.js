@@ -1,11 +1,13 @@
+const path = require('path');
+
 const test = require('prova');
 const proxyquire = require('proxyquire').noPreserveCache();
-const path = require('path');
 const devnull = require('dev-null');
+const qs = require('q-stream');
 
 
 test('Prints `--help`', (assert) => {
-  assert.plan(2);
+  assert.plan(3);
 
   const spawnSyncStub = (program, args) => {
     assert.equal(
@@ -25,7 +27,44 @@ test('Prints `--help`', (assert) => {
     'child_process': { spawnSync: spawnSyncStub },
   });
 
-  elmLive(['--help'], { stream: devnull });
+  const exitCode = elmLive(['--help'], { stream: devnull });
+
+  assert.equal(exitCode, 0,
+    'succeeds'
+  );
+});
+
+
+test('Shouts if `elm-make` can’t be found', (assert) => {
+  assert.plan(2);
+
+  const expectedMessage = new RegExp(
+`^elm-live:
+  I can’t find the command \`elm-make\`!`
+  );
+
+  const spawnSyncStub = (command) => {
+    if (command !== 'elm-make') assert.fail(
+      'doesn’t spawn any other command'
+    );
+
+    return { error: { code: 'ENOENT' } };
+  };
+
+  const elmLive = proxyquire('./source/elm-live', {
+    'child_process': { spawnSync: spawnSyncStub },
+  });
+
+  const exitCode = elmLive([], { stream: qs((chunk) => {
+    assert.ok(
+      expectedMessage.test(chunk),
+      'prints an informative message'
+    );
+  })});
+
+  assert.equal(exitCode, 1,
+    'fails'
+  );
 });
 
 // Passes correct args to elm-make
