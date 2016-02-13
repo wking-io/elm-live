@@ -161,6 +161,40 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
 });
 
 
+test('Redirects elm-make output', (assert) => {
+  const testOutput = (
+`Hello there!
+How’s it going?
+`
+  );
+
+  const cp = { spawnSync: (command, _, options) => {
+    assert.equal(command, 'elm-make',
+      'spawns `elm-make`'
+    );
+
+    options.stdio[0].write(testOutput);
+
+    return {};
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
+  elmLive([], { stream: qs((chunk) => {
+    assert.equal(
+      chunk,
+`elm-make:
+  Hello there!
+  How’s it going?
+
+`,
+      'prints the output, annotated and indented'
+    );
+
+    assert.end();
+  }) });
+});
+
+
 // Starts budo at the specified `--port`
 
 

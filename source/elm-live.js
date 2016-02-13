@@ -1,6 +1,9 @@
 const cp = require('child_process');
 const path = require('path');
 
+const qs = require('q-stream');
+const indent = require('indent-string');
+
 const parseArgs = require('./parse-args');
 
 module.exports = (argv, options) => {
@@ -15,7 +18,16 @@ module.exports = (argv, options) => {
     return 0;
   }
 
-  const elmMake = cp.spawnSync('elm-make', args.elmMakeArgs);
+  const printElmMakeOutput = qs((chunk) => {
+    stream.write(
+      'elm-make:\n' + indent(String(chunk), '  ') + '\n'
+    );
+  });
+
+  const elmMake = cp.spawnSync('elm-make', args.elmMakeArgs, {
+    stdio: [printElmMakeOutput, printElmMakeOutput],
+  });
+
   if (elmMake.error && elmMake.error.code === 'ENOENT') {
     stream.write(
 `elm-live:
@@ -34,7 +46,7 @@ module.exports = (argv, options) => {
   } else if (elmMake.error) {
     stream.write(
 `elm-live: Error while calling \`elm-make\`! The output may be helpful:
-  ${ elmMake.error }
+${ indent(String(elmMake.error), '  ') }
 
 `
     );

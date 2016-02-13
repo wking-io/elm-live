@@ -5,7 +5,10 @@
   "bin": {
     "elm-live": "bin/elm-live.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "indent-string": "^2.1.0",
+    "q-stream": "^0.2.0"
+  },
   "peerDependencies": {
     "elm": "*"
   },
@@ -45,7 +48,6 @@
     "marked-man": "^0.1.5",
     "node-dev": "github:tomekwi/node-dev#39f8c44",
     "prova": "^2.1.2",
-    "proxyquire": "^1.7.4",
-    "q-stream": "^0.2.0"
+    "proxyquire": "^1.7.4"
   }
 }
