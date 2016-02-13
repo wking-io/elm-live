@@ -4,6 +4,9 @@ const path = require('path');
 const indent = require('indent-string');
 const budo = require('budo');
 const gaze = require('gaze');
+const chalk = require('chalk');
+const bold = chalk.bold;
+const dim = chalk.dim;
 
 const parseArgs = require('./parse-args');
 
@@ -36,10 +39,10 @@ module.exports = (argv, options) => {
 
     if (elmMake.error && elmMake.error.code === 'ENOENT') {
       outputStream.write(
-`elm-live:
-  I can’t find the command \`elm-make\`! Looks like elm-platform
+`\n${ dim('elm-live:') }
+  I can’t find the command ${ bold('elm-make') }! Looks like ${ bold('elm-platform') }
   isn’t installed. Make sure you’ve followed the steps
-  at https://git.io/elm-platform and that you can call \`elm-make\`
+  at https://git.io/elm-platform and that you can call ${ bold('elm-make') }
   from your command line.
 
   If that fails, have a look at open issues:
@@ -51,7 +54,7 @@ module.exports = (argv, options) => {
       return 1;
     } else if (elmMake.error) {
       outputStream.write(
-`elm-live: Error while calling \`elm-make\`! This output may be helpful:
+`\n${ dim('elm-live:') } Error while calling ${ bold('elm-make') }! This output may be helpful:
 ${ indent(String(elmMake.error), '  ') }
 
 `
@@ -66,8 +69,8 @@ ${ indent(String(elmMake.error), '  ') }
 
   // Serve
   outputStream.write(
-`elm-live:
-  \`elm-make\` has finished its job. Starting the server!
+`\n${ dim('elm-live:') }
+  ${ bold('elm-make') } has finished its job. Starting the server!
 
 `
   );
@@ -88,7 +91,7 @@ ${ indent(String(elmMake.error), '  ') }
       const relativePath = path.relative(process.cwd(), filePath);
 
       outputStream.write(
-`elm-live:
+`\n${ dim('elm-live:') }
   You’ve ${ event } \`${ relativePath }\`. Rebuilding!
 
 `
