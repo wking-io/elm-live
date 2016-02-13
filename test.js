@@ -117,12 +117,49 @@ test('Passes correct args to `elm-make`', (assert) => {
       'passes all not understood commands to elm-make'
     );
 
-    // Kill after one try
+    // Kill after one attempt
     return { status: 77, error: {} };
   } };
 
   const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
   elmLive(elmLiveArgs.concat(otherArgs), { stream: devnull() });
+});
+
+
+test('Disambiguates `elm-make` args with `--`', (assert) => {
+  assert.plan(1);
+
+  const elmMakeBefore =
+    ['--anything', 'whatever', 'whatever 2'];
+  const elmLiveBefore =
+    ['--open'];
+  const elmMakeAfter =
+    ['--port=77', '--beep=boop'];
+  const allArgs = [].concat(
+    elmMakeBefore,
+    elmLiveBefore,
+    ['--'],
+    elmMakeAfter
+  );
+
+  const cp = { spawnSync: (command, args) => {
+    if (command !== 'elm-make') assert.fail(
+      'doesn’t spawn any other command'
+    );
+
+    assert.deepEqual(
+      args,
+      elmMakeBefore.concat(elmMakeAfter),
+      'passes all not understood commands and all commands after the `--` ' +
+      'to elm-make'
+    );
+
+    // Kill after one attempt
+    return { status: 77, error: {} };
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
+  elmLive(allArgs, { stream: devnull() });
 });
 
 // Starts budo at the specified `--port`
