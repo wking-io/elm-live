@@ -6,6 +6,8 @@
     "elm-live": "bin/elm-live.js"
   },
   "dependencies": {
+    "budo": "^8.0.4",
+    "gaze": "^0.5.2",
     "indent-string": "^2.1.0",
     "q-stream": "^0.2.0"
   },
