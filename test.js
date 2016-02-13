@@ -39,9 +39,9 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
   I can’t find the command \`elm-make\`!`
   );
 
-  const child = { execFile: (command) => {
+  const child = { spawnSync: (command) => {
     assert.equal(command, 'elm-make',
-      'executes `elm-make`'
+      'spawns `elm-make`'
     );
 
     return { error: { code: 'ENOENT' } };
@@ -68,9 +68,9 @@ test('Prints any other `elm-make` error', (assert) => {
   const message = 'whatever';
   const status = 9;
 
-  const child = { execFile: (command) => {
+  const child = { spawnSync: (command) => {
     assert.equal(command, 'elm-make',
-      'executes `elm-make`'
+      'spawns `elm-make`'
     );
 
     return { status, error: { toString: () => message } };
@@ -104,9 +104,9 @@ test('Passes correct args to `elm-make`', (assert) => {
   const otherArgs =
     ['--anything', 'whatever', 'whatever 2', '--beep=boop', '--no-flag'];
 
-  const child = { execFile: (command, args) => {
+  const child = { spawnSync: (command, args) => {
     assert.equal(command, 'elm-make',
-      'executes `elm-make`'
+      'spawns `elm-make`'
     );
 
     assert.deepEqual(
@@ -140,9 +140,9 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
     elmMakeAfter
   );
 
-  const child = { execFile: (command, args) => {
+  const child = { spawnSync: (command, args) => {
     assert.equal(command, 'elm-make',
-      'executes `elm-make`'
+      'spawns `elm-make`'
     );
 
     assert.deepEqual(
@@ -162,18 +162,18 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
 
 
 test('Redirects elm-make output', (assert) => {
-  const testOutput = (
+  const elmLiveOutput = (
 `Hello there!
 How’s it going?
 `
   );
 
-  const child = { execFile: (command, _, options) => {
+  const child = { spawnSync: (command, _, options) => {
     assert.equal(command, 'elm-make',
-      'executes `elm-make`'
+      'spawns `elm-make`'
     );
 
-    options.stdio[1].write(testOutput);
+    options.stdio[1].write(elmLiveOutput);
 
     return {};
   } };
@@ -182,12 +182,8 @@ How’s it going?
   elmLive([], { stream: qs((chunk) => {
     assert.equal(
       chunk,
-`elm-make:
-  Hello there!
-  How’s it going?
-
-`,
-      'prints the output, annotated and indented'
+      elmLiveOutput,
+      'directs the output to `stream`'
     );
 
     assert.end();

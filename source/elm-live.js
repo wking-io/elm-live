@@ -1,7 +1,6 @@
 const child = require('child_process');
 const path = require('path');
 
-const qs = require('q-stream');
 const indent = require('indent-string');
 
 const parseArgs = require('./parse-args');
@@ -18,14 +17,8 @@ module.exports = (argv, options) => {
     return 0;
   }
 
-  const printElmMakeOutput = qs((chunk) => {
-    stream.write(
-      'elm-make:\n' + indent(String(chunk), '  ') + '\n'
-    );
-  });
-
-  const elmMake = child.execFile('elm-make', args.elmMakeArgs, {
-    stdio: [null, printElmMakeOutput, printElmMakeOutput],
+  const elmMake = child.spawnSync('elm-make', args.elmMakeArgs, {
+    stdio: ['ignore', stream, stream],
   });
 
   if (elmMake.error && elmMake.error.code === 'ENOENT') {
