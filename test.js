@@ -9,7 +9,7 @@ const qs = require('q-stream');
 test('Prints `--help`', (assert) => {
   assert.plan(3);
 
-  const spawnSyncStub = (program, args) => {
+  const cp = { spawnSync: (program, args) => {
     assert.equal(
       program,
       'man',
@@ -21,11 +21,9 @@ test('Prints `--help`', (assert) => {
       path.resolve(__dirname, 'manpages/elm-live.1'),
       'with the right manpage'
     );
-  };
+  } };
 
-  const elmLive = proxyquire('./source/elm-live', {
-    'child_process': { spawnSync: spawnSyncStub },
-  });
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
 
   const exitCode = elmLive(['--help'], { stream: devnull });
 
@@ -43,24 +41,22 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
   I can’t find the command \`elm-make\`!`
   );
 
-  const spawnSyncStub = (command) => {
+  const cp = { spawnSync: (command) => {
     if (command !== 'elm-make') assert.fail(
       'doesn’t spawn any other command'
     );
 
     return { error: { code: 'ENOENT' } };
-  };
+  } };
 
-  const elmLive = proxyquire('./source/elm-live', {
-    'child_process': { spawnSync: spawnSyncStub },
-  });
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
 
   const exitCode = elmLive([], { stream: qs((chunk) => {
     assert.ok(
       expectedMessage.test(chunk),
       'prints an informative message'
     );
-  })});
+  }) });
 
   assert.equal(exitCode, 1,
     'fails'
