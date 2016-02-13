@@ -101,7 +101,7 @@ You’re looking at it.
 
 Many thanks to [Evan Czaplicki](https://github.com/evancz), the creator of Elm, for [git.io/elm-make](https://git.io/elm-make) – the most brilliant language compiler the world has ever seen! Without _elm-make_, _elm-live_ would be a car without an engine.
 
-Many thanks to [Matt Deslauriers](https://github.com/mattdesl) for the wonderful [git.io/budo-server](https://git.io/budo-server). That’s what does the heavy lifting on the static server side.
+Many thanks to [Matt DesLauriers](https://github.com/mattdesl) for the wonderful [git.io/budo-server](https://git.io/budo-server). That’s what does the heavy lifting on the static server side.
 
 
 
