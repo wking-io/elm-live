@@ -1,7 +1,7 @@
 const path = require('path');
 
 const test = require('prova');
-const proxyquire = require('proxyquire').noPreserveCache();
+const proxyquire = require('proxyquire').noPreserveCache().noCallThru();
 const devnull = require('dev-null');
 const qs = require('q-stream');
 
@@ -9,9 +9,9 @@ const qs = require('q-stream');
 test('Prints `--help`', (assert) => {
   assert.plan(3);
 
-  const cp = { spawnSync: (command, args) => {
+  const child = { spawnSync: (command, args) => {
     assert.equal(command, 'man',
-      'invokes `man`'
+      'spawns `man`'
     );
 
     assert.equal(
@@ -21,7 +21,7 @@ test('Prints `--help`', (assert) => {
     );
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
 
   const exitCode = elmLive(['--help'], { stream: devnull() });
 
@@ -39,15 +39,15 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
   I can’t find the command \`elm-make\`!`
   );
 
-  const cp = { spawnSync: (command) => {
+  const child = { execFile: (command) => {
     assert.equal(command, 'elm-make',
-      'spawns `elm-make`'
+      'executes `elm-make`'
     );
 
     return { error: { code: 'ENOENT' } };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
 
   const exitCode = elmLive([], { stream: qs((chunk) => {
     assert.ok(
@@ -68,15 +68,15 @@ test('Prints any other `elm-make` error', (assert) => {
   const message = 'whatever';
   const status = 9;
 
-  const cp = { spawnSync: (command) => {
+  const child = { execFile: (command) => {
     assert.equal(command, 'elm-make',
-      'spawns `elm-make`'
+      'executes `elm-make`'
     );
 
     return { status, error: { toString: () => message } };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
 
   const exitCode = elmLive([], { stream: qs((chunk) => {
     assert.equal(
@@ -104,9 +104,9 @@ test('Passes correct args to `elm-make`', (assert) => {
   const otherArgs =
     ['--anything', 'whatever', 'whatever 2', '--beep=boop', '--no-flag'];
 
-  const cp = { spawnSync: (command, args) => {
+  const child = { execFile: (command, args) => {
     assert.equal(command, 'elm-make',
-      'spawns `elm-make`'
+      'executes `elm-make`'
     );
 
     assert.deepEqual(
@@ -119,7 +119,7 @@ test('Passes correct args to `elm-make`', (assert) => {
     return { status: 77, error: {} };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
   elmLive(elmLiveArgs.concat(otherArgs), { stream: devnull() });
 });
 
@@ -140,9 +140,9 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
     elmMakeAfter
   );
 
-  const cp = { spawnSync: (command, args) => {
+  const child = { execFile: (command, args) => {
     assert.equal(command, 'elm-make',
-      'spawns `elm-make`'
+      'executes `elm-make`'
     );
 
     assert.deepEqual(
@@ -156,7 +156,7 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
     return { status: 77, error: {} };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
   elmLive(allArgs, { stream: devnull() });
 });
 
@@ -168,17 +168,17 @@ How’s it going?
 `
   );
 
-  const cp = { spawnSync: (command, _, options) => {
+  const child = { execFile: (command, _, options) => {
     assert.equal(command, 'elm-make',
-      'spawns `elm-make`'
+      'executes `elm-make`'
     );
 
-    options.stdio[0].write(testOutput);
+    options.stdio[1].write(testOutput);
 
     return {};
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
   elmLive([], { stream: qs((chunk) => {
     assert.equal(
       chunk,

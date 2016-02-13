@@ -1,4 +1,4 @@
-const cp = require('child_process');
+const child = require('child_process');
 const path = require('path');
 
 const qs = require('q-stream');
@@ -11,7 +11,7 @@ module.exports = (argv, options) => {
   const args = parseArgs(argv);
 
   if (args.help) {
-    cp.spawnSync('man', [
+    child.spawnSync('man', [
       path.resolve(__dirname, '../manpages/elm-live.1'),
     ], { stdio: 'inherit' });
 
@@ -24,8 +24,8 @@ module.exports = (argv, options) => {
     );
   });
 
-  const elmMake = cp.spawnSync('elm-make', args.elmMakeArgs, {
-    stdio: [printElmMakeOutput, printElmMakeOutput],
+  const elmMake = child.execFile('elm-make', args.elmMakeArgs, {
+    stdio: [null, printElmMakeOutput, printElmMakeOutput],
   });
 
   if (elmMake.error && elmMake.error.code === 'ENOENT') {
