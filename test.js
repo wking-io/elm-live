@@ -11,6 +11,7 @@ const naked = require('strip-ansi');
 const dummyConfig = { inputStream: devnull(), outputStream: devnull() };
 const dummyCp = { spawnSync: () => { return { status: 0 }; } };
 const dummyBudoServer = { on: () => {} };
+const dummyBudo = () => dummyBudoServer;
 const dummyGaze = () => {};
 
 
@@ -123,7 +124,9 @@ test('Informs of compile errors', (assert) => {
     return { status };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
+  const elmLive = proxyquire('./source/elm-live', {
+    'child_process': child, budo: dummyBudo, gaze: dummyGaze,
+  });
 
   let run = 0;
   const outputStream = qs((chunk) => {
