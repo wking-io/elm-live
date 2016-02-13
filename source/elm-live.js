@@ -65,6 +65,12 @@ ${ indent(String(elmMake.error), '  ') }
   if (exitStatus !== 0) { return exitStatus; }
 
   // Serve
+  outputStream.write(
+`elm-live:
+  \`elm-make\` has finished its job. Starting the server!
+
+`
+  );
   const server = budo({
     live: true,
     watchGlob: '**/*.{html,css,js}',
@@ -79,8 +85,13 @@ ${ indent(String(elmMake.error), '  ') }
     if (error) throw error;
 
     watcher.on('all', (event, filePath) => {
+      const relativePath = path.relative(process.cwd(), filePath);
+
       outputStream.write(
-        `elm-live: \`${ filePath }\` ${ event }. Rebuilding!\n`
+`elm-live:
+  You’ve ${ event } \`${ relativePath }\`. Rebuilding!
+
+`
       );
       build();
     });
