@@ -107,6 +107,51 @@ test('Exits if `--no-recover`', (assert) => {
 });
 
 
+test('Informs of compile errors', (assert) => {
+  assert.plan(3);
+
+  const message = 'whatever';
+  const status = 9;
+
+  const child = { spawnSync: (command, _, options) => {
+    assert.equal(command, 'elm-make',
+      'spawns `elm-make`'
+    );
+
+    options.stdio[1].write(message);
+
+    return { status };
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
+
+  let run = 0;
+  const outputStream = qs((chunk) => {
+    if (run === 0) assert.equal(chunk, message,
+      'prints elm-make output first'
+    );
+
+    if (run === 1) assert.equal(
+      naked(chunk),
+      (
+`\nelm-live:
+  elm-make failed! You can find more info above. Keep calm and take your time
+  to fix your code. We’ll try to compile it again as soon as you change a file.
+
+  Hint: Pass the option --no-recover to exit immediately after a compile error.
+
+`
+      ),
+      'prints a friendly message afterwards'
+    );
+
+    run++;
+  });
+
+  elmLive([], { outputStream, inputStream: devnull() });
+});
+
+
 test('Prints any other `elm-make` error', (assert) => {
   assert.plan(3);
 

@@ -66,6 +66,16 @@ ${ indent(String(elmMake.error), '  ') }
       );
     }
 
+    if (args.recover && elmMake.status !== SUCCESS) outputStream.write(
+`\n${ dim('elm-live:') }
+  ${ bold('elm-make') } failed! You can find more info above. Keep calm and take your time
+  to fix your code. We’ll try to compile it again as soon as you change a file.
+
+  Hint: Pass the option ${ bold('--no-recover') } to exit immediately after a compile error.
+
+`
+    );
+
     return { fatal: false, exitCode: elmMake.status };
   };
 
@@ -74,7 +84,9 @@ ${ indent(String(elmMake.error), '  ') }
   const startServer = () => {
     outputStream.write(
 `\n${ dim('elm-live:') }
-  ${ bold('elm-make') } has succeeded. Starting the server!
+  ${ bold('elm-make') } has succeeded. Starting the server!${ args.open ? (
+` We’ll open your app
+  in the default browser as soon as it’s up and running.`) : '' }
 
 `
     );
