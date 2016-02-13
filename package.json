@@ -51,6 +51,7 @@
     "marked-man": "^0.1.5",
     "node-dev": "github:tomekwi/node-dev#39f8c44",
     "prova": "^2.1.2",
-    "proxyquire": "^1.7.4"
+    "proxyquire": "^1.7.4",
+    "strip-ansi": "^3.0.0"
   }
 }

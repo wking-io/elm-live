@@ -6,6 +6,7 @@ const test = require('prova');
 const proxyquire = require('proxyquire').noPreserveCache().noCallThru();
 const devnull = require('dev-null');
 const qs = require('q-stream');
+const naked = require('strip-ansi');
 
 const dummyConfig = { inputStream: devnull(), outputStream: devnull() };
 const dummyCp = { spawnSync: () => { return { status: 0 }; } };
@@ -41,8 +42,8 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
   assert.plan(3);
 
   const expectedMessage = new RegExp(
-`^elm-live:
-  I can’t find the command \`elm-make\`!`
+`^\nelm-live:
+  I can’t find the command elm-make!`
   );
 
   const child = { spawnSync: (command) => {
@@ -57,7 +58,7 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
 
   const exitCode = elmLive([], { outputStream: qs((chunk) => {
     assert.ok(
-      expectedMessage.test(chunk),
+      expectedMessage.test(naked(chunk)),
       'prints an informative message'
     );
   }), inputStream: devnull() });
@@ -86,9 +87,9 @@ test('Prints any other `elm-make` error', (assert) => {
 
   const exitCode = elmLive([], { outputStream: qs((chunk) => {
     assert.equal(
-      chunk,
+      naked(chunk),
       (
-`elm-live: Error while calling \`elm-make\`! This output may be helpful:
+`\nelm-live: Error while calling elm-make! This output may be helpful:
   ${ message }
 
 `
