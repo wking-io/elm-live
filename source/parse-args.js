@@ -2,6 +2,7 @@ const defaults = {
   port: 8000,
   open: false,
   help: false,
+  recover: true,
 };
 
 module.exports = (argv) => {
@@ -17,6 +18,11 @@ module.exports = (argv) => {
     };
 
     if (['help', 'open'].some(tryBoolOption)) {
+      return true;
+    }
+
+    if (arg === '--no-recover') {
+      args.recover = false;
       return true;
     }
 

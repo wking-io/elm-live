@@ -2,7 +2,9 @@
 
 const argv = process.argv.slice(2);
 
-require('..')(argv, {
+const exitCode = require('..')(argv, {
   inputStream: process.stdin,
   outputStream: process.stdout,
 });
+
+if (exitCode !== null) process.exit(exitCode);

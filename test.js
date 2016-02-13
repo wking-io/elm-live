@@ -85,7 +85,7 @@ test('Prints any other `elm-make` error', (assert) => {
 
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
 
-  const exitCode = elmLive([], { outputStream: qs((chunk) => {
+  const exitCode = elmLive(['--no-recover'], { outputStream: qs((chunk) => {
     assert.equal(
       naked(chunk),
       (
@@ -107,7 +107,7 @@ test('Prints any other `elm-make` error', (assert) => {
 test('Passes correct args to `elm-make`', (assert) => {
   assert.plan(2);
 
-  const elmLiveArgs = ['--port=77'];
+  const elmLiveArgs = ['--port=77', '--no-recover'];
   const otherArgs =
     ['--anything', 'whatever', 'whatever 2', '--beep=boop', '--no-flag'];
 
@@ -137,7 +137,7 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
   const elmMakeBefore =
     ['--anything', 'whatever', 'whatever 2'];
   const elmLiveBefore =
-    ['--open'];
+    ['--open', '--no-recover'];
   const elmMakeAfter =
     ['--port=77', '--beep=boop'];
   const allArgs = [].concat(
@@ -197,12 +197,13 @@ How’s it going?
     options.stdio[1].write(elmLiveOut);
     options.stdio[2].write(elmLiveErr);
 
-    return {};
+    // Kill after one attempt
+    return { status: 77, error: {} };
   } };
 
   let run = 0;
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
-  elmLive([], { inputStream, outputStream: qs((chunk) => {
+  elmLive(['--no-recover'], { inputStream, outputStream: qs((chunk) => {
     if (run === 0) assert.equal(
       chunk,
       elmLiveOut,

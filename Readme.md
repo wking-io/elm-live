@@ -87,6 +87,9 @@ Set the port to start the server at. If the port is taken, we’ll use the next 
 #### `--open`
 We’ll open the app in your default browser as soon as the server is up.
 
+#### `--no-recover`
+When _elm-make_ encounters a compile error, we keep _elm-live_ running and give you time to fix your code. Pass `--no-recover` if you want the server to exit immediately whenever it encounters a compile error.
+
 #### `--help`
 You’re looking at it.
 

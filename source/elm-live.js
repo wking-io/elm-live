@@ -15,7 +15,7 @@ const parseArgs = require('./parse-args');
     outputStream: WritableStream,
     inputStream: ReadableStream,
   }) =>
-    exitCode: Integer
+    exitCode: Integer | Null
 */
 module.exports = (argv, options) => {
   const outputStream = options.outputStream;
@@ -51,7 +51,7 @@ module.exports = (argv, options) => {
 `
       );
 
-      return 1;
+      return { fatal: true, exitCode: 1 };
     } else if (elmMake.error) {
       outputStream.write(
 `\n${ dim('elm-live:') } Error while calling ${ bold('elm-make') }! This output may be helpful:
@@ -61,11 +61,16 @@ ${ indent(String(elmMake.error), '  ') }
       );
     }
 
-    return elmMake.status;
+    return { fatal: false, exitCode: elmMake.status };
   };
 
-  const exitStatus = build();
-  if (exitStatus !== 0) { return exitStatus; }
+  const buildResult = build();
+  if (
+    buildResult.fatal ||
+    (!args.recover && buildResult.exitCode !== 0)
+  ) {
+    return buildResult.exitCode;
+  }
 
   // Serve
   outputStream.write(
@@ -99,4 +104,6 @@ ${ indent(String(elmMake.error), '  ') }
       build();
     });
   });
+
+  return null;
 };
