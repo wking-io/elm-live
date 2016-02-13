@@ -11,7 +11,6 @@ const naked = require('strip-ansi');
 const dummyConfig = { inputStream: devnull(), outputStream: devnull() };
 const dummyCp = { spawnSync: () => { return { status: 0 }; } };
 const dummyBudoServer = { on: () => {} };
-const dummyBudo = () => dummyBudoServer;
 const dummyGaze = () => {};
 
 
@@ -84,8 +83,14 @@ test('Exits if `--no-recover`', (assert) => {
     return { status };
   } };
 
+  const budo = () => {
+    assert.fail(
+      'doesn’t start the server until errors are fixed'
+    );
+  };
+
   const elmLive = proxyquire('./source/elm-live', {
-    'child_process': child, budo: dummyBudo, gaze: dummyGaze,
+    'child_process': child, budo, gaze: dummyGaze,
   });
 
   assert.equal(

@@ -1,3 +1,5 @@
+'use strict';
+
 const child = require('child_process');
 const path = require('path');
 
@@ -7,6 +9,9 @@ const gaze = require('gaze');
 const chalk = require('chalk');
 const bold = chalk.bold;
 const dim = chalk.dim;
+
+const SUCCESS = 0;
+const FAILURE = 1;
 
 const parseArgs = require('./parse-args');
 
@@ -28,10 +33,10 @@ module.exports = (argv, options) => {
       path.resolve(__dirname, '../manpages/elm-live.1'),
     ], { stdio: 'inherit' });
 
-    return 0;
+    return SUCCESS;
   }
 
-  // First build
+  // Build logic
   const build = () => {
     const elmMake = child.spawnSync('elm-make', args.elmMakeArgs, {
       stdio: [inputStream, outputStream, outputStream],
@@ -51,7 +56,7 @@ module.exports = (argv, options) => {
 `
       );
 
-      return { fatal: true, exitCode: 1 };
+      return { fatal: true, exitCode: FAILURE };
     } else if (elmMake.error) {
       outputStream.write(
 `\n${ dim('elm-live:') } Error while calling ${ bold('elm-make') }! This output may be helpful:
@@ -64,29 +69,37 @@ ${ indent(String(elmMake.error), '  ') }
     return { fatal: false, exitCode: elmMake.status };
   };
 
-  const buildResult = build();
-  if (
-    buildResult.fatal ||
-    (!args.recover && buildResult.exitCode !== 0)
-  ) {
-    return buildResult.exitCode;
-  }
-
-  // Serve
-  outputStream.write(
+  // Server logic
+  let serverStarted;
+  const startServer = () => {
+    outputStream.write(
 `\n${ dim('elm-live:') }
-  ${ bold('elm-make') } has finished its job. Starting the server!
+  ${ bold('elm-make') } has succeeded. Starting the server!
 
 `
-  );
-  const server = budo({
-    live: true,
-    watchGlob: '**/*.{html,css,js}',
-    port: args.port,
-    open: args.open,
-    stream: outputStream,
-  });
-  server.on('error', (error) => { throw error; });
+    );
+    const server = budo({
+      live: true,
+      watchGlob: '**/*.{html,css,js}',
+      port: args.port,
+      open: args.open,
+      stream: outputStream,
+    });
+    server.on('error', (error) => { throw error; });
+
+    serverStarted = true;
+  };
+
+  // First build
+  const firstBuildResult = build();
+  if (
+    firstBuildResult.fatal ||
+    (!args.recover && firstBuildResult.exitCode !== SUCCESS)
+  ) {
+    return firstBuildResult.exitCode;
+  } else if (firstBuildResult.exitCode === SUCCESS) {
+    startServer();
+  }
 
   // Watch Elm files
   gaze('**/*.elm', (error, watcher) => {
@@ -101,7 +114,11 @@ ${ indent(String(elmMake.error), '  ') }
 
 `
       );
-      build();
+
+      const buildResult = build();
+      if (!serverStarted && buildResult.exitCode === SUCCESS) {
+        startServer();
+      }
     });
   });
 
