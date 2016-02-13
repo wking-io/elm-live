@@ -6,9 +6,7 @@
     "elm-live": "bin/elm-live.js"
   },
   "dependencies": {
-    "gaze": "^0.5.2",
-    "minimist": "^1.2.0",
-    "tiny-lr": "^0.2.1"
+    "minimist": "^1.2.0"
   },
   "peerDependencies": {
     "elm": "*"
