@@ -25,7 +25,7 @@ test('Prints `--help`', (assert) => {
 
   const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
 
-  const exitCode = elmLive(['--help'], { stream: devnull });
+  const exitCode = elmLive(['--help'], { stream: devnull() });
 
   assert.equal(exitCode, 0,
     'succeeds'
@@ -98,7 +98,32 @@ test('Prints any other `elm-make` error', (assert) => {
   );
 });
 
-// Passes correct args to elm-make
+
+test('Passes correct args to `elm-make`', (assert) => {
+  assert.plan(1);
+
+  const elmLiveArgs = ['--port=77'];
+  const otherArgs =
+    ['--anything', 'whatever', 'whatever 2', '--beep=boop', '--no-flag'];
+
+  const cp = { spawnSync: (command, args) => {
+    if (command !== 'elm-make') assert.fail(
+      'doesn’t spawn any other command'
+    );
+
+    assert.deepEqual(
+      args,
+      otherArgs,
+      'passes all not understood commands to elm-make'
+    );
+
+    // Kill after one try
+    return { status: 77, error: {} };
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
+  elmLive(elmLiveArgs.concat(otherArgs), { stream: devnull() });
+});
 
 // Starts budo at the specified `--port`
 

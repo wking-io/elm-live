@@ -81,6 +81,9 @@ We also watch all `*.elm` files in the current directory and its subdirectories.
 
 ## OPTIONS
 
+#### `--port=PORT`
+Set the port to start the server at. `PORT` should be a valid port number. Default: `8000`.
+
 #### `--help`
 You’re looking at it
 

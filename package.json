@@ -5,9 +5,7 @@
   "bin": {
     "elm-live": "bin/elm-live.js"
   },
-  "dependencies": {
-    "minimist": "^1.2.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "elm": "*"
   },

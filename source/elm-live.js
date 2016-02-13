@@ -1,9 +1,7 @@
 const cp = require('child_process');
 const path = require('path');
 
-const minimist = require('minimist');
-
-const parseArgs = (argv) => minimist(argv);
+const parseArgs = require('./parse-args');
 
 module.exports = (argv, options) => {
   const stream = options.stream;
@@ -17,7 +15,7 @@ module.exports = (argv, options) => {
     return 0;
   }
 
-  const elmMake = cp.spawnSync('elm-make');
+  const elmMake = cp.spawnSync('elm-make', args.elmMakeArgs);
   if (elmMake.error && elmMake.error.code === 'ENOENT') {
     stream.write(
 `elm-live:
