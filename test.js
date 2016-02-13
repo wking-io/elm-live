@@ -9,10 +9,8 @@ const qs = require('q-stream');
 test('Prints `--help`', (assert) => {
   assert.plan(3);
 
-  const cp = { spawnSync: (program, args) => {
-    assert.equal(
-      program,
-      'man',
+  const cp = { spawnSync: (command, args) => {
+    assert.equal(command, 'man',
       'invokes `man`'
     );
 
@@ -34,7 +32,7 @@ test('Prints `--help`', (assert) => {
 
 
 test('Shouts if `elm-make` can’t be found', (assert) => {
-  assert.plan(2);
+  assert.plan(3);
 
   const expectedMessage = new RegExp(
 `^elm-live:
@@ -42,8 +40,8 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
   );
 
   const cp = { spawnSync: (command) => {
-    if (command !== 'elm-make') assert.fail(
-      'doesn’t spawn any other command'
+    assert.equal(command, 'elm-make',
+      'spawns `elm-make`'
     );
 
     return { error: { code: 'ENOENT' } };
@@ -65,14 +63,14 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
 
 
 test('Prints any other `elm-make` error', (assert) => {
-  assert.plan(2);
+  assert.plan(3);
 
   const message = 'whatever';
   const status = 9;
 
   const cp = { spawnSync: (command) => {
-    if (command !== 'elm-make') assert.fail(
-      'doesn’t spawn any other command'
+    assert.equal(command, 'elm-make',
+      'spawns `elm-make`'
     );
 
     return { status, error: { toString: () => message } };
@@ -100,21 +98,21 @@ test('Prints any other `elm-make` error', (assert) => {
 
 
 test('Passes correct args to `elm-make`', (assert) => {
-  assert.plan(1);
+  assert.plan(2);
 
   const elmLiveArgs = ['--port=77'];
   const otherArgs =
     ['--anything', 'whatever', 'whatever 2', '--beep=boop', '--no-flag'];
 
   const cp = { spawnSync: (command, args) => {
-    if (command !== 'elm-make') assert.fail(
-      'doesn’t spawn any other command'
+    assert.equal(command, 'elm-make',
+      'spawns `elm-make`'
     );
 
     assert.deepEqual(
       args,
       otherArgs,
-      'passes all not understood commands to elm-make'
+      'passes all not understood arguments'
     );
 
     // Kill after one attempt
@@ -127,7 +125,7 @@ test('Passes correct args to `elm-make`', (assert) => {
 
 
 test('Disambiguates `elm-make` args with `--`', (assert) => {
-  assert.plan(1);
+  assert.plan(2);
 
   const elmMakeBefore =
     ['--anything', 'whatever', 'whatever 2'];
@@ -143,8 +141,8 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
   );
 
   const cp = { spawnSync: (command, args) => {
-    if (command !== 'elm-make') assert.fail(
-      'doesn’t spawn any other command'
+    assert.equal(command, 'elm-make',
+      'spawns `elm-make`'
     );
 
     assert.deepEqual(
