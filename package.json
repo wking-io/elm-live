@@ -6,7 +6,6 @@
     "elm-live": "bin/elm-live.js"
   },
   "dependencies": {
-    "chalk": "^1.1.1",
     "gaze": "^0.5.2",
     "minimist": "^1.2.0",
     "tiny-lr": "^0.2.1"
@@ -47,6 +46,7 @@
     "eslint": "^1.9.0",
     "eslint-config-airbnb": "^1.0.0",
     "node-dev": "github:tomekwi/node-dev#39f8c44",
-    "prova": "^2.1.2"
+    "prova": "^2.1.2",
+    "q-stream": "^0.2.0"
   }
 }
