@@ -1,7 +1,7 @@
-const fs = require('fs');
+// Prints `--help`
 
-const testDir = `${ __dirname }/test`;
+// Passes correct args to elm-make
 
-fs.readdirSync(testDir).forEach((file) => {
-  require(`${ testDir }/${ file }`);
-});
+// Starts budo at the specified `--port`
+
+// `--open`s the default browser
