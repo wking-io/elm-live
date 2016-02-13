@@ -63,6 +63,41 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
   );
 });
 
+
+test('Prints any other `elm-make` error', (assert) => {
+  assert.plan(2);
+
+  const message = 'whatever';
+  const status = 9;
+
+  const cp = { spawnSync: (command) => {
+    if (command !== 'elm-make') assert.fail(
+      'doesn’t spawn any other command'
+    );
+
+    return { status, error: { toString: () => message } };
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', { 'child_process': cp });
+
+  const exitCode = elmLive([], { stream: qs((chunk) => {
+    assert.equal(
+      chunk,
+      (
+`elm-live: Error while calling \`elm-make\`! The output may be helpful:
+  ${ message }
+
+`
+      ),
+      'prints the error’s output'
+    );
+  }) });
+
+  assert.equal(exitCode, status,
+    'exits with whatever code `elm-make` returned'
+  );
+});
+
 // Passes correct args to elm-make
 
 // Starts budo at the specified `--port`

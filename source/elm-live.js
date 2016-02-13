@@ -33,5 +33,14 @@ module.exports = (argv, options) => {
     );
 
     return 1;
+  } else if (elmMake.error) {
+    stream.write(
+`elm-live: Error while calling \`elm-make\`! The output may be helpful:
+  ${ elmMake.error }
+
+`
+    );
+
+    return elmMake.status;
   }
 };
