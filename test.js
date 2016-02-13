@@ -8,6 +8,8 @@ const devnull = require('dev-null');
 const qs = require('q-stream');
 
 const dummyConfig = { inputStream: devnull(), outputStream: devnull() };
+const dummyCp = { spawnSync: () => { return { status: 0 }; } };
+const dummyBudo = { on: () => {} };
 
 
 test('Prints `--help`', (assert) => {
@@ -217,10 +219,83 @@ How’s it going?
 });
 
 
-// Starts budo at the specified `--port`
+test('Starts budo and gaze with correct config', (assert) => {
+  assert.plan(5);
+
+  const budo = (options) => {
+    assert.equal(options.port, 8000,
+      'uses port 8000 by default (or the next available one)'
+    );
+
+    assert.equal(options.open, false,
+      'doesn’t `--open` the app by default'
+    );
+
+    assert.equal(options.watchGlob, '**/*.{html,css,js}',
+      'reloads the app when an HTML, JS or CSS static file changes'
+    );
+
+    assert.equal(options.stream, dummyConfig.outputStream,
+      'directs all output to `outputStream`'
+    );
+
+    return dummyBudo;
+  };
+
+  const gaze = (glob) => {
+    assert.equal(glob, '**/*.elm',
+      'watches all `*.elm` files in the current directory ' +
+      'and its subdirectories'
+    );
+  };
+
+  const elmLive = proxyquire('./source/elm-live', {
+    budo, gaze, 'child_process': dummyCp,
+  });
+
+  elmLive([], dummyConfig);
+});
 
 
-// `--open`s the default browser
+test('`--open`s the default browser', (assert) => {
+  assert.plan(1);
+
+  const budo = (options) => {
+    assert.equal(options.open, true,
+      'passes `--open` to budo'
+    );
+
+    return dummyBudo;
+  };
+
+  const gaze = () => {};
+
+  const elmLive = proxyquire('./source/elm-live', {
+    budo, gaze, 'child_process': dummyCp,
+  });
+
+  elmLive(['--open'], dummyConfig);
+});
 
 
-// Reruns elm-make whenever an Elm file is changes
+test('Serves at the specified `--port`', (assert) => {
+  assert.plan(1);
+
+  const portNumber = 867;
+
+  const budo = (options) => {
+    assert.equal(options.port, portNumber,
+      'passes `--port` to budo'
+    );
+
+    return dummyBudo;
+  };
+
+  const gaze = () => {};
+
+  const elmLive = proxyquire('./source/elm-live', {
+    budo, gaze, 'child_process': dummyCp,
+  });
+
+  elmLive([`--port=${ portNumber }`], dummyConfig);
+});

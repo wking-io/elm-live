@@ -82,7 +82,7 @@ We also watch all `*.elm` files in the current directory and its subdirectories.
 ## OPTIONS
 
 #### `--port=PORT`
-Set the port to start the server at. `PORT` should be a valid port number. Default: `8000`.
+Set the port to start the server at. If the port is taken, we’ll use the next available one. `PORT` should be a valid port number. Default: `8000`.
 
 #### `--open`
 We’ll open the app in your default browser as soon as the server is up.

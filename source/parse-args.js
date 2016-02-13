@@ -23,7 +23,7 @@ module.exports = (argv) => {
     const portPattern = /^--port=(\d+)$/;
     const portMatch = arg.match(portPattern);
     if (portMatch) {
-      args.port = portMatch[1];
+      args.port = Number(portMatch[1]);
       return true;
     }
 
