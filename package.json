@@ -14,6 +14,7 @@
   "scripts": {
     "develop": "node-dev --respawn --no-notify --no-deps test.js",
     "manpages": "scripts/manpages.sh",
+    "prepublish": "npm run manpages",
     "test": "eslint . && node test.js"
   },
   "engines": {
@@ -21,8 +22,10 @@
   },
   "files": [
     "**/*.js",
+    "!/test.js",
     "/Readme.md",
-    "/License.md"
+    "/License.md",
+    "/manpages/"
   ],
   "directories": {
     "man": "/manpages"
@@ -38,10 +41,12 @@
     "url": "git@github.com:tomekwi/elm-live"
   },
   "devDependencies": {
+    "dev-null": "^0.1.1",
     "eslint": "^1.9.0",
     "eslint-config-airbnb": "^1.0.0",
     "node-dev": "github:tomekwi/node-dev#39f8c44",
     "prova": "^2.1.2",
+    "proxyquire": "^1.7.4",
     "q-stream": "^0.2.0"
   }
 }

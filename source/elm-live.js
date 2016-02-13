@@ -1,15 +1,16 @@
-const fs = require('fs');
+const cp = require('child_process');
+const path = require('path');
 
 const minimist = require('minimist');
 
 const parseArgs = (argv) => minimist(argv);
 
-module.exports = (argv, options) => {
-  const stream = options.stream;
-
+module.exports = (argv) => {
   const args = parseArgs(argv);
 
   if (args.help) {
-    stream.write(fs.readFileSync(`${ __dirname }/help.txt`));
+    cp.spawnSync('man', [
+      path.resolve(__dirname, '../manpages/elm-live.1'),
+    ], { stdio: 'inherit' });
   }
 };

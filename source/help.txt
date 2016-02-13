@@ -1,6 +1,0 @@
-Usage:
-    elm-live [--port=<port>] [--] [--open] <elm-live args>
-    elm-live --help
-
-More info:
-    man elm-live
