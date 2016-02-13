@@ -95,6 +95,31 @@ You’re looking at it.
 
 
 
+<a                                                     id="/examples"></a>&nbsp;
+
+## EXAMPLES
+
+The simplest scenario:
+
+```sh
+$ elm-live Main.elm --open
+```
+
+Custom HTML file:
+
+```html
+$ echo \
+  '<!doctype html>
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/elm.js"></script>
+  ' > index.html
+$ elm-live Main.elm --output=elm.js --open
+```
+
+
+
+
+
 <a                                                      id="/credits"></a>&nbsp;
 
 ## CREDITS

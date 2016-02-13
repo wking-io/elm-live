@@ -13,7 +13,7 @@ cat Readme.md \
   | perl -0777 -pe 's|^[\S\s]*?\n(# )|$1|' \
   | perl -0777 -pe 's|(^# [^\s]+)\n\n\*\*(.+)  \n(.+)\*\*|$1(1) -- $2. $3|' \
   | perl -0777 -pe 's|\n## INSTALLATION[\S\s]*?(?=\n## )||' \
-  | perl -0777 -pe 's|<[a-z/][\S\s]*?>||g' \
+  | perl -0777 -pe 's#</?(?:a|p|img)[\S\s]*?>##g' \
   | perl -0777 -pe 's|```sh\n([\S\s]*?\n)```\n|$1|' \
   | marked-man \
     --version=v$(node -p 'require("./package.json").version') \
