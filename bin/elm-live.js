@@ -2,4 +2,7 @@
 
 const argv = process.argv.slice(2);
 
-require('..')(argv, { stream: process.stdout });
+require('..')(argv, {
+  inputStream: process.stdin,
+  outputStream: process.stdout,
+});

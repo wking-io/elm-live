@@ -1,6 +1,4 @@
-{
-  "extends": "airbnb/base",
-  "rules": {
-    "curly": 0
-  }
-}
+extends: "airbnb/base"
+rules:
+  curly: 0  # https://github.com/airbnb/javascript/issues/445
+  strict: 0  # node v4+ needs it for `let`

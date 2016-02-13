@@ -5,8 +5,16 @@ const indent = require('indent-string');
 
 const parseArgs = require('./parse-args');
 
+/*
+  ({
+    outputStream: WritableStream,
+    inputStream: ReadableStream,
+  }) =>
+    exitCode: Integer
+*/
 module.exports = (argv, options) => {
-  const stream = options.stream;
+  const outputStream = options.outputStream;
+  const inputStream = options.inputStream;
   const args = parseArgs(argv);
 
   if (args.help) {
@@ -18,11 +26,11 @@ module.exports = (argv, options) => {
   }
 
   const elmMake = child.spawnSync('elm-make', args.elmMakeArgs, {
-    stdio: ['ignore', stream, stream],
+    stdio: [inputStream, outputStream, outputStream],
   });
 
   if (elmMake.error && elmMake.error.code === 'ENOENT') {
-    stream.write(
+    outputStream.write(
 `elm-live:
   I can’t find the command \`elm-make\`! Looks like elm-platform
   isn’t installed. Make sure you’ve followed the steps
@@ -37,8 +45,8 @@ module.exports = (argv, options) => {
 
     return 1;
   } else if (elmMake.error) {
-    stream.write(
-`elm-live: Error while calling \`elm-make\`! The output may be helpful:
+    outputStream.write(
+`elm-live: Error while calling \`elm-make\`! This output may be helpful:
 ${ indent(String(elmMake.error), '  ') }
 
 `

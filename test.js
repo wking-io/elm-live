@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 
 const test = require('prova');
@@ -23,7 +25,7 @@ test('Prints `--help`', (assert) => {
 
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
 
-  const exitCode = elmLive(['--help'], { stream: devnull() });
+  const exitCode = elmLive(['--help'], { outputStream: devnull() });
 
   assert.equal(exitCode, 0,
     'succeeds'
@@ -49,7 +51,7 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
 
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
 
-  const exitCode = elmLive([], { stream: qs((chunk) => {
+  const exitCode = elmLive([], { outputStream: qs((chunk) => {
     assert.ok(
       expectedMessage.test(chunk),
       'prints an informative message'
@@ -78,11 +80,11 @@ test('Prints any other `elm-make` error', (assert) => {
 
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
 
-  const exitCode = elmLive([], { stream: qs((chunk) => {
+  const exitCode = elmLive([], { outputStream: qs((chunk) => {
     assert.equal(
       chunk,
       (
-`elm-live: Error while calling \`elm-make\`! The output may be helpful:
+`elm-live: Error while calling \`elm-make\`! This output may be helpful:
   ${ message }
 
 `
@@ -120,7 +122,7 @@ test('Passes correct args to `elm-make`', (assert) => {
   } };
 
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
-  elmLive(elmLiveArgs.concat(otherArgs), { stream: devnull() });
+  elmLive(elmLiveArgs.concat(otherArgs), { outputStream: devnull() });
 });
 
 
@@ -157,36 +159,58 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
   } };
 
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
-  elmLive(allArgs, { stream: devnull() });
+  elmLive(allArgs, { outputStream: devnull() });
 });
 
 
-test('Redirects elm-make output', (assert) => {
-  const elmLiveOutput = (
+test('Redirects elm-make stdio', (assert) => {
+  assert.plan(4);
+
+  const elmLiveOut = (
 `Hello there!
 How’s it going?
 `
   );
+  const elmLiveErr = (
+`Not too well, to be honest
+`
+  );
+
+  const inputStream = {};
 
   const child = { spawnSync: (command, _, options) => {
     assert.equal(command, 'elm-make',
       'spawns `elm-make`'
     );
 
-    options.stdio[1].write(elmLiveOutput);
+    assert.equal(
+      options.stdio[0],
+      inputStream,
+      'takes stdin from the `inputStream`'
+    );
+
+    options.stdio[1].write(elmLiveOut);
+    options.stdio[2].write(elmLiveErr);
 
     return {};
   } };
 
+  let run = 0;
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
-  elmLive([], { stream: qs((chunk) => {
-    assert.equal(
+  elmLive([], { inputStream, outputStream: qs((chunk) => {
+    if (run === 0) assert.equal(
       chunk,
-      elmLiveOutput,
-      'directs the output to `stream`'
+      elmLiveOut,
+      'directs stdout to the `outputStream`'
     );
 
-    assert.end();
+    if (run === 1) assert.equal(
+      chunk,
+      elmLiveErr,
+      'directs stderr to the `outputStream`'
+    );
+
+    run++;
   }) });
 });
 
