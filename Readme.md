@@ -93,6 +93,17 @@ You’re looking at it.
 
 
 
+<a                                                      id="/credits"></a>&nbsp;
+
+## CREDITS
+
+https://git.io/elm-make – the compiler behind _elm-live_ – is a child of [Evan Czaplicki](https://github.com/evancz), the creator of Elm.
+
+Many thanks to [Matt Deslauriers](https://github.com/mattdesl) for the wonderful https://git.io/budo-server. That’s what does most of the heavy lifting on the static server side.
+
+
+
+
 <a                                                      id="/license"></a>&nbsp;
 
 ## LICENSE
