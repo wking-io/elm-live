@@ -31,9 +31,9 @@
     "/License.md",
     "/manpages/"
   ],
-  "directories": {
-    "man": "/manpages"
-  },
+  "man": [
+    "/manpages/elm-live.1"
+  ],
   "license": "MIT",
   "keywords": [
     "cli",
