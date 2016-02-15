@@ -141,8 +141,6 @@ test('Informs of compile errors', (assert) => {
   elm-make failed! You can find more info above. Keep calm and take your time
   to fix your code. We’ll try to compile it again as soon as you change a file.
 
-  Hint: Pass the option --no-recover to exit immediately after a compile error.
-
 `
       ),
       'prints a friendly message afterwards'
