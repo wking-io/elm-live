@@ -56,7 +56,7 @@ Note that you need *node 4.0+* to run the tool natively. But if you’re stuck o
 ## SYNOPSIS
 
 ```sh
-elm-live [<OPTIONS>] [--] <ELM-MAKE ARGS>  
+elm-live [...<options>] [--] ...<elm-make args>  
 elm-live --help
 ```
 
@@ -67,7 +67,7 @@ elm-live --help
 
 ## DESCRIPTION
 
-First, we spawn `elm-make` with the `ELM-MAKE ARGS` you’ve given.
+First, we spawn `elm-make` with the `elm-make args` you’ve given.
 
 When the build is ready, we start a static HTTP server in the current directory. We inject a _live reload_ snippet into every HTML file we serve. Every time a static file has changed, we’ll reload your app in all browsers you’ve opened it with. (Mobile and IE included!)
 
