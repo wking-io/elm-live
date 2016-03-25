@@ -2,7 +2,7 @@
 
 const path = require('path');
 
-const test = require('prova');
+const test = require('ava');
 const proxyquire = require('proxyquire').noPreserveCache().noCallThru();
 const devnull = require('dev-null');
 const qs = require('q-stream');
@@ -19,11 +19,11 @@ test('Prints `--help`', (assert) => {
   assert.plan(3);
 
   const child = { spawnSync: (command, args) => {
-    assert.equal(command, 'man',
+    assert.is(command, 'man',
       'spawns `man`'
     );
 
-    assert.equal(
+    assert.is(
       args[0],
       path.resolve(__dirname, 'manpages/elm-live.1'),
       'with the right manpage'
@@ -34,13 +34,15 @@ test('Prints `--help`', (assert) => {
 
   const exitCode = elmLive(['--help'], dummyConfig);
 
-  assert.equal(exitCode, 0,
+  assert.is(exitCode, 0,
     'succeeds'
   );
 });
 
 
-test('Shouts if `elm-make` can’t be found', (assert) => {
+test((
+  'Shouts if `elm-make` can’t be found'
+), (assert) => new Promise((resolve) => {
   assert.plan(3);
 
   const expectedMessage = new RegExp(
@@ -49,7 +51,7 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
   );
 
   const child = { spawnSync: (command) => {
-    assert.equal(command, 'elm-make',
+    assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
 
@@ -63,12 +65,14 @@ test('Shouts if `elm-make` can’t be found', (assert) => {
       expectedMessage.test(naked(chunk)),
       'prints an informative message'
     );
+
+    resolve();
   }), inputStream: devnull() });
 
-  assert.equal(exitCode, 1,
+  assert.is(exitCode, 1,
     'fails'
   );
-});
+}));
 
 
 test('Exits if `--no-recover`', (assert) => {
@@ -77,7 +81,7 @@ test('Exits if `--no-recover`', (assert) => {
   const status = 59;
 
   const child = { spawnSync: (command) => {
-    assert.equal(command, 'elm-make',
+    assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
 
@@ -94,13 +98,13 @@ test('Exits if `--no-recover`', (assert) => {
     'child_process': child, budo, gaze: dummyGaze,
   });
 
-  assert.equal(
+  assert.is(
     elmLive(['--no-recover'], dummyConfig),
     status,
     'exits with the same status as `elm-make`'
   );
 
-  assert.equal(
+  assert.is(
     elmLive([], dummyConfig),
     null,
     'keeps running otherwise'
@@ -108,14 +112,14 @@ test('Exits if `--no-recover`', (assert) => {
 });
 
 
-test('Informs of compile errors', (assert) => {
+test('Informs of compile errors', (assert) => new Promise((resolve) => {
   assert.plan(3);
 
   const message = 'whatever';
   const status = 9;
 
   const child = { spawnSync: (command, _, options) => {
-    assert.equal(command, 'elm-make',
+    assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
 
@@ -130,11 +134,11 @@ test('Informs of compile errors', (assert) => {
 
   let run = 0;
   const outputStream = qs((chunk) => {
-    if (run === 0) assert.equal(chunk, message,
+    if (run === 0) assert.is(chunk, message,
       'prints elm-make output first'
     );
 
-    if (run === 1) assert.equal(
+    if (run === 1) resolve(assert.is(
       naked(chunk),
       (
 `\nelm-live:
@@ -144,23 +148,23 @@ test('Informs of compile errors', (assert) => {
 `
       ),
       'prints a friendly message afterwards'
-    );
+    ));
 
     run++;
   });
 
   elmLive([], { outputStream, inputStream: devnull() });
-});
+}));
 
 
-test('Prints any other `elm-make` error', (assert) => {
+test('Prints any other `elm-make` error', (assert) => new Promise((resolve) => {
   assert.plan(3);
 
   const message = 'whatever';
   const status = 9;
 
   const child = { spawnSync: (command) => {
-    assert.equal(command, 'elm-make',
+    assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
 
@@ -170,7 +174,7 @@ test('Prints any other `elm-make` error', (assert) => {
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
 
   const exitCode = elmLive(['--no-recover'], { outputStream: qs((chunk) => {
-    assert.equal(
+    assert.is(
       naked(chunk),
       (
 `\nelm-live: Error while calling elm-make! This output may be helpful:
@@ -180,12 +184,14 @@ test('Prints any other `elm-make` error', (assert) => {
       ),
       'prints the error’s output'
     );
+
+    resolve();
   }), inputStream: devnull() });
 
-  assert.equal(exitCode, status,
+  assert.is(exitCode, status,
     'exits with whatever code `elm-make` returned'
   );
-});
+}));
 
 
 test('Passes correct args to `elm-make`', (assert) => {
@@ -193,14 +199,14 @@ test('Passes correct args to `elm-make`', (assert) => {
 
   const elmLiveArgs = ['--port=77', '--no-recover'];
   const otherArgs =
-    ['--anything', 'whatever', 'whatever 2', '--beep=boop', '--no-flag'];
+    ['--anything', 'whatever', 'with whitespace', '--beep=boop', '--no-flag'];
 
   const child = { spawnSync: (command, args) => {
-    assert.equal(command, 'elm-make',
+    assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
 
-    assert.deepEqual(
+    assert.same(
       args,
       otherArgs,
       'passes all not understood arguments'
@@ -232,11 +238,11 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
   );
 
   const child = { spawnSync: (command, args) => {
-    assert.equal(command, 'elm-make',
+    assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
 
-    assert.deepEqual(
+    assert.same(
       args,
       elmMakeBefore.concat(elmMakeAfter),
       'passes all not understood commands and all commands after the `--` ' +
@@ -252,7 +258,7 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
 });
 
 
-test('Redirects elm-make stdio', (assert) => {
+test('Redirects elm-make stdio', (assert) => new Promise((resolve) => {
   assert.plan(4);
 
   const elmLiveOut = (
@@ -268,11 +274,11 @@ How’s it going?
   const inputStream = {};
 
   const child = { spawnSync: (command, _, options) => {
-    assert.equal(command, 'elm-make',
+    assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
 
-    assert.equal(
+    assert.is(
       options.stdio[0],
       inputStream,
       'takes stdin from the `inputStream`'
@@ -288,40 +294,40 @@ How’s it going?
   let run = 0;
   const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
   elmLive(['--no-recover'], { inputStream, outputStream: qs((chunk) => {
-    if (run === 0) assert.equal(
+    if (run === 0) assert.is(
       chunk,
       elmLiveOut,
       'directs stdout to the `outputStream`'
     );
 
-    if (run === 1) assert.equal(
+    if (run === 1) resolve(assert.is(
       chunk,
       elmLiveErr,
       'directs stderr to the `outputStream`'
-    );
+    ));
 
     run++;
   }) });
-});
+}));
 
 
 test('Starts budo and gaze with correct config', (assert) => {
   assert.plan(5);
 
   const budo = (options) => {
-    assert.equal(options.port, 8000,
+    assert.is(options.port, 8000,
       'uses port 8000 by default (or the next available one)'
     );
 
-    assert.equal(options.open, false,
+    assert.is(options.open, false,
       'doesn’t `--open` the app by default'
     );
 
-    assert.equal(options.watchGlob, '**/*.{html,css,js}',
+    assert.is(options.watchGlob, '**/*.{html,css,js}',
       'reloads the app when an HTML, JS or CSS static file changes'
     );
 
-    assert.equal(options.stream, dummyConfig.outputStream,
+    assert.is(options.stream, dummyConfig.outputStream,
       'directs all output to `outputStream`'
     );
 
@@ -329,7 +335,7 @@ test('Starts budo and gaze with correct config', (assert) => {
   };
 
   const gaze = (glob) => {
-    assert.equal(glob, '**/*.elm',
+    assert.is(glob, '**/*.elm',
       'watches all `*.elm` files in the current directory ' +
       'and its subdirectories'
     );
@@ -347,7 +353,7 @@ test('`--open`s the default browser', (assert) => {
   assert.plan(1);
 
   const budo = (options) => {
-    assert.equal(options.open, true,
+    assert.is(options.open, true,
       'passes `--open` to budo'
     );
 
@@ -368,7 +374,7 @@ test('Serves at the specified `--port`', (assert) => {
   const portNumber = 867;
 
   const budo = (options) => {
-    assert.equal(options.port, portNumber,
+    assert.is(options.port, portNumber,
       'passes `--port` to budo'
     );
 
