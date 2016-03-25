@@ -1,0 +1,18 @@
+2.0.5:
+  date: 2016-02-25
+  fixed bugs:
+    - Updated dependencies
+    - Tested file watching (coverage is now at 100%! 🎉)
+    - >
+      Switched test framework to AVA.
+      More info: https://github.com/tomekwi/elm-live/pull/9
+
+2.0.0:
+  date: 2016-02-13
+  breaking changes:
+    - This was a complete rewrite. We no longer base on elm-reactor. Now we
+      do the heavy lifting ourselves with the help of budo and gaze.
+
+1.0.0:
+  date: 2015-11-14
+  note: Initial release
