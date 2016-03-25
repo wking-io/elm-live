@@ -119,6 +119,14 @@ $ elm-live Main.elm --output=elm.js --open
 
 
 
+<a id="/supported-platforms"></a>&nbsp;
+
+## SUPPORTED PLATFORMS
+
+We currently support all Unix systems. We’re also [doing our best](https://github.com/tomekwi/elm-live/labels/Windows%20support) to bring _elm-live_ to Windows.
+
+
+
 
 <a id="/credits"></a>&nbsp;
 
