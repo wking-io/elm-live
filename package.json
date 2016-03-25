@@ -16,10 +16,10 @@
     "elm": "*"
   },
   "scripts": {
-    "develop": "node-dev --respawn --no-notify --no-deps test.js",
+    "develop": "ava --watch",
     "manpages": "scripts/manpages.sh",
     "prepublish": "npm run manpages",
-    "test": "eslint . && node test.js"
+    "test": "eslint . && ava"
   },
   "engines": {
     "node": ">= 4.0.0"
@@ -45,12 +45,11 @@
     "url": "git@github.com:tomekwi/elm-live"
   },
   "devDependencies": {
+    "ava": "^0.13.0",
     "dev-null": "^0.1.1",
     "eslint": "^1.9.0",
     "eslint-config-airbnb": "^1.0.0",
     "marked-man": "^0.1.5",
-    "node-dev": "github:tomekwi/node-dev#39f8c44",
-    "tape": "^4.5.0",
     "proxyquire": "^1.7.4",
     "strip-ansi": "^3.0.0"
   }
