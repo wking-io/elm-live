@@ -8,7 +8,7 @@
   "dependencies": {
     "budo": "^8.0.4",
     "chalk": "^1.1.1",
-    "gaze": "^0.5.2",
+    "gaze": "^1.0.0",
     "indent-string": "^2.1.0",
     "q-stream": "^0.2.0"
   },
