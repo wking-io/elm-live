@@ -1,6 +1,9 @@
 [![Travis – build status
 ](https://img.shields.io/travis/tomekwi/elm-live/master.svg?style=flat-square
 )](https://travis-ci.org/tomekwi/elm-live
+) [![Coveralls – test coverage
+](https://img.shields.io/coveralls/tomekwi/elm-live.svg?style=flat-square
+)](https://coveralls.io/r/tomekwi/elm-live
 ) [![David – status of dependencies
 ](https://img.shields.io/david/tomekwi/elm-live.svg?style=flat-square
 )](https://david-dm.org/tomekwi/elm-live
