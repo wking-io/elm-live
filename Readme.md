@@ -20,7 +20,7 @@ Live reload included!**
 
 
 
-<a                                                   id="/screenshot"></a>&nbsp;
+<a id="/screenshot"></a>&nbsp;
 
 <p align="center"><img
   alt="Screencast"
@@ -32,7 +32,7 @@ Live reload included!**
 
 
 
-<a                                                 id="/installation"></a>&nbsp;
+<a id="/installation"></a>&nbsp;
 
 ## INSTALLATION
 
@@ -51,7 +51,7 @@ Note that you need *node 4.0+* to run the tool natively. But if you’re stuck o
 
 
 
-<a                                                     id="/synopsis"></a>&nbsp;
+<a id="/synopsis"></a>&nbsp;
 
 ## SYNOPSIS
 
@@ -63,7 +63,7 @@ elm-live --help
 
 
 
-<a                                                  id="/description"></a>&nbsp;
+<a id="/description"></a>&nbsp;
 
 ## DESCRIPTION
 
@@ -76,7 +76,7 @@ We also watch all `*.elm` files in the current directory and its subdirectories.
 
 
 
-<a                                                      id="/options"></a>&nbsp;
+<a id="/options"></a>&nbsp;
 
 ## OPTIONS
 
@@ -95,7 +95,7 @@ You’re looking at it.
 
 
 
-<a                                                     id="/examples"></a>&nbsp;
+<a id="/examples"></a>&nbsp;
 
 ## EXAMPLES
 
@@ -120,7 +120,7 @@ $ elm-live Main.elm --output=elm.js --open
 
 
 
-<a                                                      id="/credits"></a>&nbsp;
+<a id="/credits"></a>&nbsp;
 
 ## CREDITS
 
@@ -131,7 +131,7 @@ Many thanks to [Matt DesLauriers](https://github.com/mattdesl) for the wonderful
 
 
 
-<a                                                      id="/license"></a>&nbsp;
+<a id="/license"></a>&nbsp;
 
 ## LICENSE
 
