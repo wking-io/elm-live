@@ -1,6 +1,6 @@
 'use strict';
 
-const child = require('child_process');
+const spawnSync = require('cross-spawn').sync;
 const path = require('path');
 
 const indent = require('indent-string');
@@ -29,7 +29,7 @@ module.exports = (argv, options) => {
 
   // Display help
   if (args.help) {
-    child.spawnSync('man', [
+    spawnSync('man', [
       path.resolve(__dirname, '../manpages/elm-live.1'),
     ], { stdio: 'inherit' });
 
@@ -38,7 +38,7 @@ module.exports = (argv, options) => {
 
   // Build logic
   const build = () => {
-    const elmMake = child.spawnSync('elm-make', args.elmMakeArgs, {
+    const elmMake = spawnSync('elm-make', args.elmMakeArgs, {
       stdio: [inputStream, outputStream, outputStream],
     });
 
