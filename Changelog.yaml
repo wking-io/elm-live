@@ -1,6 +1,10 @@
-master:
+2.0.6:
+  date: 2016-02-25
   fixed bugs:
     - Bumped coverage to 100%! Hooray!
+    - >
+      Brought Windows support forward a bit.
+      More info: https://github.com/tomekwi/elm-live/pull/10
 
 2.0.5:
   date: 2016-02-25
