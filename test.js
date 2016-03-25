@@ -395,8 +395,8 @@ test((
   assert.plan(4);
 
   const event = 'touched';
-  const absolutePath = path.resolve(process.cwd(), 'ab/c.elm');
-  const relativePath = path.relative(process.cwd(), absolutePath);
+  const relativePath = path.join('ab', 'c.elm');
+  const absolutePath = path.resolve(process.cwd(), relativePath);
 
   const watcherMock = {
     on: (what, callback) => {
