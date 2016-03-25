@@ -387,3 +387,51 @@ test('Serves at the specified `--port`', (assert) => {
 
   elmLive([`--port=${ portNumber }`], dummyConfig);
 });
+
+
+test((
+  'Watches all `**/*.elm` files in the current directory'
+), (assert) => new Promise((resolve) => {
+  assert.plan(2);
+
+  const event = 'touched';
+  const relativePath = 'ab/c.elm';
+  const absolutePath = path.resolve(process.cwd(), relativePath);
+
+  const watcherMock = {
+    on: (what, callback) => {
+      callback(event, absolutePath);
+    },
+  };
+
+  const gaze = (target, callback) => {
+    assert.is(target, '**/*.elm',
+      'passes the right glob to gaze'
+    );
+
+    callback(null, watcherMock);
+  };
+
+  const elmLive = proxyquire('./source/elm-live', {
+    gaze, budo: dummyBudo, 'child_process': dummyCp,
+  });
+
+  let run = 0;
+  elmLive([], { inputStream: devnull(), outputStream: qs((chunk) => {
+    run++;
+    if (run < 2) return;
+
+    const expectedMessage = (
+`\nelm-live:
+  You’ve ${ event } \`${ relativePath }\`. Rebuilding!
+
+`
+    );
+
+    assert.is(naked(chunk), expectedMessage,
+      'prints a message every time a file is changed'
+    );
+
+    resolve();
+  }) });
+}));
