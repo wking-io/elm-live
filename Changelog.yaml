@@ -1,8 +1,12 @@
+master:
+  fixed bugs:
+    - Bumped coverage to 100%! Hooray!
+
 2.0.5:
   date: 2016-02-25
   fixed bugs:
     - Updated dependencies
-    - Tested file watching (coverage is now at 100%! 🎉)
+    - Tested file watching
     - >
       Switched test framework to AVA.
       More info: https://github.com/tomekwi/elm-live/pull/9
