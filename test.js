@@ -2,7 +2,7 @@
 
 const path = require('path');
 
-const test = require('prova');
+const test = require('tape');
 const proxyquire = require('proxyquire').noPreserveCache().noCallThru();
 const devnull = require('dev-null');
 const qs = require('q-stream');

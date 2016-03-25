@@ -50,7 +50,7 @@
     "eslint-config-airbnb": "^1.0.0",
     "marked-man": "^0.1.5",
     "node-dev": "github:tomekwi/node-dev#39f8c44",
-    "prova": "^2.1.2",
+    "tape": "^4.5.0",
     "proxyquire": "^1.7.4",
     "strip-ansi": "^3.0.0"
   }
