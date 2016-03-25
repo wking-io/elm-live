@@ -392,7 +392,7 @@ test('Serves at the specified `--port`', (assert) => {
 test((
   'Watches all `**/*.elm` files in the current directory'
 ), (assert) => new Promise((resolve) => {
-  assert.plan(2);
+  assert.plan(4);
 
   const event = 'touched';
   const relativePath = 'ab/c.elm';
@@ -412,14 +412,40 @@ test((
     callback(null, watcherMock);
   };
 
+  let serverStarted = false;
+  const budo = () => {
+    serverStarted = true;
+    return dummyBudoServer;
+  };
+
+  let elmMakeRun = 0;
+  const success = { status: 0, error: {} };
+  const failure = { status: 77, error: {} };
+  const child = { spawnSync: (command) => {
+    if (command !== 'elm-make') return success;
+    elmMakeRun++;
+
+    if (elmMakeRun === 1) return failure;
+
+    assert.notOk(serverStarted,
+      'doesn’t start the server immediately if things go wrong'
+    );
+
+    assert.pass(
+      'retries spawning `elm-make` if things go wrong the first time'
+    );
+
+    return success;
+  } };
+
   const elmLive = proxyquire('./source/elm-live', {
-    gaze, budo: dummyBudo, 'child_process': dummyCp,
+    gaze, budo, 'child_process': child,
   });
 
-  let run = 0;
+  let chunkNumber = 0;
   elmLive([], { inputStream: devnull(), outputStream: qs((chunk) => {
-    run++;
-    if (run < 2) return;
+    chunkNumber++;
+    if (chunkNumber !== 3) return;
 
     const expectedMessage = (
 `\nelm-live:
@@ -429,7 +455,7 @@ test((
     );
 
     assert.is(naked(chunk), expectedMessage,
-      'prints a message every time a file is changed'
+      'prints a message when a file is changed'
     );
 
     resolve();
