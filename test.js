@@ -9,7 +9,7 @@ const qs = require('q-stream');
 const naked = require('strip-ansi');
 
 const dummyConfig = { inputStream: devnull(), outputStream: devnull() };
-const dummyCp = { spawnSync: () => { return { status: 0 }; } };
+const dummyCrossSpawn = { sync: () => { return { status: 0 }; } };
 const dummyBudoServer = { on: () => {} };
 const dummyBudo = () => dummyBudoServer;
 const dummyGaze = () => {};
@@ -18,7 +18,7 @@ const dummyGaze = () => {};
 test('Prints `--help`', (assert) => {
   assert.plan(3);
 
-  const child = { spawnSync: (command, args) => {
+  const crossSpawn = { sync: (command, args) => {
     assert.is(command, 'man',
       'spawns `man`'
     );
@@ -30,7 +30,7 @@ test('Prints `--help`', (assert) => {
     );
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
+  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
 
   const exitCode = elmLive(['--help'], dummyConfig);
 
@@ -50,7 +50,7 @@ test((
   I can’t find the command elm-make!`
   );
 
-  const child = { spawnSync: (command) => {
+  const crossSpawn = { sync: (command) => {
     assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
@@ -58,7 +58,7 @@ test((
     return { error: { code: 'ENOENT' } };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
+  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
 
   const exitCode = elmLive([], { outputStream: qs((chunk) => {
     assert.ok(
@@ -80,7 +80,7 @@ test('Exits if `--no-recover`', (assert) => {
 
   const status = 59;
 
-  const child = { spawnSync: (command) => {
+  const crossSpawn = { sync: (command) => {
     assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
@@ -95,7 +95,7 @@ test('Exits if `--no-recover`', (assert) => {
   };
 
   const elmLive = proxyquire('./source/elm-live', {
-    'child_process': child, budo, gaze: dummyGaze,
+    'cross-spawn': crossSpawn, budo, gaze: dummyGaze,
   });
 
   assert.is(
@@ -118,7 +118,7 @@ test('Informs of compile errors', (assert) => new Promise((resolve) => {
   const message = 'whatever';
   const status = 9;
 
-  const child = { spawnSync: (command, _, options) => {
+  const crossSpawn = { sync: (command, _, options) => {
     assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
@@ -129,7 +129,7 @@ test('Informs of compile errors', (assert) => new Promise((resolve) => {
   } };
 
   const elmLive = proxyquire('./source/elm-live', {
-    'child_process': child, budo: dummyBudo, gaze: dummyGaze,
+    'cross-spawn': crossSpawn, budo: dummyBudo, gaze: dummyGaze,
   });
 
   let run = 0;
@@ -163,7 +163,7 @@ test('Prints any other `elm-make` error', (assert) => new Promise((resolve) => {
   const message = 'whatever';
   const status = 9;
 
-  const child = { spawnSync: (command) => {
+  const crossSpawn = { sync: (command) => {
     assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
@@ -171,7 +171,7 @@ test('Prints any other `elm-make` error', (assert) => new Promise((resolve) => {
     return { status, error: { toString: () => message } };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
+  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
 
   const exitCode = elmLive(['--no-recover'], { outputStream: qs((chunk) => {
     assert.is(
@@ -201,7 +201,7 @@ test('Passes correct args to `elm-make`', (assert) => {
   const otherArgs =
     ['--anything', 'whatever', 'with whitespace', '--beep=boop', '--no-flag'];
 
-  const child = { spawnSync: (command, args) => {
+  const crossSpawn = { sync: (command, args) => {
     assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
@@ -216,7 +216,7 @@ test('Passes correct args to `elm-make`', (assert) => {
     return { status: 77, error: {} };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
+  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
   elmLive(elmLiveArgs.concat(otherArgs), dummyConfig);
 });
 
@@ -237,7 +237,7 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
     elmMakeAfter
   );
 
-  const child = { spawnSync: (command, args) => {
+  const crossSpawn = { sync: (command, args) => {
     assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
@@ -253,7 +253,7 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
     return { status: 77, error: {} };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
+  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
   elmLive(allArgs, dummyConfig);
 });
 
@@ -273,7 +273,7 @@ How’s it going?
 
   const inputStream = {};
 
-  const child = { spawnSync: (command, _, options) => {
+  const crossSpawn = { sync: (command, _, options) => {
     assert.is(command, 'elm-make',
       'spawns `elm-make`'
     );
@@ -292,7 +292,7 @@ How’s it going?
   } };
 
   let run = 0;
-  const elmLive = proxyquire('./source/elm-live', { 'child_process': child });
+  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
   elmLive(['--no-recover'], { inputStream, outputStream: qs((chunk) => {
     if (run === 0) assert.is(
       chunk,
@@ -342,7 +342,7 @@ test('Starts budo and gaze with correct config', (assert) => {
   };
 
   const elmLive = proxyquire('./source/elm-live', {
-    budo, gaze, 'child_process': dummyCp,
+    budo, gaze, 'cross-spawn': dummyCrossSpawn,
   });
 
   elmLive([], dummyConfig);
@@ -361,7 +361,7 @@ test('`--open`s the default browser', (assert) => {
   };
 
   const elmLive = proxyquire('./source/elm-live', {
-    budo, gaze: dummyGaze, 'child_process': dummyCp,
+    budo, gaze: dummyGaze, 'cross-spawn': dummyCrossSpawn,
   });
 
   elmLive(['--open'], dummyConfig);
@@ -382,7 +382,7 @@ test('Serves at the specified `--port`', (assert) => {
   };
 
   const elmLive = proxyquire('./source/elm-live', {
-    budo, gaze: dummyGaze, 'child_process': dummyCp,
+    budo, gaze: dummyGaze, 'cross-spawn': dummyCrossSpawn,
   });
 
   elmLive([`--port=${ portNumber }`], dummyConfig);
@@ -395,8 +395,8 @@ test((
   assert.plan(4);
 
   const event = 'touched';
-  const relativePath = 'ab/c.elm';
-  const absolutePath = path.resolve(process.cwd(), relativePath);
+  const absolutePath = path.resolve(process.cwd(), 'ab/c.elm');
+  const relativePath = path.relative(process.cwd(), absolutePath);
 
   const watcherMock = {
     on: (what, callback) => {
@@ -421,7 +421,7 @@ test((
   let elmMakeRun = 0;
   const success = { status: 0, error: {} };
   const failure = { status: 77, error: {} };
-  const child = { spawnSync: (command) => {
+  const crossSpawn = { sync: (command) => {
     if (command !== 'elm-make') return success;
     elmMakeRun++;
 
@@ -439,7 +439,7 @@ test((
   } };
 
   const elmLive = proxyquire('./source/elm-live', {
-    gaze, budo, 'child_process': child,
+    gaze, budo, 'cross-spawn': crossSpawn,
   });
 
   let chunkNumber = 0;
