@@ -19,7 +19,7 @@
     "develop": "ava --watch",
     "manpages": "scripts/manpages.sh",
     "prepublish": "npm run manpages",
-    "test": "eslint . && ava"
+    "test": "eslint . && nyc ava"
   },
   "engines": {
     "node": ">= 4.0.0"
