@@ -399,7 +399,7 @@ test((
 ), (assert) => new Promise((resolve) => {
   assert.plan(5);
 
-  const event = 'touched';
+  const event = 'change';
   const relativePath = path.join('ab', 'c.elm');
   const absolutePath = path.resolve(process.cwd(), relativePath);
 
@@ -458,7 +458,7 @@ test((
 
     const expectedMessage = (
 `\nelm-live:
-  You’ve ${ event } \`${ relativePath }\`. Rebuilding!
+  You’ve changed \`${ relativePath }\`. Rebuilding!
 
 `
     );

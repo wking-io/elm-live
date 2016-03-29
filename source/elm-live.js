@@ -111,15 +111,24 @@ ${ indent(String(elmMake.error), '  ') }
     startServer();
   }
 
+  const eventNameMap = {
+    'add': 'added',
+    'addDir': 'added',
+    'change': 'changed',
+    'unlink': 'removed',
+    'unlinkDir': 'removed',
+  };
+
   // Watch Elm files
   const watcher = chokidar.watch('**/*.elm', { ignoreInitial: true });
 
   watcher.on('all', (event, filePath) => {
     const relativePath = path.relative(process.cwd(), filePath);
+    const eventName = eventNameMap[event] || event;
 
     outputStream.write(
 `\n${ dim('elm-live:') }
-  You’ve ${ event } \`${ relativePath }\`. Rebuilding!
+  You’ve ${ eventName } \`${ relativePath }\`. Rebuilding!
 
 `
     );
