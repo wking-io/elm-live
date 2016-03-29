@@ -88,6 +88,35 @@ of a white Christmas
 
 
 test((
+  'Throws any other `man` error'
+), (assert) => {
+  assert.plan(2);
+
+  const dummyError = { code: 'unknown' };
+
+  const crossSpawn = { sync: (command) => {
+    assert.is(command, 'man',
+      'tries to spawn `man`'
+    );
+
+    return { error: dummyError };
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', {
+    'cross-spawn': crossSpawn,
+  });
+
+  try {
+    elmLive(['--help'], dummyConfig);
+  } catch (error) {
+    assert.is(error, dummyError,
+      'throws the same error cross-spawn returns'
+    );
+  }
+});
+
+
+test((
   'Shouts if `elm-make` can’t be found'
 ), (assert) => new Promise((resolve) => {
   assert.plan(3);
