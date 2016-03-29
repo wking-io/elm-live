@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 
 const test = require('ava');
 const proxyquire = require('proxyquire').noPreserveCache().noCallThru();
@@ -29,6 +30,8 @@ test('Prints `--help`', (assert) => {
       path.resolve(__dirname, 'manpages/elm-live.1'),
       'with the right manpage'
     );
+
+    return { error: null };
   } };
 
   const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
@@ -39,6 +42,49 @@ test('Prints `--help`', (assert) => {
     'succeeds'
   );
 });
+
+
+test((
+  'Falls back to plain text `--help` over stdout'
+), (assert) => new Promise((resolve, reject) => {
+  assert.plan(3);
+  setTimeout(reject, 100);
+
+  const expectedHelpContent = (
+`I’m dreaming
+of a white Christmas
+`
+  );
+  fs.writeFileSync(`${__dirname}/manpages/elm-live.1.txt`, expectedHelpContent);
+
+  const crossSpawn = { sync: (command) => {
+    assert.is(command, 'man',
+      'tries to spawn `man`'
+    );
+
+    return { error: { code: 'ENOENT' } };
+  } };
+
+  const outputStream = qs((chunk) => {
+    assert.is(chunk, expectedHelpContent,
+      'prints elm-make output first'
+    );
+
+    resolve();
+  });
+
+  const elmLive = proxyquire('./source/elm-live', {
+    'cross-spawn': crossSpawn,
+  });
+
+  const exitCode = elmLive(['--help'], {
+    inputStream: devnull(), outputStream,
+  });
+
+  assert.is(exitCode, 0,
+    'succeeds'
+  );
+}));
 
 
 test((

@@ -2,6 +2,7 @@
 
 const spawnSync = require('cross-spawn').sync;
 const path = require('path');
+const fs = require('fs');
 
 const indent = require('indent-string');
 const budo = require('budo');
@@ -29,9 +30,21 @@ module.exports = (argv, options) => {
 
   // Display help
   if (args.help) {
-    spawnSync('man', [
+    const manProcess = spawnSync('man', [
       path.resolve(__dirname, '../manpages/elm-live.1'),
     ], { stdio: 'inherit' });
+
+    if (manProcess.error) {
+      if (manProcess.error.code === 'ENOENT') {
+        const fallbackPath =
+          path.resolve(__dirname, '../manpages/elm-live.1.txt');
+        const plainTextHelp =
+          fs.readFileSync(fallbackPath, 'utf8');
+        outputStream.write(plainTextHelp);
+      } else {
+        throw manProcess.error;
+      }
+    }
 
     return SUCCESS;
   }
