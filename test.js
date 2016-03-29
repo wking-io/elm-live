@@ -397,7 +397,7 @@ test('Serves at the specified `--port`', (assert) => {
 test((
   'Watches all `**/*.elm` files in the current directory'
 ), (assert) => new Promise((resolve) => {
-  assert.plan(4);
+  assert.plan(5);
 
   const event = 'touched';
   const relativePath = path.join('ab', 'c.elm');
@@ -410,10 +410,12 @@ test((
   };
 
   const chokidar = {
-    watch: (target) => {
+    watch: (target, options) => {
       assert.is(target, '**/*.elm',
         'passes the right glob to chokidar'
       );
+
+      assert.true(options.ignoreInitial, 'does not trigger events when starting watch');
 
       return watcherMock;
     },
