@@ -5,7 +5,7 @@ const path = require('path');
 
 const indent = require('indent-string');
 const budo = require('budo');
-const gaze = require('gaze');
+const chokidar = require('chokidar');
 const chalk = require('chalk');
 const bold = chalk.bold;
 const dim = chalk.dim;
@@ -112,24 +112,22 @@ ${ indent(String(elmMake.error), '  ') }
   }
 
   // Watch Elm files
-  gaze('**/*.elm', (error, watcher) => {
-    if (error) throw error;
+  const watcher = chokidar.watch('**/*.elm', { ignoreInitial: false, ignorePermissionErrors: true });
 
-    watcher.on('all', (event, filePath) => {
-      const relativePath = path.relative(process.cwd(), filePath);
+  watcher.on('all', (event, filePath) => {
+    const relativePath = path.relative(process.cwd(), filePath);
 
-      outputStream.write(
+    outputStream.write(
 `\n${ dim('elm-live:') }
   You’ve ${ event } \`${ relativePath }\`. Rebuilding!
 
 `
-      );
+    );
 
-      const buildResult = build();
-      if (!serverStarted && buildResult.exitCode === SUCCESS) {
-        startServer();
-      }
-    });
+    const buildResult = build();
+    if (!serverStarted && buildResult.exitCode === SUCCESS) {
+      startServer();
+    }
   });
 
   return null;

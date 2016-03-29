@@ -12,7 +12,8 @@ const dummyConfig = { inputStream: devnull(), outputStream: devnull() };
 const dummyCrossSpawn = { sync: () => { return { status: 0 }; } };
 const dummyBudoServer = { on: () => {} };
 const dummyBudo = () => dummyBudoServer;
-const dummyGaze = () => {};
+const dummyChokidarWatcher = { on: () => {} };
+const dummyChokidar = { watch: () => dummyChokidarWatcher };
 
 
 test('Prints `--help`', (assert) => {
@@ -95,7 +96,7 @@ test('Exits if `--no-recover`', (assert) => {
   };
 
   const elmLive = proxyquire('./source/elm-live', {
-    'cross-spawn': crossSpawn, budo, gaze: dummyGaze,
+    'cross-spawn': crossSpawn, budo, chokidar: dummyChokidar,
   });
 
   assert.is(
@@ -129,7 +130,7 @@ test('Informs of compile errors', (assert) => new Promise((resolve) => {
   } };
 
   const elmLive = proxyquire('./source/elm-live', {
-    'cross-spawn': crossSpawn, budo: dummyBudo, gaze: dummyGaze,
+    'cross-spawn': crossSpawn, budo: dummyBudo, chokidar: dummyChokidar,
   });
 
   let run = 0;
@@ -311,7 +312,7 @@ How’s it going?
 }));
 
 
-test('Starts budo and gaze with correct config', (assert) => {
+test('Starts budo and chokidar with correct config', (assert) => {
   assert.plan(5);
 
   const budo = (options) => {
@@ -334,15 +335,19 @@ test('Starts budo and gaze with correct config', (assert) => {
     return dummyBudoServer;
   };
 
-  const gaze = (glob) => {
-    assert.is(glob, '**/*.elm',
-      'watches all `*.elm` files in the current directory ' +
-      'and its subdirectories'
-    );
+  const chokidar = {
+    watch: (glob) => {
+      assert.is(glob, '**/*.elm',
+        'watches all `*.elm` files in the current directory ' +
+        'and its subdirectories'
+      );
+
+      return dummyChokidarWatcher;
+    },
   };
 
   const elmLive = proxyquire('./source/elm-live', {
-    budo, gaze, 'cross-spawn': dummyCrossSpawn,
+    budo, chokidar, 'cross-spawn': dummyCrossSpawn,
   });
 
   elmLive([], dummyConfig);
@@ -361,7 +366,7 @@ test('`--open`s the default browser', (assert) => {
   };
 
   const elmLive = proxyquire('./source/elm-live', {
-    budo, gaze: dummyGaze, 'cross-spawn': dummyCrossSpawn,
+    budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
   });
 
   elmLive(['--open'], dummyConfig);
@@ -382,7 +387,7 @@ test('Serves at the specified `--port`', (assert) => {
   };
 
   const elmLive = proxyquire('./source/elm-live', {
-    budo, gaze: dummyGaze, 'cross-spawn': dummyCrossSpawn,
+    budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
   });
 
   elmLive([`--port=${ portNumber }`], dummyConfig);
@@ -404,12 +409,14 @@ test((
     },
   };
 
-  const gaze = (target, callback) => {
-    assert.is(target, '**/*.elm',
-      'passes the right glob to gaze'
-    );
+  const chokidar = {
+    watch: (target) => {
+      assert.is(target, '**/*.elm',
+        'passes the right glob to chokidar'
+      );
 
-    callback(null, watcherMock);
+      return watcherMock;
+    },
   };
 
   let serverStarted = false;
@@ -439,7 +446,7 @@ test((
   } };
 
   const elmLive = proxyquire('./source/elm-live', {
-    gaze, budo, 'cross-spawn': crossSpawn,
+    chokidar, budo, 'cross-spawn': crossSpawn,
   });
 
   let chunkNumber = 0;
