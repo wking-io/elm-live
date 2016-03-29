@@ -1,6 +1,7 @@
 # /bin/bash -e
 
 mkdir -p manpages
+rm -rf manpages/*
 
 # 1. Render the manpage
 #   * Strip everything before the title
