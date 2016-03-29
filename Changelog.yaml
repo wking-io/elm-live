@@ -1,3 +1,10 @@
+2.1.0:
+  date: 2016-02-29
+  new features:
+    - >
+      Yippie!! Windows support for file watching.
+      More info: https://github.com/tomekwi/elm-live/pull/16
+
 2.0.6:
   date: 2016-02-25
   fixed bugs:
