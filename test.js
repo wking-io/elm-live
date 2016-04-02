@@ -55,12 +55,12 @@ of a white Christmas
 `
   );
 
-  const crossSpawn = { sync: (command) => {
+  const hasbin = { sync: (command) => {
     assert.is(command, 'man',
-      'tries to spawn `man`'
+      'checks if `man` is in the PATH'
     );
 
-    return { error: { code: 'ENOENT' } };
+    return false;
   } };
 
   const fs = { readFileSync: (file, encoding) => {
@@ -83,7 +83,7 @@ of a white Christmas
   });
 
   const elmLive = proxyquire('./source/elm-live', {
-    'cross-spawn': crossSpawn, fs,
+    hasbin, fs,
   });
 
   const exitCode = elmLive(['--help'], {

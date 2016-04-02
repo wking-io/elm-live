@@ -10,6 +10,7 @@ const chokidar = require('chokidar');
 const chalk = require('chalk');
 const bold = chalk.bold;
 const dim = chalk.dim;
+const hasbinSync = require('hasbin').sync;
 
 const SUCCESS = 0;
 const FAILURE = 1;
@@ -30,20 +31,19 @@ module.exports = (argv, options) => {
 
   // Display help
   if (args.help) {
-    const manProcess = spawnSync('man', [
-      path.resolve(__dirname, '../manpages/elm-live.1'),
-    ], { stdio: 'inherit' });
+    if (hasbinSync('man')) {
+      const manpagePath =
+        path.resolve(__dirname, '../manpages/elm-live.1');
+      const manProcess =
+        spawnSync('man', [manpagePath], { stdio: 'inherit' });
 
-    if (manProcess.error) {
-      if (manProcess.error.code === 'ENOENT') {
-        const fallbackPath =
-          path.resolve(__dirname, '../manpages/elm-live.1.txt');
-        const plainTextHelp =
-          fs.readFileSync(fallbackPath, 'utf8');
-        outputStream.write(plainTextHelp);
-      } else {
-        throw manProcess.error;
-      }
+      if (manProcess.error) throw manProcess.error;
+    } else {
+      const fallbackPath =
+        path.resolve(__dirname, '../manpages/elm-live.1.txt');
+      const plainTextHelp =
+        fs.readFileSync(fallbackPath, 'utf8');
+      outputStream.write(plainTextHelp);
     }
 
     return SUCCESS;

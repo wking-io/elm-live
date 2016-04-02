@@ -10,6 +10,7 @@
     "chalk": "^1.1.1",
     "chokidar": "^1.4.3",
     "cross-spawn": "^2.1.5",
+    "hasbin": "^1.2.1",
     "indent-string": "^2.1.0",
     "q-stream": "^0.2.0"
   },
