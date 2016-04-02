@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const fs = require('fs');
 
 const test = require('ava');
 const proxyquire = require('proxyquire').noPreserveCache().noCallThru();
@@ -47,7 +46,7 @@ test('Prints `--help`', (assert) => {
 test((
   'Falls back to plain text `--help` over stdout'
 ), (assert) => new Promise((resolve, reject) => {
-  assert.plan(3);
+  assert.plan(4);
   setTimeout(reject, 100);
 
   const expectedHelpContent = (
@@ -55,7 +54,6 @@ test((
 of a white Christmas
 `
   );
-  fs.writeFileSync(`${__dirname}/manpages/elm-live.1.txt`, expectedHelpContent);
 
   const crossSpawn = { sync: (command) => {
     assert.is(command, 'man',
@@ -65,16 +63,27 @@ of a white Christmas
     return { error: { code: 'ENOENT' } };
   } };
 
+  const fs = { readFileSync: (file, encoding) => {
+    const expectedLocation = 'manpages/elm-live.1.txt';
+    assert.is(file, path.resolve(__dirname, expectedLocation),
+      `reads the file at \`${expectedLocation}\``
+    );
+
+    if (encoding !== 'utf8') throw new Error('Bad encoding!');
+
+    return expectedHelpContent;
+  } };
+
   const outputStream = qs((chunk) => {
     assert.is(chunk, expectedHelpContent,
-      'prints elm-make output first'
+      'prints the help text'
     );
 
     resolve();
   });
 
   const elmLive = proxyquire('./source/elm-live', {
-    'cross-spawn': crossSpawn,
+    'cross-spawn': crossSpawn, fs,
   });
 
   const exitCode = elmLive(['--help'], {
