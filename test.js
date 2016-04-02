@@ -17,9 +17,9 @@ const dummyChokidar = { watch: () => dummyChokidarWatcher };
 
 
 test('Prints `--help`', (assert) => {
-  assert.plan(3);
+  assert.plan(5);
 
-  const crossSpawn = { sync: (command, args) => {
+  const crossSpawn = { sync: (command, args, config) => {
     assert.is(command, 'man',
       'spawns `man`'
     );
@@ -28,6 +28,18 @@ test('Prints `--help`', (assert) => {
       args[0],
       path.resolve(__dirname, 'manpages/elm-live.1'),
       'with the right manpage'
+    );
+
+    assert.is(
+      config.stdio[0],
+      dummyConfig.inputStream,
+      'reads from `inputStream`'
+    );
+
+    assert.is(
+      config.stdio[1],
+      dummyConfig.outputStream,
+      'reads from `outputStream`'
     );
 
     return { error: null };

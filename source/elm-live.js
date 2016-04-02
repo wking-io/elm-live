@@ -35,7 +35,9 @@ module.exports = (argv, options) => {
       const manpagePath =
         path.resolve(__dirname, '../manpages/elm-live.1');
       const manProcess =
-        spawnSync('man', [manpagePath], { stdio: 'inherit' });
+        spawnSync('man', [manpagePath], { stdio: [
+          inputStream, outputStream, outputStream,
+        ] });
 
       if (manProcess.error) throw manProcess.error;
     } else {
