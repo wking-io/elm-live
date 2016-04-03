@@ -17,9 +17,9 @@ const dummyChokidar = { watch: () => dummyChokidarWatcher };
 
 
 test('Prints `--help`', (assert) => {
-  assert.plan(3);
+  assert.plan(5);
 
-  const crossSpawn = { sync: (command, args) => {
+  const crossSpawn = { sync: (command, args, config) => {
     assert.is(command, 'man',
       'spawns `man`'
     );
@@ -29,6 +29,20 @@ test('Prints `--help`', (assert) => {
       path.resolve(__dirname, 'manpages/elm-live.1'),
       'with the right manpage'
     );
+
+    assert.is(
+      config.stdio[0],
+      dummyConfig.inputStream,
+      'reads from `inputStream`'
+    );
+
+    assert.is(
+      config.stdio[1],
+      dummyConfig.outputStream,
+      'reads from `outputStream`'
+    );
+
+    return { error: null };
   } };
 
   const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
@@ -38,6 +52,88 @@ test('Prints `--help`', (assert) => {
   assert.is(exitCode, 0,
     'succeeds'
   );
+});
+
+
+test((
+  'Falls back to plain text `--help` over stdout'
+), (assert) => new Promise((resolve, reject) => {
+  assert.plan(4);
+  setTimeout(reject, 100);
+
+  const expectedHelpContent = (
+`I’m dreaming
+of a white Christmas
+`
+  );
+
+  const hasbin = { sync: (command) => {
+    assert.is(command, 'man',
+      'checks if `man` is in the PATH'
+    );
+
+    return false;
+  } };
+
+  const fs = { readFileSync: (file, encoding) => {
+    const expectedLocation = 'manpages/elm-live.1.txt';
+    assert.is(file, path.resolve(__dirname, expectedLocation),
+      `reads the file at \`${expectedLocation}\``
+    );
+
+    if (encoding !== 'utf8') throw new Error('Bad encoding!');
+
+    return expectedHelpContent;
+  } };
+
+  const outputStream = qs((chunk) => {
+    assert.is(chunk, expectedHelpContent,
+      'prints the help text'
+    );
+
+    resolve();
+  });
+
+  const elmLive = proxyquire('./source/elm-live', {
+    hasbin, fs,
+  });
+
+  const exitCode = elmLive(['--help'], {
+    inputStream: devnull(), outputStream,
+  });
+
+  assert.is(exitCode, 0,
+    'succeeds'
+  );
+}));
+
+
+test((
+  'Throws any other `man` error'
+), (assert) => {
+  assert.plan(2);
+
+  const dummyError = { code: 'unknown' };
+
+  const crossSpawn = { sync: (command) => {
+    assert.is(command, 'man',
+      'tries to spawn `man`'
+    );
+
+    return { error: dummyError };
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', {
+    'cross-spawn': crossSpawn,
+  });
+
+  try {
+    elmLive(['--help'], dummyConfig);
+  } catch (error) {
+    assert.is(error, dummyError,
+      'throws the same error cross-spawn returns'
+    );
+  }
 });
 
 
