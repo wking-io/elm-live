@@ -139,7 +139,4 @@ Many thanks to [Brian Dukes](https://github.com/bdukes) for making Windows suppo
 
 ## LICENSE
 
-[MIT][] © [Tomek Wiszniewski][]
-
-[MIT]: ./License.md
-[Tomek Wiszniewski]: https://github.com/tomekwi
+[MIT](https://git.io/elm-live.License) © [Tomek Wiszniewski](https://github.com/tomekwi)
