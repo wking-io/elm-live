@@ -1,12 +1,20 @@
+2.2.0:
+  date: 2016-04-13
+  new features:
+    - >
+      We now have full Windows support. Many thanks to [@bdukes
+      ](https://github.com/bdukes) for making this possible!
+      More info: https://github.com/tomekwi/elm-live/pull/17
+
 2.1.0:
-  date: 2016-02-29
+  date: 2016-03-29
   new features:
     - >
       Yippie!! Windows support for file watching.
       More info: https://github.com/tomekwi/elm-live/pull/16
 
 2.0.6:
-  date: 2016-02-25
+  date: 2016-03-25
   fixed bugs:
     - Bumped coverage to 100%! Hooray!
     - >
@@ -14,7 +22,7 @@
       More info: https://github.com/tomekwi/elm-live/pull/10
 
 2.0.5:
-  date: 2016-02-25
+  date: 2016-03-25
   fixed bugs:
     - Updated dependencies
     - Tested file watching
