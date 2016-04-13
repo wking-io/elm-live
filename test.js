@@ -9,7 +9,7 @@ const qs = require('q-stream');
 const naked = require('strip-ansi');
 
 const dummyConfig = { inputStream: devnull(), outputStream: devnull() };
-const dummyCrossSpawn = { sync: () => { return { status: 0 }; } };
+const dummyCrossSpawn = { sync: () => ({ status: 0 }) };
 const dummyBudoServer = { on: () => {} };
 const dummyBudo = () => dummyBudoServer;
 const dummyChokidarWatcher = { on: () => {} };
@@ -275,7 +275,7 @@ test('Prints any other `elm-make` error', (assert) => new Promise((resolve) => {
       naked(chunk),
       (
 `\nelm-live: Error while calling elm-make! This output may be helpful:
-  ${ message }
+  ${message}
 
 `
       ),
@@ -486,7 +486,7 @@ test('Serves at the specified `--port`', (assert) => {
     budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
   });
 
-  elmLive([`--port=${ portNumber }`], dummyConfig);
+  elmLive([`--port=${portNumber}`], dummyConfig);
 });
 
 
@@ -554,7 +554,7 @@ test((
 
     const expectedMessage = (
 `\nelm-live:
-  You’ve changed \`${ relativePath }\`. Rebuilding!
+  You’ve changed \`${relativePath}\`. Rebuilding!
 
 `
     );

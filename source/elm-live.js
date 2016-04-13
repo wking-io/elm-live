@@ -59,10 +59,10 @@ module.exports = (argv, options) => {
 
     if (elmMake.error && elmMake.error.code === 'ENOENT') {
       outputStream.write(
-`\n${ dim('elm-live:') }
-  I can’t find the command ${ bold('elm-make') }! Looks like ${ bold('elm-platform') }
+`\n${dim('elm-live:')}
+  I can’t find the command ${bold('elm-make')}! Looks like ${bold('elm-platform')}
   isn’t installed. Make sure you’ve followed the steps
-  at https://git.io/elm-platform and that you can call ${ bold('elm-make') }
+  at https://git.io/elm-platform and that you can call ${bold('elm-make')}
   from your command line.
 
   If that fails, have a look at open issues:
@@ -74,16 +74,16 @@ module.exports = (argv, options) => {
       return { fatal: true, exitCode: FAILURE };
     } else if (elmMake.error) {
       outputStream.write(
-`\n${ dim('elm-live:') } Error while calling ${ bold('elm-make') }! This output may be helpful:
-${ indent(String(elmMake.error), '  ') }
+`\n${dim('elm-live:')} Error while calling ${bold('elm-make')}! This output may be helpful:
+${indent(String(elmMake.error), '  ')}
 
 `
       );
     }
 
     if (args.recover && elmMake.status !== SUCCESS) outputStream.write(
-`\n${ dim('elm-live:') }
-  ${ bold('elm-make') } failed! You can find more info above. Keep calm and take your time
+`\n${dim('elm-live:')}
+  ${bold('elm-make')} failed! You can find more info above. Keep calm and take your time
   to fix your code. We’ll try to compile it again as soon as you change a file.
 
 `
@@ -96,10 +96,10 @@ ${ indent(String(elmMake.error), '  ') }
   let serverStarted;
   const startServer = () => {
     outputStream.write(
-`\n${ dim('elm-live:') }
-  ${ bold('elm-make') } has succeeded. Starting the server!${ args.open ? (
+`\n${dim('elm-live:')}
+  ${bold('elm-make')} has succeeded. Starting the server!${args.open ? (
 ` We’ll open your app
-  in the default browser as soon as it’s up and running.`) : '' }
+  in the default browser as soon as it’s up and running.`) : ''}
 
 `
     );
@@ -127,11 +127,11 @@ ${ indent(String(elmMake.error), '  ') }
   }
 
   const eventNameMap = {
-    'add': 'added',
-    'addDir': 'added',
-    'change': 'changed',
-    'unlink': 'removed',
-    'unlinkDir': 'removed',
+    add: 'added',
+    addDir: 'added',
+    change: 'changed',
+    unlink: 'removed',
+    unlinkDir: 'removed',
   };
 
   // Watch Elm files
@@ -142,8 +142,8 @@ ${ indent(String(elmMake.error), '  ') }
     const eventName = eventNameMap[event] || event;
 
     outputStream.write(
-`\n${ dim('elm-live:') }
-  You’ve ${ eventName } \`${ relativePath }\`. Rebuilding!
+`\n${dim('elm-live:')}
+  You’ve ${eventName} \`${relativePath}\`. Rebuilding!
 
 `
     );
