@@ -11,10 +11,11 @@ module.exports = (argv) => {
 
   argv.every((arg, index) => {
     const tryBoolOption = (boolOption) => {
-      if (arg === `--${ boolOption }`) {
+      if (arg === `--${boolOption}`) {
         args[boolOption] = true;
         return true;
       }
+      return false;
     };
 
     if (['help', 'open'].some(tryBoolOption)) {
