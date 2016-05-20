@@ -1,4 +1,4 @@
-# /bin/bash -e
+#! /bin/bash -e
 
 mkdir -p manpages
 rm -rf manpages/*
