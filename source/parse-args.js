@@ -3,6 +3,7 @@ const defaults = {
   open: false,
   help: false,
   recover: true,
+  host: 'localhost',
 };
 
 module.exports = (argv) => {
@@ -31,6 +32,13 @@ module.exports = (argv) => {
     const portMatch = arg.match(portPattern);
     if (portMatch) {
       args.port = Number(portMatch[1]);
+      return true;
+    }
+
+    const hostPattern = /^--host=(.*)$/;
+    const hostMatch = arg.match(hostPattern);
+    if (hostMatch) {
+      args.host = hostMatch[1];
       return true;
     }
 

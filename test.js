@@ -490,6 +490,28 @@ test('Serves at the specified `--port`', (assert) => {
 });
 
 
+test('Serves on the specified `--host` or `-H`', (assert) => {
+  assert.plan(2);
+
+  const hostName1 = 'localhost';
+  const hostName2 = '127.0.0.1';
+
+  const budo = (options) => {
+    assert.true(options.host === hostName1 || options.host === hostName2,
+      'passes `--host` or `-H` to budo'
+    );
+
+    return dummyBudoServer;
+  };
+
+  const elmLive = proxyquire('./source/elm-live', {
+    budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
+  });
+
+  elmLive([`--host=${hostName1}`], dummyConfig);
+  elmLive([`--host=${hostName2}`], dummyConfig);
+});
+
 test((
   'Watches all `**/*.elm` files in the current directory'
 ), (assert) => new Promise((resolve) => {
