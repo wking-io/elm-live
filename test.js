@@ -409,11 +409,15 @@ How’s it going?
 
 
 test('Starts budo and chokidar with correct config', (assert) => {
-  assert.plan(5);
+  assert.plan(6);
 
   const budo = (options) => {
     assert.is(options.port, 8000,
       'uses port 8000 by default (or the next available one)'
+    );
+
+    assert.is(options.host, 'localhost',
+      'uses the localhost interface by default'
     );
 
     assert.is(options.open, false,
