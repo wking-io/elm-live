@@ -107,6 +107,7 @@ ${indent(String(elmMake.error), '  ')}
       live: true,
       watchGlob: '**/*.{html,css,js}',
       port: args.port,
+      host: args.host,
       open: args.open,
       stream: outputStream,
     });
