@@ -158,7 +158,7 @@ test((
   const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
 
   const exitCode = elmLive([], { outputStream: qs((chunk) => {
-    assert.ok(
+    assert.truthy(
       expectedMessage.test(naked(chunk)),
       'prints an informative message'
     );
@@ -303,7 +303,7 @@ test('Passes correct args to `elm-make`', (assert) => {
       'spawns `elm-make`'
     );
 
-    assert.same(
+    assert.deepEqual(
       args,
       otherArgs,
       'passes all not understood arguments'
@@ -339,7 +339,7 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
       'spawns `elm-make`'
     );
 
-    assert.same(
+    assert.deepEqual(
       args,
       elmMakeBefore.concat(elmMakeAfter),
       'passes all not understood commands and all commands after the `--` ' +
@@ -558,7 +558,7 @@ test((
 
     if (elmMakeRun === 1) return failure;
 
-    assert.notOk(serverStarted,
+    assert.falsy(serverStarted,
       'doesn’t start the server immediately if things go wrong'
     );
 
