@@ -1,3 +1,10 @@
+master:
+  new features:
+    - >
+      New option `--host`. Warm thanks to [@kbsymanz
+      ](https://github.com/kbsymanz)!
+      More info: https://github.com/tomekwi/elm-live/pull/30
+
 2.2.1:
   date: 2016-04-27
   fixed bugs:
