@@ -1,40 +1,41 @@
-master:
+2.3.0:
+  date: 2016-05-27
   new features:
     - >
       New option `--host`. Warm thanks to [@kbsymanz
-      ](https://github.com/kbsymanz)!
-      More info: https://github.com/tomekwi/elm-live/pull/30
+      ](https://github.com/kbsymanz)! More info:
+      https://github.com/tomekwi/elm-live/pull/30
 
 2.2.1:
   date: 2016-04-27
   fixed bugs:
     - >
       We’ve removed the peer dependency on _elm_ to give you more flexibility.
-      Many thanks to [@rtfeldman](https://github.com/rtfeldman)!
-      More info: https://github.com/tomekwi/elm-live/pull/25
+      Many thanks to [@rtfeldman](https://github.com/rtfeldman)! More info:
+      https://github.com/tomekwi/elm-live/pull/25
 
 2.2.0:
   date: 2016-04-13
   new features:
     - >
       We now have full Windows support. Many thanks to [@bdukes
-      ](https://github.com/bdukes) for making this possible!
-      More info: https://github.com/tomekwi/elm-live/pull/17
+      ](https://github.com/bdukes) for making this possible! More info:
+      https://github.com/tomekwi/elm-live/pull/17
 
 2.1.0:
   date: 2016-03-29
   new features:
     - >
-      Yippie!! Windows support for file watching.
-      More info: https://github.com/tomekwi/elm-live/pull/16
+      Yippie!! Windows support for file watching. More info:
+      https://github.com/tomekwi/elm-live/pull/16
 
 2.0.6:
   date: 2016-03-25
   fixed bugs:
     - Bumped coverage to 100%! Hooray!
     - >
-      Brought Windows support forward a bit.
-      More info: https://github.com/tomekwi/elm-live/pull/10
+      Brought Windows support forward a bit. More info:
+      https://github.com/tomekwi/elm-live/pull/10
 
 2.0.5:
   date: 2016-03-25
@@ -42,14 +43,15 @@ master:
     - Updated dependencies
     - Tested file watching
     - >
-      Switched test framework to AVA.
-      More info: https://github.com/tomekwi/elm-live/pull/9
+      Switched test framework to AVA. More info:
+      https://github.com/tomekwi/elm-live/pull/9
 
 2.0.0:
   date: 2016-02-13
   breaking changes:
-    - This was a complete rewrite. We no longer base on elm-reactor. Now we
-      do the heavy lifting ourselves with the help of budo and gaze.
+    - >-
+      This was a complete rewrite. We no longer base on elm-reactor. Now we do
+      the heavy lifting ourselves with the help of budo and gaze.
 
 1.0.0:
   date: 2015-11-14
