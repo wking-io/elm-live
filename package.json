@@ -48,7 +48,7 @@
     "coveralls": "^2.11.9",
     "dev-null": "^0.1.1",
     "eslint": "^2.7.0",
-    "eslint-config-airbnb": "^7.0.0",
+    "eslint-config-airbnb": "^9.0.1",
     "marked-man": "^0.1.5",
     "nyc": "^6.1.1",
     "proxyquire": "^1.7.4",
