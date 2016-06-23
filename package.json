@@ -11,7 +11,7 @@
     "chokidar": "^1.4.3",
     "cross-spawn": "^4.0.0",
     "hasbin": "^1.2.1",
-    "indent-string": "^2.1.0",
+    "indent-string": "^3.0.0",
     "q-stream": "^0.2.0"
   },
   "scripts": {
