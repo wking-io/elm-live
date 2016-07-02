@@ -86,6 +86,9 @@ We also watch all `*.elm` files in the current directory and its subdirectories.
 #### `--port=PORT`
 Set the port to start the server at. If the port is taken, we’ll use the next available one. `PORT` should be a valid port number. Default: `8000`.
 
+#### `--path-to-elm-make=PATH`
+An absolute or relative path to `elm-make`. If you’ve installed _elm-platform_ locally with _npm_ (`npm install --save-dev elm`), you’ll likely want to set this to `node_modules/.bin/elm-make`. Default: `elm-make`.
+
 #### `--host=HOSTNAME|IP`
 Set the host interface to attach the server to. Default: `localhost`.
 

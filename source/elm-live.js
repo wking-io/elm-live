@@ -53,17 +53,17 @@ module.exports = (argv, options) => {
 
   // Build logic
   const build = () => {
-    const elmMake = spawnSync('elm-make', args.elmMakeArgs, {
+    const elmMake = spawnSync(args.pathToElmMake, args.elmMakeArgs, {
       stdio: [inputStream, outputStream, outputStream],
     });
 
     if (elmMake.error && elmMake.error.code === 'ENOENT') {
       outputStream.write(
 `\n${dim('elm-live:')}
-  I can’t find the command ${bold('elm-make')}! Looks like ${bold('elm-platform')}
-  isn’t installed. Make sure you’ve followed the steps
-  at https://git.io/elm-platform and that you can call ${bold('elm-make')}
-  from your command line.
+  I can’t find the command ${bold(args.pathToElmMake)}!
+  Looks like ${bold('elm-platform')} isn’t installed. Make sure you’ve followed
+  the steps at https://git.io/elm-platform and that you can call
+  ${bold(args.pathToElmMake)} from your command line.
 
   If that fails, have a look at open issues:
   https://github.com/tomekwi/elm-live/issues .

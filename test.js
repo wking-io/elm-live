@@ -355,6 +355,25 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
 });
 
 
+test('Spawns `--path-to-elm-make` instead of `elm-make` if given', (assert) => {
+  assert.plan(1);
+
+  const pathToElmMake = '/path/to/any/binary';
+
+  const crossSpawn = { sync: (command) => {
+    assert.is(command, pathToElmMake);
+
+    // Kill after one attempt
+    return { status: 77, error: {} };
+  } };
+
+  const elmLive = proxyquire('./source/elm-live',
+    { 'cross-spawn': crossSpawn }
+  );
+  elmLive([`--path-to-elm-make=${pathToElmMake}`], dummyConfig);
+});
+
+
 test('Redirects elm-make stdio', (assert) => new Promise((resolve) => {
   assert.plan(4);
 

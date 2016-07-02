@@ -3,6 +3,7 @@ const defaults = {
   open: false,
   help: false,
   recover: true,
+  pathToElmMake: 'elm-make',
   host: 'localhost',
 };
 
@@ -39,6 +40,13 @@ module.exports = (argv) => {
     const hostMatch = arg.match(hostPattern);
     if (hostMatch) {
       args.host = hostMatch[1];
+      return true;
+    }
+
+    const pathPattern = /^--path-to-elm-make=(.*)$/;
+    const pathMatch = arg.match(pathPattern);
+    if (pathMatch) {
+      args.pathToElmMake = pathMatch[1];
       return true;
     }
 
