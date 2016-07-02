@@ -1,4 +1,5 @@
-master:
+2.4.0:
+  date: 2016-07-02
   new features:
     - >
       New option `--path-to-elm-make`. Many thanks to [@rtfeldman
