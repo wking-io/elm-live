@@ -131,6 +131,15 @@ $ elm-live Main.elm --output=elm.js --open
 
 
 
+<a id="/caveats"></a>&nbsp;
+
+## CAVEATS
+
+Your HTML file must have an explicit `<body>` tag, so that we know where to inject a LiveReload snippet.
+
+
+
+
 <a id="/credits"></a>&nbsp;
 
 ## CREDITS
