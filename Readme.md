@@ -92,6 +92,9 @@ An absolute or relative path to `elm-make`. If you’ve installed _elm-platform_
 #### `--host=HOSTNAME|IP`
 Set the host interface to attach the server to. Default: `localhost`.
 
+#### `--dir=PATH`
+The base for static content. Default: `.`.
+
 #### `--open`
 We’ll open the app in your default browser as soon as the server is up.
 

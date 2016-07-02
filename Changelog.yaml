@@ -5,6 +5,7 @@ master:
       ](https://github.com/rtfeldman) for showing us [a reasonable direction
       ](https://github.com/rtfeldman/elm-webpack-loader/issues/43#issuecomment-204136876).
       More info: https://github.com/tomekwi/elm-live/issues/18.
+    - New option `--dir`.
 
 2.3.0:
   date: 2016-05-27

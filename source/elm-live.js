@@ -109,6 +109,7 @@ ${indent(String(elmMake.error), '  ')}
       port: args.port,
       host: args.host,
       open: args.open,
+      dir: args.dir,
       stream: outputStream,
     });
     server.on('error', (error) => { throw error; });

@@ -5,6 +5,7 @@ const defaults = {
   recover: true,
   pathToElmMake: 'elm-make',
   host: 'localhost',
+  dir: '.',
 };
 
 module.exports = (argv) => {
@@ -19,7 +20,6 @@ module.exports = (argv) => {
       }
       return false;
     };
-
     if (['help', 'open'].some(tryBoolOption)) {
       return true;
     }
@@ -36,17 +36,20 @@ module.exports = (argv) => {
       return true;
     }
 
-    const hostPattern = /^--host=(.*)$/;
-    const hostMatch = arg.match(hostPattern);
-    if (hostMatch) {
-      args.host = hostMatch[1];
-      return true;
-    }
-
-    const pathPattern = /^--path-to-elm-make=(.*)$/;
-    const pathMatch = arg.match(pathPattern);
-    if (pathMatch) {
-      args.pathToElmMake = pathMatch[1];
+    const tryStringOption = (option) => {
+      const pattern = new RegExp(`^${option.arg}=(.*)$`);
+      const match = arg.match(pattern);
+      if (match) {
+        args[option.key] = match[1];
+        return true;
+      }
+      return false;
+    };
+    if ([
+      { arg: '--host', key: 'host' },
+      { arg: '--path-to-elm-make', key: 'pathToElmMake' },
+      { arg: '--dir', key: 'dir' },
+    ].some(tryStringOption)) {
       return true;
     }
 
