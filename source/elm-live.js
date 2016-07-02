@@ -75,7 +75,7 @@ module.exports = (argv, options) => {
     } else if (elmMake.error) {
       outputStream.write(
 `\n${dim('elm-live:')} Error while calling ${bold('elm-make')}! This output may be helpful:
-${indent(String(elmMake.error), '  ')}
+${indent(String(elmMake.error), 2)}
 
 `
       );
