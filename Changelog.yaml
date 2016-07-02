@@ -1,4 +1,5 @@
-master:
+2.4.1:
+  date: 2016-07-02
   fixed bugs:
     - Fixed watching of built files in a specific `--dir`.
 
