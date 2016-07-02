@@ -513,7 +513,7 @@ test('Serves at the specified `--port`', (assert) => {
 });
 
 
-test('Serves on the specified `--host` or `-H`', (assert) => {
+test('Serves on the specified `--host`', (assert) => {
   assert.plan(2);
 
   const hostName1 = 'localhost';
@@ -521,7 +521,7 @@ test('Serves on the specified `--host` or `-H`', (assert) => {
 
   const budo = (options) => {
     assert.true(options.host === hostName1 || options.host === hostName2,
-      'passes `--host` or `-H` to budo'
+      'passes `--host` to budo'
     );
 
     return dummyBudoServer;
