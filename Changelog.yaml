@@ -1,3 +1,7 @@
+master:
+  fixed bugs:
+    - Fixed watching of built files in a specific `--dir`.
+
 2.4.0:
   date: 2016-07-02
   new features:

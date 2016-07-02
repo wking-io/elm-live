@@ -105,7 +105,7 @@ ${indent(String(elmMake.error), 2)}
     );
     const server = budo({
       live: true,
-      watchGlob: '**/*.{html,css,js}',
+      watchGlob: path.join(args.dir, '**/*.{html,css,js}'),
       port: args.port,
       host: args.host,
       open: args.open,

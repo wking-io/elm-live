@@ -541,12 +541,17 @@ test('Serves on the specified `--host`', (assert) => {
 
 
 test('Serves from the specified `--dir`', (assert) => {
-  assert.plan(1);
+  assert.plan(2);
 
   const dir = 'relative/or/absolute/path/';
 
   const budo = (options) => {
-    assert.true(options.dir === dir);
+    assert.true(options.dir === dir,
+      'serves the right files'
+    );
+    assert.true(options.watchGlob === `${dir}**/*.{html,css,js}`,
+      'watches the right files'
+    );
     return dummyBudoServer;
   };
 
