@@ -29,7 +29,7 @@ Live reload included!**
   alt="Screencast"
   src="https://cdn.rawgit.com/tomekwi/elm-live/b990094/screencast.gif"
   title="Sweet, isn’t it?"
-  width="810"
+  width="405"
 /></p>
 
 
