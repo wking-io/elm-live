@@ -428,7 +428,7 @@ How’s it going?
 
 
 test('Starts budo and chokidar with correct config', (assert) => {
-  assert.plan(7);
+  assert.plan(8);
 
   const budo = (options) => {
     assert.is(options.port, 8000,
@@ -449,6 +449,10 @@ test('Starts budo and chokidar with correct config', (assert) => {
 
     assert.is(options.watchGlob, '**/*.{html,css,js}',
       'reloads the app when an HTML, JS or CSS static file changes'
+    );
+
+    assert.is(options.pushstate, false,
+      'disables `--pushstate` by default'
     );
 
     assert.is(options.stream, dummyConfig.outputStream,
@@ -562,6 +566,23 @@ test('Serves from the specified `--dir`', (assert) => {
   elmLive([`--dir=${dir}`], dummyConfig);
 });
 
+test('`--pushstate to support client-side routing', (assert) => {
+  assert.plan(1);
+
+  const budo = (options) => {
+    assert.is(options.pushstate, true,
+      'passes `--pushstate` to budo'
+    );
+
+    return dummyBudoServer;
+  };
+
+  const elmLive = proxyquire('./source/elm-live', {
+    budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
+  });
+
+  elmLive(['--pushstate'], dummyConfig);
+});
 
 test((
   'Watches all `**/*.elm` files in the current directory'

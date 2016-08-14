@@ -111,7 +111,7 @@ ${indent(String(elmMake.error), 2)}
       open: args.open,
       dir: args.dir,
       stream: outputStream,
-      pushstate: args.pushstate
+      pushstate: args.pushstate,
     });
     server.on('error', (error) => { throw error; });
 

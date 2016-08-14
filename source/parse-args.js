@@ -6,7 +6,7 @@ const defaults = {
   pathToElmMake: 'elm-make',
   host: 'localhost',
   dir: '.',
-  pushstate: false
+  pushstate: false,
 };
 
 module.exports = (argv) => {
