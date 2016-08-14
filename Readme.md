@@ -101,6 +101,9 @@ We’ll open the app in your default browser as soon as the server is up.
 #### `--no-recover`
 When _elm-make_ encounters a compile error, we keep _elm-live_ running and give you time to fix your code. Pass `--no-recover` if you want the server to exit immediately whenever it encounters a compile error.
 
+#### `--pushstate`
+Serve `index.html` on 404 errors. This lets us use client-side routing in Elm. For instance, we can have a URL like `http://localhost:8000/account` get handled by the Elm _navigation_ package instead of failing with a 404 error.
+
 #### `--help`
 You’re looking at it.
 
@@ -128,7 +131,11 @@ $ echo \
 $ elm-live Main.elm --output=elm.js --open
 ```
 
+Support client-side routing in Elm:
 
+```sh
+$ elm-live Main.elm --open --pushstate
+```
 
 
 <a id="/caveats"></a>&nbsp;
