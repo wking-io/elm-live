@@ -1,3 +1,10 @@
+2.5.0:
+  date: 2016-08-18
+  new features:
+    - >
+      `--pushstate` is now available. Kudos to [Josh](https://github.com/joshmh)
+      for this one!
+
 2.4.1:
   date: 2016-07-02
   fixed bugs:
