@@ -155,9 +155,7 @@ Many thanks to [Evan Czaplicki](https://github.com/evancz), the creator of Elm, 
 
 Many thanks to [Matt DesLauriers](https://github.com/mattdesl) for the wonderful [git.io/budo-server](https://git.io/budo-server). That’s what does the heavy lifting on the static server side.
 
-Many thanks to [Brian Dukes](https://github.com/bdukes) for making Windows support possible!
-
-Many thanks to [Josh Harvey](https://github.com/joshmh) for his work on enabling client-side routing.
+Warm thanks to our amazing contributors! Credits to [Brian](https://github.com/bdukes) for making Windows support possible, [Kurt](https://github.com/kbsymanz) for allowing a configurable `--host` and [Josh](https://github.com/joshmh) for his work on enabling client-side routing.
 
 
 
