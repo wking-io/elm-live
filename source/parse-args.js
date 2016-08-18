@@ -6,6 +6,7 @@ const defaults = {
   pathToElmMake: 'elm-make',
   host: 'localhost',
   dir: '.',
+  pushstate: false,
 };
 
 module.exports = (argv) => {
@@ -20,7 +21,7 @@ module.exports = (argv) => {
       }
       return false;
     };
-    if (['help', 'open'].some(tryBoolOption)) {
+    if (['help', 'open', 'pushstate'].some(tryBoolOption)) {
       return true;
     }
 
