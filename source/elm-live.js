@@ -8,14 +8,15 @@ const indent = require('indent-string');
 const budo = require('budo');
 const chokidar = require('chokidar');
 const chalk = require('chalk');
-const bold = chalk.bold;
-const dim = chalk.dim;
 const hasbinSync = require('hasbin').sync;
+
+const parseArgs = require('./parse-args');
 
 const SUCCESS = 0;
 const FAILURE = 1;
 
-const parseArgs = require('./parse-args');
+const bold = chalk.bold;
+const dim = chalk.dim;
 
 /*
   ({

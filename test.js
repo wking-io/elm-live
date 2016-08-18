@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 'use strict';
 
 const path = require('path');
@@ -157,14 +158,18 @@ test((
 
   const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
 
-  const exitCode = elmLive([], { outputStream: qs((chunk) => {
-    assert.truthy(
-      expectedMessage.test(naked(chunk)),
-      'prints an informative message'
-    );
+  const exitCode = elmLive([], {
+    outputStream: qs((chunk) => {
+      assert.truthy(
+        expectedMessage.test(naked(chunk)),
+        'prints an informative message'
+      );
 
-    resolve();
-  }), inputStream: devnull() });
+      resolve();
+    }),
+
+    inputStream: devnull(),
+  });
 
   assert.is(exitCode, 1,
     'fails'
@@ -270,20 +275,23 @@ test('Prints any other `elm-make` error', (assert) => new Promise((resolve) => {
 
   const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
 
-  const exitCode = elmLive(['--no-recover'], { outputStream: qs((chunk) => {
-    assert.is(
-      naked(chunk),
-      (
+  const exitCode = elmLive(['--no-recover'], {
+    outputStream: qs((chunk) => {
+      assert.is(
+        naked(chunk),
+        (
 `\nelm-live: Error while calling elm-make! This output may be helpful:
   ${message}
 
 `
-      ),
-      'prints the error’s output'
-    );
+        ),
+        'prints the error’s output'
+      );
 
-    resolve();
-  }), inputStream: devnull() });
+      resolve();
+    }),
+    inputStream: devnull(),
+  });
 
   assert.is(exitCode, status,
     'exits with whatever code `elm-make` returned'
@@ -409,21 +417,24 @@ How’s it going?
 
   let run = 0;
   const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
-  elmLive(['--no-recover'], { inputStream, outputStream: qs((chunk) => {
-    if (run === 0) assert.is(
-      chunk,
-      elmLiveOut,
-      'directs stdout to the `outputStream`'
-    );
+  elmLive(['--no-recover'], {
+    inputStream,
+    outputStream: qs((chunk) => {
+      if (run === 0) assert.is(
+        chunk,
+        elmLiveOut,
+        'directs stdout to the `outputStream`'
+      );
 
-    if (run === 1) resolve(assert.is(
-      chunk,
-      elmLiveErr,
-      'directs stderr to the `outputStream`'
-    ));
+      if (run === 1) resolve(assert.is(
+        chunk,
+        elmLiveErr,
+        'directs stderr to the `outputStream`'
+      ));
 
-    run++;
-  }) });
+      run++;
+    }),
+  });
 }));
 
 
@@ -642,21 +653,24 @@ test((
   });
 
   let chunkNumber = 0;
-  elmLive([], { inputStream: devnull(), outputStream: qs((chunk) => {
-    chunkNumber++;
-    if (chunkNumber !== 3) return;
+  elmLive([], {
+    inputStream: devnull(),
+    outputStream: qs((chunk) => {
+      chunkNumber++;
+      if (chunkNumber !== 3) return;
 
-    const expectedMessage = (
+      const expectedMessage = (
 `\nelm-live:
   You’ve changed \`${relativePath}\`. Rebuilding!
 
 `
-    );
+      );
 
-    assert.is(naked(chunk), expectedMessage,
-      'prints a message when a file is changed'
-    );
+      assert.is(naked(chunk), expectedMessage,
+        'prints a message when a file is changed'
+      );
 
-    resolve();
-  }) });
+      resolve();
+    }),
+  });
 }));
