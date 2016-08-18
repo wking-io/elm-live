@@ -157,6 +157,8 @@ Many thanks to [Matt DesLauriers](https://github.com/mattdesl) for the wonderful
 
 Many thanks to [Brian Dukes](https://github.com/bdukes) for making Windows support possible!
 
+Many thanks to [Josh Harvey](https://github.com/joshmh) for his work on enabling client-side routing.
+
 
 
 
