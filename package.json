@@ -6,7 +6,7 @@
     "elm-live": "bin/elm-live.js"
   },
   "dependencies": {
-    "budo": "^8.0.4",
+    "budo": "^9.0.0",
     "chalk": "^1.1.1",
     "chokidar": "^1.4.3",
     "cross-spawn": "^4.0.0",
