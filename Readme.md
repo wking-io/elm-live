@@ -125,9 +125,22 @@ Custom HTML file:
 ```html
 $ echo \
   '<!doctype html>
-  <link rel="stylesheet" href="/style.css" />
-  <script src="/elm.js"></script>
-  ' > index.html
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Elm Live Demo</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/elm.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+  </body>
+
+  <script>
+    Elm.Main.embed(document.getElementById("root"));
+  </script>
+</html>' > index.html
 $ elm-live Main.elm --output=elm.js --open
 ```
 
