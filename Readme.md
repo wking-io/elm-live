@@ -126,11 +126,11 @@ Custom HTML file:
 $ cat <<——— > index.html
   <!doctype html>
   <link rel="stylesheet" href="style.css" />
-  <script src="elm.js"></script>
 
   <body>
     <div></div>
-    <script>Elm.Main.embed(document.querySelector("root"));</script>
+    <script src="elm.js"></script>
+    <script>Elm.Main.embed(document.querySelector("div"));</script>
   </body>
 ———
 $ elm-live Main.elm --output=elm.js --open
