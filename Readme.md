@@ -123,11 +123,16 @@ $ elm-live Main.elm --open
 Custom HTML file:
 
 ```html
-$ echo \
-  '<!doctype html>
-  <link rel="stylesheet" href="/style.css" />
-  <script src="/elm.js"></script>
-  ' > index.html
+$ cat <<——— > index.html
+  <!doctype html>
+  <link rel="stylesheet" href="style.css" />
+
+  <body>
+    <div></div>
+    <script src="elm.js"></script>
+    <script>Elm.Main.embed(document.querySelector("div"));</script>
+  </body>
+———
 $ elm-live Main.elm --output=elm.js --open
 ```
 
