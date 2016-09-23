@@ -1,9 +1,10 @@
-master:
+2.5.1:
+  date: 2016-09-23
   fixed bugs:
     - >
       Fixed the custom HTML example. Credits to [Mathieu
-      ](https://github.com/magopian), [Rémy](https://github.com/natim)
-      and [Nicolas](https://github.com/n1k0).
+      ](https://github.com/magopian), [Rémy](https://github.com/natim) and
+      [Nicolas](https://github.com/n1k0).
 
 2.5.0:
   date: 2016-08-18
