@@ -104,6 +104,12 @@ When _elm-make_ encounters a compile error, we keep _elm-live_ running and give 
 #### `--pushstate`
 Serve `index.html` on 404 errors. This lets us use client-side routing in Elm. For instance, we can have a URL like `http://localhost:8000/account` get handled by the Elm _navigation_ package instead of failing with a 404 error.
 
+#### `--before-build`
+Run a command before a build is run. This allows us to call external build tools that could generate Elm code, for example.
+
+#### `--after-build`
+Run a command after a build finishes. The same as `--before-build`, but it runs after the build finishes. We can then execute a command that depends on the finished source.
+
 #### `--help`
 You’re looking at it.
 

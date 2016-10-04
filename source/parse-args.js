@@ -50,6 +50,8 @@ module.exports = (argv) => {
       { arg: '--host', key: 'host' },
       { arg: '--path-to-elm-make', key: 'pathToElmMake' },
       { arg: '--dir', key: 'dir' },
+      { arg: '--before-build', key: 'beforeBuild' },
+      { arg: '--after-build', key: 'afterBuild' }
     ].some(tryStringOption)) {
       return true;
     }
