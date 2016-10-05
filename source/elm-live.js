@@ -52,20 +52,20 @@ module.exports = (argv, options) => {
     return SUCCESS;
   }
 
-  const auxiliaryBuild = (path) => {
-    if(!path) {
+  const auxiliaryBuild = (execPath) => {
+    if (!execPath) {
       return { fatal: false, status: SUCCESS };
     }
 
-    const process = spawnSync(path, [], {
+    const process = spawnSync(execPath, [], {
       stdio: [inputStream, outputStream, outputStream],
     });
 
-    if(process.error && process.error.code === 'ENOENT') {
+    if (process.error && process.error.code === 'ENOENT') {
       outputStream.write(
   `\n${dim('elm-live:')}
-    I am trying to run ${bold(path)} but can't find it!
-    Please make sure you can call ${bold(path)}
+    I am trying to run ${bold(execPath)} but can't find it!
+    Please make sure you can call ${bold(execPath)}
     from your command line.
   `
       );
@@ -73,8 +73,8 @@ module.exports = (argv, options) => {
       return { fatal: true, exitCode: FAILURE };
     } else if (process.error) {
       outputStream.write(
-  `\n${dim('elm-live:')} Error while calling ${bold(path)}! This output may be helpful:
-  ${indent(String(command.error), 2)}
+  `\n${dim('elm-live:')} Error while calling ${bold(execPath)}! This output may be helpful:
+  ${indent(String(process.error), 2)}
 
   `
       );
@@ -82,20 +82,19 @@ module.exports = (argv, options) => {
 
     if (args.recover && process.status !== SUCCESS) outputStream.write(
 `\n${dim('elm-live:')}
-  ${bold(path)} failed! You can find more info above. Keep calm and take your time
+  ${bold(execPath)} failed! You can find more info above. Keep calm and take your time
   to fix your code. We’ll try to compile it again as soon as you change a file.
 
 `
     );
-    
+
     return { fatal: false, exitCode: process.status };
-  }
+  };
 
   // Build logic
   const build = () => {
-
     const beforeBuild = auxiliaryBuild(args.beforeBuild);
-    if(beforeBuild.status !== SUCCESS) {
+    if (beforeBuild.status !== SUCCESS) {
       return beforeBuild;
     }
 
@@ -135,9 +134,9 @@ ${indent(String(elmMake.error), 2)}
 `
     );
 
-    if(elmMake.status === SUCCESS) {
+    if (elmMake.status === SUCCESS) {
       const afterBuild = auxiliaryBuild(args.afterBuild);
-      if(afterBuild.status !== SUCCESS) {
+      if (afterBuild.status !== SUCCESS) {
         return afterBuild;
       }
     }
