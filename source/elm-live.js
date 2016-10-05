@@ -52,8 +52,53 @@ module.exports = (argv, options) => {
     return SUCCESS;
   }
 
+  const auxiliaryBuild = (path) => {
+    if(!path) {
+      return { fatal: false, status: SUCCESS };
+    }
+
+    const process = spawnSync(path, [], {
+      stdio: [inputStream, outputStream, outputStream],
+    });
+
+    if(process.error && process.error.code === 'ENOENT') {
+      outputStream.write(
+  `\n${dim('elm-live:')}
+    I am trying to run ${bold(path)} but can't find it!
+    Please make sure you can call ${bold(path)}
+    from your command line.
+  `
+      );
+
+      return { fatal: true, exitCode: FAILURE };
+    } else if (process.error) {
+      outputStream.write(
+  `\n${dim('elm-live:')} Error while calling ${bold(path)}! This output may be helpful:
+  ${indent(String(command.error), 2)}
+
+  `
+      );
+    }
+
+    if (args.recover && process.status !== SUCCESS) outputStream.write(
+`\n${dim('elm-live:')}
+  ${bold(path)} failed! You can find more info above. Keep calm and take your time
+  to fix your code. We’ll try to compile it again as soon as you change a file.
+
+`
+    );
+    
+    return { fatal: false, exitCode: process.status };
+  }
+
   // Build logic
   const build = () => {
+
+    const beforeBuild = auxiliaryBuild(args.beforeBuild);
+    if(beforeBuild.status !== SUCCESS) {
+      return beforeBuild;
+    }
+
     const elmMake = spawnSync(args.pathToElmMake, args.elmMakeArgs, {
       stdio: [inputStream, outputStream, outputStream],
     });
@@ -89,6 +134,13 @@ ${indent(String(elmMake.error), 2)}
 
 `
     );
+
+    if(elmMake.status === SUCCESS) {
+      const afterBuild = auxiliaryBuild(args.afterBuild);
+      if(afterBuild.status !== SUCCESS) {
+        return afterBuild;
+      }
+    }
 
     return { fatal: false, exitCode: elmMake.status };
   };
