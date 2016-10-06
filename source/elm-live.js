@@ -94,7 +94,7 @@ module.exports = (argv, options) => {
   // Build logic
   const build = () => {
     const beforeBuild = auxiliaryBuild(args.beforeBuild);
-    if (beforeBuild.status !== SUCCESS) {
+    if (beforeBuild.exitCode !== SUCCESS) {
       return beforeBuild;
     }
 
