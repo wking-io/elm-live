@@ -748,3 +748,42 @@ test((
   elmLive([`--before-build=${beforeCommand}`], { outputStream, inputStream: devnull() });
   resolve();
 }));
+
+test((
+  'Shouts if `--before-build` command can’t be found'
+), (assert) => new Promise((resolve) => {
+  assert.plan(2);
+
+  const beforeCommand = 'testCommand';
+
+  const expectedMessage = new RegExp(
+`^\nelm-live:
+  I can’t find the command ${beforeCommand}!`
+  );
+
+  const crossSpawn = { sync: (command) => {
+    if (command === beforeCommand) {
+      return { error: { code: 'ENOENT' } };
+    }
+    return dummyCrossSpawn.sync();
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+
+  const exitCode = elmLive([`--before-build=${beforeCommand}`], {
+    outputStream: qs((chunk) => {
+      assert.truthy(
+        expectedMessage.test(naked(chunk)),
+        'prints an informative message'
+      );
+
+      resolve();
+    }),
+
+    inputStream: devnull(),
+  });
+
+  assert.is(exitCode, 1,
+    'fails'
+  );
+}));
