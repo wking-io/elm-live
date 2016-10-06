@@ -63,11 +63,11 @@ module.exports = (argv, options) => {
 
     if (process.error && process.error.code === 'ENOENT') {
       outputStream.write(
-  `\n${dim('elm-live:')}
-    I am trying to run ${bold(execPath)} but can't find it!
-    Please make sure you can call ${bold(execPath)}
-    from your command line.
-  `
+`\n${dim('elm-live:')}
+  I can’t find the command ${bold(execPath)}!
+  Please make sure you can call ${bold(execPath)}
+  from your command line.
+`
       );
 
       return { fatal: true, exitCode: FAILURE };
