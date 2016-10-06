@@ -680,7 +680,7 @@ test((
 ), (assert) => new Promise((resolve) => {
   const beforeCommand = 'testCommand';
 
-  const commandsRun = []; 
+  const commandsRun = [];
 
   const crossSpawn = { sync: (command) => {
     commandsRun.push(command);
