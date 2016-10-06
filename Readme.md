@@ -107,9 +107,6 @@ Serve `index.html` on 404 errors. This lets us use client-side routing in Elm. F
 #### `--before-build`
 Run a command before a build is run. This allows us to call external build tools that could generate Elm code, for example.
 
-#### `--after-build`
-Run a command after a build finishes. The same as `--before-build`, but it runs after the build finishes. We can then execute a command that depends on the finished source.
-
 #### `--help`
 You’re looking at it.
 

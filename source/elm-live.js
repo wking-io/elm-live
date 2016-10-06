@@ -134,13 +134,6 @@ ${indent(String(elmMake.error), 2)}
 `
     );
 
-    if (elmMake.status === SUCCESS) {
-      const afterBuild = auxiliaryBuild(args.afterBuild);
-      if (afterBuild.status !== SUCCESS) {
-        return afterBuild;
-      }
-    }
-
     return { fatal: false, exitCode: elmMake.status };
   };
 
