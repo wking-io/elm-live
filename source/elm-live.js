@@ -54,7 +54,7 @@ module.exports = (argv, options) => {
 
   const auxiliaryBuild = (execPath) => {
     if (!execPath) {
-      return { fatal: false, status: SUCCESS };
+      return { fatal: false, exitCode: SUCCESS };
     }
 
     const process = spawnSync(execPath, [], {
