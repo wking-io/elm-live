@@ -73,10 +73,10 @@ module.exports = (argv, options) => {
       return { fatal: true, exitCode: FAILURE };
     } else if (process.error) {
       outputStream.write(
-  `\n${dim('elm-live:')} Error while calling ${bold(execPath)}! This output may be helpful:
-  ${indent(String(process.error), 2)}
+`\n${dim('elm-live:')} Error while calling ${bold(execPath)}! This output may be helpful:
+${indent(String(process.error), 2)}
 
-  `
+`
       );
     }
 
