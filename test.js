@@ -674,3 +674,31 @@ test((
     }),
   });
 }));
+
+test((
+  '--before-build runs command'
+), (assert) => new Promise((resolve) => {
+  const beforeCommand = 'testCommand';
+
+  const commandsRun = []; 
+
+  const crossSpawn = { sync: (command) => {
+    commandsRun.push(command);
+    return dummyCrossSpawn.sync();
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+
+  elmLive([`--before-build=${beforeCommand}`], dummyConfig);
+
+  assert.deepEqual(
+    commandsRun,
+    [
+      beforeCommand,
+      'elm-make',
+    ],
+    'Calls the `--before-build` command and `elm-make`'
+  );
+
+  resolve();
+}));
