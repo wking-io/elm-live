@@ -787,3 +787,43 @@ test((
     'fails'
   );
 }));
+
+test('Prints any other `--before-build` command error', (assert) => new Promise((resolve) => {
+  assert.plan(2);
+
+  const beforeCommand = 'testCommand';
+  const message = 'whatever';
+  const status = 9;
+
+  const crossSpawn = { sync: (command) => {
+    if (command === beforeCommand) {
+      return { status, error: { toString: () => message } };
+    }
+
+    return dummyCrossSpawn.sync();
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+
+  const exitCode = elmLive(['--no-recover', `--before-build=${beforeCommand}`], {
+    outputStream: qs((chunk) => {
+      assert.is(
+        naked(chunk),
+        (
+`\nelm-live: Error while calling ${beforeCommand}! This output may be helpful:
+  ${message}
+
+`
+        ),
+        'prints the error’s output'
+      );
+
+      resolve();
+    }),
+    inputStream: devnull(),
+  });
+
+  assert.is(exitCode, status,
+    'exits with whatever code the `--before-build` command returned'
+  );
+}));
