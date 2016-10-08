@@ -83,7 +83,7 @@ ${indent(String(process.error), 2)}
 
     if (args.recover && process.status !== SUCCESS) outputStream.write(
 `\n${dim('elm-live:')}
-  ${bold(execPath)} failed! You can find more info above. Keep calm and take your time 
+  ${bold(execPath)} failed! You can find more info above. Keep calm and take your time
   to check why the command is failing. We’ll try to run it again as soon as you change an Elm file.
 
 `

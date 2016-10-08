@@ -735,7 +735,7 @@ test((
       (
 `\nelm-live:
   ${beforeCommand} failed! You can find more info above. Keep calm and take your time
-  to fix your code. We’ll try to compile it again as soon as you change a file.
+  to check why the command is failing. We’ll try to run it again as soon as you change an Elm file.
 
 `
       ),
