@@ -67,6 +67,7 @@ module.exports = (argv, options) => {
   I can’t find the command ${bold(execPath)}!
   Please make sure you can call ${bold(execPath)}
   from your command line.
+
 `
       );
 
@@ -82,8 +83,8 @@ ${indent(String(process.error), 2)}
 
     if (args.recover && process.status !== SUCCESS) outputStream.write(
 `\n${dim('elm-live:')}
-  ${bold(execPath)} failed! You can find more info above. Keep calm and take your time
-  to fix your code. We’ll try to compile it again as soon as you change a file.
+  ${bold(execPath)} failed! You can find more info above. Keep calm and take your time 
+  to check why the command is failing. We’ll try to run it again as soon as you change an Elm file.
 
 `
     );

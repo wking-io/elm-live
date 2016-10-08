@@ -105,7 +105,9 @@ When _elm-make_ encounters a compile error, we keep _elm-live_ running and give 
 Serve `index.html` on 404 errors. This lets us use client-side routing in Elm. For instance, we can have a URL like `http://localhost:8000/account` get handled by the Elm _navigation_ package instead of failing with a 404 error.
 
 #### `--before-build`
-Run a command before a build is run. This allows us to call external build tools that could generate Elm code, for example.
+Run an executable before every rebuild. This way you can easily use other tools like elm-css or browserify in your workflow.
+
+Heads up! At the moment, we only allow running a single executable without parameters. If you need more than that, please give us a shout at https://git.io/elm-live.before-build-args.
 
 #### `--help`
 You’re looking at it.
