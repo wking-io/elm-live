@@ -1,4 +1,5 @@
-master:
+2.6.0:
+  date: 2016-10-13
   new features:
     - >
       New option `--before-build`. Many thanks to [Gabriel
