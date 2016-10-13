@@ -1,3 +1,9 @@
+master:
+  new features:
+    - >
+      New option `--before-build`. Many thanks to [Gabriel
+      ](https://github.com/peacememories) for making this happen!
+
 2.5.1:
   date: 2016-09-23
   fixed bugs:
