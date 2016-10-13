@@ -674,3 +674,156 @@ test((
     }),
   });
 }));
+
+test((
+  '--before-build runs command'
+), (assert) => new Promise((resolve) => {
+  const beforeCommand = 'testCommand';
+
+  const commandsRun = [];
+
+  const crossSpawn = { sync: (command) => {
+    commandsRun.push(command);
+    return dummyCrossSpawn.sync();
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+
+  elmLive([`--before-build=${beforeCommand}`], dummyConfig);
+
+  assert.deepEqual(
+    commandsRun,
+    [
+      beforeCommand,
+      'elm-make',
+    ],
+    'Calls the `--before-build` command and `elm-make`'
+  );
+
+  resolve();
+}));
+
+test((
+  'Informs of `--before-build` run errors'
+), (assert) => new Promise((resolve) => {
+  assert.plan(2);
+
+  const beforeCommand = 'testCommand';
+  const message = 'whatever';
+  const status = 1;
+
+  const crossSpawn = { sync: (command, _, options) => {
+    if (command === beforeCommand) {
+      options.stdio[1].write(message);
+      return { status };
+    }
+    return dummyCrossSpawn.sync();
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', {
+    'cross-spawn': crossSpawn, budo: dummyBudo, chokidar: dummyChokidar,
+  });
+
+  let run = 0;
+  const outputStream = qs((chunk) => {
+    if (run === 0) assert.is(chunk, message,
+      'prints before-build output first'
+    );
+
+    if (run === 1) resolve(assert.is(
+      naked(chunk),
+      (
+`\nelm-live:
+  ${beforeCommand} failed! You can find more info above. Keep calm and take your time
+  to check why the command is failing. We’ll try to run it again as soon as you change an Elm file.
+
+`
+      ),
+      'prints a friendly message afterwards'
+    ));
+
+    run++;
+  });
+
+  elmLive([`--before-build=${beforeCommand}`], { outputStream, inputStream: devnull() });
+  resolve();
+}));
+
+test((
+  'Shouts if `--before-build` command can’t be found'
+), (assert) => new Promise((resolve) => {
+  assert.plan(2);
+
+  const beforeCommand = 'testCommand';
+
+  const expectedMessage = new RegExp(
+`^\nelm-live:
+  I can’t find the command ${beforeCommand}!`
+  );
+
+  const crossSpawn = { sync: (command) => {
+    if (command === beforeCommand) {
+      return { error: { code: 'ENOENT' } };
+    }
+    return dummyCrossSpawn.sync();
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+
+  const exitCode = elmLive([`--before-build=${beforeCommand}`], {
+    outputStream: qs((chunk) => {
+      assert.truthy(
+        expectedMessage.test(naked(chunk)),
+        'prints an informative message'
+      );
+
+      resolve();
+    }),
+
+    inputStream: devnull(),
+  });
+
+  assert.is(exitCode, 1,
+    'fails'
+  );
+}));
+
+test('Prints any other `--before-build` command error', (assert) => new Promise((resolve) => {
+  assert.plan(2);
+
+  const beforeCommand = 'testCommand';
+  const message = 'whatever';
+  const status = 9;
+
+  const crossSpawn = { sync: (command) => {
+    if (command === beforeCommand) {
+      return { status, error: { toString: () => message } };
+    }
+
+    return dummyCrossSpawn.sync();
+  } };
+
+  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+
+  const exitCode = elmLive(['--no-recover', `--before-build=${beforeCommand}`], {
+    outputStream: qs((chunk) => {
+      assert.is(
+        naked(chunk),
+        (
+`\nelm-live: Error while calling ${beforeCommand}! This output may be helpful:
+  ${message}
+
+`
+        ),
+        'prints the error’s output'
+      );
+
+      resolve();
+    }),
+    inputStream: devnull(),
+  });
+
+  assert.is(exitCode, status,
+    'exits with whatever code the `--before-build` command returned'
+  );
+}));

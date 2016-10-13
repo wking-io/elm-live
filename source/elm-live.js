@@ -52,8 +52,53 @@ module.exports = (argv, options) => {
     return SUCCESS;
   }
 
+  const auxiliaryBuild = (execPath) => {
+    if (!execPath) {
+      return { fatal: false, exitCode: SUCCESS };
+    }
+
+    const process = spawnSync(execPath, [], {
+      stdio: [inputStream, outputStream, outputStream],
+    });
+
+    if (process.error && process.error.code === 'ENOENT') {
+      outputStream.write(
+`\n${dim('elm-live:')}
+  I can’t find the command ${bold(execPath)}!
+  Please make sure you can call ${bold(execPath)}
+  from your command line.
+
+`
+      );
+
+      return { fatal: true, exitCode: FAILURE };
+    } else if (process.error) {
+      outputStream.write(
+`\n${dim('elm-live:')} Error while calling ${bold(execPath)}! This output may be helpful:
+${indent(String(process.error), 2)}
+
+`
+      );
+    }
+
+    if (args.recover && process.status !== SUCCESS) outputStream.write(
+`\n${dim('elm-live:')}
+  ${bold(execPath)} failed! You can find more info above. Keep calm and take your time
+  to check why the command is failing. We’ll try to run it again as soon as you change an Elm file.
+
+`
+    );
+
+    return { fatal: false, exitCode: process.status };
+  };
+
   // Build logic
   const build = () => {
+    const beforeBuild = auxiliaryBuild(args.beforeBuild);
+    if (beforeBuild.exitCode !== SUCCESS) {
+      return beforeBuild;
+    }
+
     const elmMake = spawnSync(args.pathToElmMake, args.elmMakeArgs, {
       stdio: [inputStream, outputStream, outputStream],
     });
