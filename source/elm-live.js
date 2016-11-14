@@ -183,10 +183,27 @@ ${indent(String(elmMake.error), 2)}
     unlinkDir: 'removed',
   };
 
+  // wait until the returned funtion has not been called for `wait`
+  // milliseconds before calling the passed in function
+  const debounce = (func, wait) => {
+    let timeout;
+    return (...theArgs) => {
+      const context = this;
+      const later = () => {
+        func.apply(context, theArgs);
+      };
+
+      if (timeout !== undefined) {
+        clearTimeout(timeout);
+      }
+      timeout = setTimeout(later, wait);
+    };
+  };
+
   // Watch Elm files
   const watcher = chokidar.watch('**/*.elm', { ignoreInitial: true });
 
-  watcher.on('all', (event, filePath) => {
+  watcher.on('all', debounce((event, filePath) => {
     const relativePath = path.relative(process.cwd(), filePath);
     const eventName = eventNameMap[event] || event;
 
@@ -201,7 +218,7 @@ ${indent(String(elmMake.error), 2)}
     if (!serverStarted && buildResult.exitCode === SUCCESS) {
       startServer();
     }
-  });
+  }), 64);
 
   return null;
 };
