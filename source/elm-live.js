@@ -11,6 +11,7 @@ const chalk = require('chalk');
 const hasbinSync = require('hasbin').sync;
 
 const parseArgs = require('./parse-args');
+const debounce = require('./debounce');
 
 const SUCCESS = 0;
 const FAILURE = 1;
@@ -181,23 +182,6 @@ ${indent(String(elmMake.error), 2)}
     change: 'changed',
     unlink: 'removed',
     unlinkDir: 'removed',
-  };
-
-  // wait until the returned funtion has not been called for `wait`
-  // milliseconds before calling the passed in function
-  const debounce = (func, wait) => {
-    let timeout;
-    return (...theArgs) => {
-      const context = this;
-      const later = () => {
-        func.apply(context, theArgs);
-      };
-
-      if (timeout !== undefined) {
-        clearTimeout(timeout);
-      }
-      timeout = setTimeout(later, wait);
-    };
   };
 
   // Watch Elm files
