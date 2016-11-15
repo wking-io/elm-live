@@ -202,7 +202,7 @@ ${indent(String(elmMake.error), 2)}
     if (!serverStarted && buildResult.exitCode === SUCCESS) {
       startServer();
     }
-  }), 64);
+  }), 100);
 
   return null;
 };
