@@ -851,5 +851,5 @@ is called several times within the wait interval`
     resolve();
   };
 
-  setTimeout(checkTimesRan, wait + 1);
+  setTimeout(checkTimesRan, wait + 200);
 }));
