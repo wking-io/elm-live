@@ -1,3 +1,9 @@
+master:
+  fixed bugs:
+    - >
+      Multiple updates happening at the same time now only trigger one rebuild!
+      Kudos for the great work to [Ryan Wiedemann](https://github.com/Ryan1729).
+
 2.6.0:
   date: 2016-10-13
   new features:
