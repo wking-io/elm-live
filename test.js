@@ -8,6 +8,7 @@ const proxyquire = require('proxyquire').noPreserveCache().noCallThru();
 const devnull = require('dev-null');
 const qs = require('q-stream');
 const naked = require('strip-ansi');
+const debounce = require('./source/debounce');
 
 const dummyConfig = { inputStream: devnull(), outputStream: devnull() };
 const dummyCrossSpawn = { sync: () => ({ status: 0 }) };
@@ -826,4 +827,29 @@ test('Prints any other `--before-build` command error', (assert) => new Promise(
   assert.is(exitCode, status,
     'exits with whatever code the `--before-build` command returned'
   );
+}));
+
+test('debounce debounces', (assert) => new Promise((resolve) => {
+  assert.plan(1);
+
+  let timesRan = 0;
+  const countTimesRan = () => { timesRan += 1; };
+
+  const wait = 1;
+  const debouncedcountTimesRan = debounce(countTimesRan, wait);
+
+  debouncedcountTimesRan();
+  debouncedcountTimesRan();
+  debouncedcountTimesRan();
+  debouncedcountTimesRan();
+
+  const checkTimesRan = () => {
+    assert.is(timesRan, 1,
+      `only calls the passed function once when the returned function
+is called several times within the wait interval`
+    );
+    resolve();
+  };
+
+  setTimeout(checkTimesRan, wait + 200);
 }));

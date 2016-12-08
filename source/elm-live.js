@@ -11,6 +11,7 @@ const chalk = require('chalk');
 const hasbinSync = require('hasbin').sync;
 
 const parseArgs = require('./parse-args');
+const debounce = require('./debounce');
 
 const SUCCESS = 0;
 const FAILURE = 1;
@@ -186,7 +187,7 @@ ${indent(String(elmMake.error), 2)}
   // Watch Elm files
   const watcher = chokidar.watch('**/*.elm', { ignoreInitial: true });
 
-  watcher.on('all', (event, filePath) => {
+  watcher.on('all', debounce((event, filePath) => {
     const relativePath = path.relative(process.cwd(), filePath);
     const eventName = eventNameMap[event] || event;
 
@@ -201,7 +202,7 @@ ${indent(String(elmMake.error), 2)}
     if (!serverStarted && buildResult.exitCode === SUCCESS) {
       startServer();
     }
-  });
+  }), 100);
 
   return null;
 };
