@@ -49,7 +49,7 @@ npm install --save-dev elm elm-live
 
 If you’d rather bring your own global `elm-make`, `npm install --global elm-live` will do.
 
-Note that you need *node 4.0+* to run the tool natively. But if you’re stuck on an older version, don’t worry! [Rumour has it](https://github.com/tomekwi/elm-live/issues/2#issuecomment-156698732) that you can transpile the code to ES5!
+Note that you need *node 6.0+* to run the tool natively. But if you’re stuck on an older version, don’t worry! [Rumour has it](https://github.com/tomekwi/elm-live/issues/2#issuecomment-156698732) that you can transpile the code to ES5!
 
 
 
