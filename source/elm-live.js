@@ -184,8 +184,10 @@ ${indent(String(elmMake.error), 2)}
     unlinkDir: 'removed',
   };
 
+  const startingElmDir = args.watch.endsWith('/') ? args.watch.slice(0, -1) : args.watch;
+
   // Watch Elm files
-  const watcher = chokidar.watch('**/*.elm', { ignoreInitial: true });
+  const watcher = chokidar.watch(`${startingElmDir}/**/*.elm`, { ignoreInitial: true });
 
   watcher.on('all', debounce((event, filePath) => {
     const relativePath = path.relative(process.cwd(), filePath);
