@@ -1,3 +1,9 @@
+master:
+  fixed bugs:
+    - >
+      Fixed `engines` field to warn people against installing on an older version
+      of node
+
 2.6.1:
   date: 2016-12-08
   fixed bugs:
