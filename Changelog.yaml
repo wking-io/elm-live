@@ -1,3 +1,7 @@
+master:
+  new features:
+    - New option `--after-build`.
+
 2.6.2:
   date: 2017-01-05
   fixed bugs:

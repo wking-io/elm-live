@@ -714,128 +714,136 @@ test((
 }));
 
 test((
-  'Informs of `--before-build` run errors'
+  'Informs of `--before-build` and `--after-build` run errors'
 ), (assert) => new Promise((resolve) => {
-  assert.plan(2);
+  assert.plan(4);
 
-  const beforeCommand = 'testCommand';
-  const message = 'whatever';
-  const status = 1;
+  ['--before-build', '--after-build'].forEach((buildParameter) => {
+    const buildCommand = 'testCommand';
+    const message = 'whatever';
+    const status = 1;
 
-  const crossSpawn = { sync: (command, _, options) => {
-    if (command === beforeCommand) {
-      options.stdio[1].write(message);
-      return { status };
-    }
-    return dummyCrossSpawn.sync();
-  } };
+    const crossSpawn = { sync: (command, _, options) => {
+      if (command === buildCommand) {
+        options.stdio[1].write(message);
+        return { status };
+      }
+      return dummyCrossSpawn.sync();
+    } };
 
-  const elmLive = newElmLive({
-    'cross-spawn': crossSpawn, budo: dummyBudo, chokidar: dummyChokidar,
-  });
+    const elmLive = newElmLive({
+      'cross-spawn': crossSpawn, budo: dummyBudo, chokidar: dummyChokidar,
+    });
 
-  let run = 0;
-  const outputStream = qs((chunk) => {
-    if (run === 0) assert.is(chunk, message,
-      'prints before-build output first'
-    );
+    let run = 0;
+    const outputStream = qs((chunk) => {
+      if (run === 0) assert.is(chunk, message,
+        `proxies ${buildCommand} output first`
+      );
 
-    if (run === 1) resolve(assert.is(
-      naked(chunk),
-      (
+      if (run === 1) resolve(assert.is(
+        naked(chunk),
+        (
 `\nelm-live:
-  ${beforeCommand} failed! You can find more info above. Keep calm and take your time
+  ${buildCommand} failed! You can find more info above. Keep calm and take your time
   to check why the command is failing. We’ll try to run it again as soon as you change an Elm file.
 
 `
-      ),
-      'prints a friendly message afterwards'
-    ));
+        ),
+        'prints a friendly message afterwards'
+      ));
 
-    run++;
+      run++;
+    });
+
+    elmLive([`${buildParameter}=${buildCommand}`], { outputStream, inputStream: devnull() });
+    resolve();
   });
-
-  elmLive([`--before-build=${beforeCommand}`], { outputStream, inputStream: devnull() });
-  resolve();
 }));
 
 test((
-  'Shouts if `--before-build` command can’t be found'
+  'Shouts if the `--before-build` or `--after-build` executable can’t be found'
 ), (assert) => new Promise((resolve) => {
-  assert.plan(2);
+  assert.plan(4);
 
-  const beforeCommand = 'testCommand';
+  ['--before-build', '--after-build'].forEach((buildParameter) => {
+    const beforeCommand = 'testCommand';
 
-  const expectedMessage = new RegExp(
+    const expectedMessage = new RegExp(
 `^\nelm-live:
   I can’t find the command ${beforeCommand}!`
-  );
+    );
 
-  const crossSpawn = { sync: (command) => {
-    if (command === beforeCommand) {
-      return { error: { code: 'ENOENT' } };
-    }
-    return dummyCrossSpawn.sync();
-  } };
+    const crossSpawn = { sync: (command) => {
+      if (command === beforeCommand) {
+        return { error: { code: 'ENOENT' } };
+      }
+      return dummyCrossSpawn.sync();
+    } };
 
-  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
+    const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
 
-  const exitCode = elmLive([`--before-build=${beforeCommand}`], {
-    outputStream: qs((chunk) => {
-      assert.truthy(
-        expectedMessage.test(naked(chunk)),
-        'prints an informative message'
-      );
+    const exitCode = elmLive([`${buildParameter}=${beforeCommand}`], {
+      outputStream: qs((chunk) => {
+        assert.truthy(
+          expectedMessage.test(naked(chunk)),
+          'prints an informative message'
+        );
 
-      resolve();
-    }),
+        resolve();
+      }),
 
-    inputStream: devnull(),
+      inputStream: devnull(),
+    });
+
+    assert.is(exitCode, 1,
+      'fails'
+    );
   });
-
-  assert.is(exitCode, 1,
-    'fails'
-  );
 }));
 
-test('Prints any other `--before-build` command error', (assert) => new Promise((resolve) => {
-  assert.plan(2);
+test((
+  'Prints any other `--before-build` or `--after-build` command error'
+), (assert) => new Promise((resolve) => {
+  assert.plan(4);
 
-  const beforeCommand = 'testCommand';
-  const message = 'whatever';
-  const status = 9;
+  ['--before-build', '--after-build'].forEach((buildParameter) => {
+    const buildCommand = 'testCommand';
+    const message = 'whatever';
+    const status = 9;
 
-  const crossSpawn = { sync: (command) => {
-    if (command === beforeCommand) {
-      return { status, error: { toString: () => message } };
-    }
+    const crossSpawn = { sync: (command) => {
+      if (command === buildCommand) {
+        return { status, error: { toString: () => message } };
+      }
 
-    return dummyCrossSpawn.sync();
-  } };
+      return dummyCrossSpawn.sync();
+    } };
 
-  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
+    const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
 
-  const exitCode = elmLive(['--no-recover', `--before-build=${beforeCommand}`], {
-    outputStream: qs((chunk) => {
-      assert.is(
-        naked(chunk),
-        (
-`\nelm-live: Error while calling ${beforeCommand}! This output may be helpful:
+    const exitCode = elmLive(['--no-recover', `${buildParameter}=${buildCommand}`], {
+      outputStream: qs((chunk) => {
+        assert.is(
+          naked(chunk),
+          (
+`\nelm-live: Error while calling ${buildCommand}! This output may be helpful:
   ${message}
 
 `
-        ),
-        'prints the error’s output'
-      );
+          ),
+          'prints the error’s output'
+        );
 
-      resolve();
-    }),
-    inputStream: devnull(),
+        resolve();
+      }),
+      inputStream: devnull(),
+    });
+
+    assert.is(exitCode, status,
+      `exits with whatever code the \`${buildParameter}\` command returned`
+    );
   });
-
-  assert.is(exitCode, status,
-    'exits with whatever code the `--before-build` command returned'
-  );
 }));
 
 test('debounce debounces', (assert) => new Promise((resolve) => {

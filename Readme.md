@@ -109,6 +109,9 @@ Run `EXECUTABLE` before every rebuild. This way you can easily use other tools l
 
 Heads up! At the moment, we only allow running a single executable without parameters. If you need more than that, please give us a shout at https://git.io/elm-live.before-build-args.
 
+#### `--after-build=EXECUTABLE`
+Just like `--before-build`, but runs after `elm-make`.
+
 #### `--help`
 You’re looking at it.
 

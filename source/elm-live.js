@@ -136,6 +136,11 @@ ${indent(String(elmMake.error), 2)}
 `
     );
 
+    const afterBuild = auxiliaryBuild(args.afterBuild);
+    if (afterBuild.exitCode !== SUCCESS) {
+      return afterBuild;
+    }
+
     return { fatal: false, exitCode: elmMake.status };
   };
 
@@ -144,7 +149,7 @@ ${indent(String(elmMake.error), 2)}
   const startServer = () => {
     outputStream.write(
 `\n${dim('elm-live:')}
-  ${bold('elm-make')} has succeeded. Starting the server!${args.open ? (
+  The build has succeeded. Starting the server!${args.open ? (
 ` We’ll open your app
   in the default browser as soon as it’s up and running.`) : ''}
 
