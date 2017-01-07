@@ -17,6 +17,11 @@ const dummyBudo = () => dummyBudoServer;
 const dummyChokidarWatcher = { on: () => {} };
 const dummyChokidar = { watch: () => dummyChokidarWatcher };
 
+const newElmLive = (mocks) => proxyquire('./source/elm-live', Object.assign({}, {
+  'cross-spawn': dummyCrossSpawn,
+  budo: dummyBudo,
+  chokidar: dummyChokidar,
+}, mocks));
 
 test('Prints `--help`', (assert) => {
   assert.plan(5);
@@ -47,7 +52,7 @@ test('Prints `--help`', (assert) => {
     return { error: null };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
 
   const exitCode = elmLive(['--help'], dummyConfig);
 
@@ -96,7 +101,7 @@ of a white Christmas
     resolve();
   });
 
-  const elmLive = proxyquire('./source/elm-live', {
+  const elmLive = newElmLive({
     hasbin, fs,
   });
 
@@ -125,7 +130,7 @@ test((
     return { error: dummyError };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', {
+  const elmLive = newElmLive({
     'cross-spawn': crossSpawn,
   });
 
@@ -157,7 +162,7 @@ test((
     return { error: { code: 'ENOENT' } };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
 
   const exitCode = elmLive([], {
     outputStream: qs((chunk) => {
@@ -197,7 +202,7 @@ test('Exits if `--no-recover`', (assert) => {
     );
   };
 
-  const elmLive = proxyquire('./source/elm-live', {
+  const elmLive = newElmLive({
     'cross-spawn': crossSpawn, budo, chokidar: dummyChokidar,
   });
 
@@ -231,7 +236,7 @@ test('Informs of compile errors', (assert) => new Promise((resolve) => {
     return { status };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', {
+  const elmLive = newElmLive({
     'cross-spawn': crossSpawn, budo: dummyBudo, chokidar: dummyChokidar,
   });
 
@@ -274,7 +279,7 @@ test('Prints any other `elm-make` error', (assert) => new Promise((resolve) => {
     return { status, error: { toString: () => message } };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
 
   const exitCode = elmLive(['--no-recover'], {
     outputStream: qs((chunk) => {
@@ -322,7 +327,7 @@ test('Passes correct args to `elm-make`', (assert) => {
     return { status: 77, error: {} };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
   elmLive(elmLiveArgs.concat(otherArgs), dummyConfig);
 });
 
@@ -359,7 +364,7 @@ test('Disambiguates `elm-make` args with `--`', (assert) => {
     return { status: 77, error: {} };
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
   elmLive(allArgs, dummyConfig);
 });
 
@@ -376,9 +381,7 @@ test('Spawns `--path-to-elm-make` instead of `elm-make` if given', (assert) => {
     return { status: 77, error: {} };
   } };
 
-  const elmLive = proxyquire('./source/elm-live',
-    { 'cross-spawn': crossSpawn }
-  );
+  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
   elmLive([`--path-to-elm-make=${pathToElmMake}`], dummyConfig);
 });
 
@@ -417,7 +420,7 @@ How’s it going?
   } };
 
   let run = 0;
-  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
   elmLive(['--no-recover'], {
     inputStream,
     outputStream: qs((chunk) => {
@@ -485,7 +488,7 @@ test('Starts budo and chokidar with correct config', (assert) => {
     },
   };
 
-  const elmLive = proxyquire('./source/elm-live', {
+  const elmLive = newElmLive({
     budo, chokidar, 'cross-spawn': dummyCrossSpawn,
   });
 
@@ -504,7 +507,7 @@ test('`--open`s the default browser', (assert) => {
     return dummyBudoServer;
   };
 
-  const elmLive = proxyquire('./source/elm-live', {
+  const elmLive = newElmLive({
     budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
   });
 
@@ -525,7 +528,7 @@ test('Serves at the specified `--port`', (assert) => {
     return dummyBudoServer;
   };
 
-  const elmLive = proxyquire('./source/elm-live', {
+  const elmLive = newElmLive({
     budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
   });
 
@@ -547,7 +550,7 @@ test('Serves on the specified `--host`', (assert) => {
     return dummyBudoServer;
   };
 
-  const elmLive = proxyquire('./source/elm-live', {
+  const elmLive = newElmLive({
     budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
   });
 
@@ -571,7 +574,7 @@ test('Serves from the specified `--dir`', (assert) => {
     return dummyBudoServer;
   };
 
-  const elmLive = proxyquire('./source/elm-live', {
+  const elmLive = newElmLive({
     budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
   });
 
@@ -589,7 +592,7 @@ test('`--pushstate to support client-side routing', (assert) => {
     return dummyBudoServer;
   };
 
-  const elmLive = proxyquire('./source/elm-live', {
+  const elmLive = newElmLive({
     budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
   });
 
@@ -649,7 +652,7 @@ test((
     return success;
   } };
 
-  const elmLive = proxyquire('./source/elm-live', {
+  const elmLive = newElmLive({
     chokidar, budo, 'cross-spawn': crossSpawn,
   });
 
@@ -677,9 +680,10 @@ test((
 }));
 
 test((
-  '--before-build runs command'
+  '--before-build and --after-build work'
 ), (assert) => new Promise((resolve) => {
-  const beforeCommand = 'testCommand';
+  const beforeCommand = 'run-me-beforehand';
+  const afterCommand = 'run-me-afterwards';
 
   const commandsRun = [];
 
@@ -688,17 +692,22 @@ test((
     return dummyCrossSpawn.sync();
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
 
-  elmLive([`--before-build=${beforeCommand}`], dummyConfig);
+  elmLive([
+    `--before-build=${beforeCommand}`,
+    `--after-build=${afterCommand}`,
+  ], dummyConfig);
 
   assert.deepEqual(
     commandsRun,
     [
       beforeCommand,
       'elm-make',
+      afterCommand,
     ],
-    'Calls the `--before-build` command and `elm-make`'
+    'Calls the `--before-build` executable, `elm-make` ' +
+    'and the `--after-build` executable'
   );
 
   resolve();
@@ -721,7 +730,7 @@ test((
     return dummyCrossSpawn.sync();
   } };
 
-  const elmLive = proxyquire('./source/elm-live', {
+  const elmLive = newElmLive({
     'cross-spawn': crossSpawn, budo: dummyBudo, chokidar: dummyChokidar,
   });
 
@@ -769,7 +778,7 @@ test((
     return dummyCrossSpawn.sync();
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
 
   const exitCode = elmLive([`--before-build=${beforeCommand}`], {
     outputStream: qs((chunk) => {
@@ -804,7 +813,7 @@ test('Prints any other `--before-build` command error', (assert) => new Promise(
     return dummyCrossSpawn.sync();
   } };
 
-  const elmLive = proxyquire('./source/elm-live', { 'cross-spawn': crossSpawn });
+  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
 
   const exitCode = elmLive(['--no-recover', `--before-build=${beforeCommand}`], {
     outputStream: qs((chunk) => {
