@@ -1,4 +1,5 @@
-master:
+2.7.0:
+  date: 2017-01-07
   new features:
     - New option `--after-build`.
 
