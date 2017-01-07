@@ -7,6 +7,7 @@ const defaults = {
   host: 'localhost',
   dir: '.',
   pushstate: false,
+  watch: '.',
 };
 
 module.exports = (argv) => {
@@ -51,6 +52,7 @@ module.exports = (argv) => {
       { arg: '--path-to-elm-make', key: 'pathToElmMake' },
       { arg: '--dir', key: 'dir' },
       { arg: '--before-build', key: 'beforeBuild' },
+      { arg: '--watch', key: 'watch' },
     ].some(tryStringOption)) {
       return true;
     }
