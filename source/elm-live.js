@@ -190,7 +190,7 @@ ${indent(String(elmMake.error), 2)}
   };
 
   // Watch Elm files
-  const watcher = chokidar.watch('**/*.elm', { ignoreInitial: true });
+  const watcher = chokidar.watch('**/*.elm', { ignoreInitial: true, followSymlinks: false });
 
   watcher.on('all', debounce((event, filePath) => {
     const relativePath = path.relative(process.cwd(), filePath);
