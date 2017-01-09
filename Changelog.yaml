@@ -1,6 +1,7 @@
-master:
+2.7.1:
+  date: 2017-01-09
   fixed bugs:
-    - Added `enginesStrict` to the package.json, to make sure npm warns people.
+    - 'Added `enginesStrict` to the package.json, to make sure npm warns people.'
 
 2.7.0:
   date: 2017-01-07
