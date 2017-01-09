@@ -1,3 +1,7 @@
+master:
+  fixed bugs:
+    - Releasing an unmerged docs change.
+
 2.7.1:
   date: 2017-01-09
   fixed bugs:
