@@ -151,11 +151,25 @@ $ elm-live Main.elm --open --pushstate
 ```
 
 
-<a id="/caveats"></a>&nbsp;
+<a id="/troubleshooting"></a>&nbsp;
 
-## CAVEATS
+## TROUBLESHOOTING
+
+#### my app is not getting reloaded
 
 Your HTML file must have an explicit `<body>` tag, so that we know where to inject a LiveReload snippet.
+
+#### I’m seeing a SyntaxError about block-scoped declarations
+
+If you’re seeing one of these:
+
+```
+SyntaxError: Block-scoped declarations (let, const, function, class) not yet supported outside strict mode
+```
+
+make sure you’re running on node 6+. If you can’t upgrade, consider [transpiling](https://github.com/tomekwi/elm-live/issues/2#issuecomment-156698732) `source/elm-live.js` to ES5.
+
+By the way, [yarn](https://github.com/yarnpkg/yarn) should be warning you about installing incompatible packages. To get the same behavior in npm, [set the `engine-strict`] flag.
 
 
 

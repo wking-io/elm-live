@@ -1,3 +1,7 @@
+master:
+  fixed bugs:
+    - Added troubleshooting.
+
 2.7.2:
   date: 2017-01-09
   fixed bugs:
