@@ -1,4 +1,5 @@
-master:
+2.7.4:
+  date: 2017-01-11
   fixed bugs:
     - Made `elm-live --help` a lot faster.
     - Added `elm-live --version`.
