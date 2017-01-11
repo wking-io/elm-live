@@ -2,6 +2,9 @@ master:
   fixed bugs:
     - Made `elm-live --help` a lot faster.
     - Added `elm-live --version`.
+    - >
+      Fixed endless loop when dealing with symlinks. More info:
+      https://github.com/tomekwi/elm-live/issues/74.
 
 2.7.3:
   date: 2017-01-09
