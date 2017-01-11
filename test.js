@@ -203,7 +203,8 @@ test('Exits if `--no-recover`', (assert) => {
   };
 
   const elmLive = newElmLive({
-    'cross-spawn': crossSpawn, budo, chokidar: dummyChokidar,
+    'cross-spawn': crossSpawn,
+    budo,
   });
 
   assert.is(
@@ -236,9 +237,7 @@ test('Informs of compile errors', (assert) => new Promise((resolve) => {
     return { status };
   } };
 
-  const elmLive = newElmLive({
-    'cross-spawn': crossSpawn, budo: dummyBudo, chokidar: dummyChokidar,
-  });
+  const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
 
   let run = 0;
   const outputStream = qs((chunk) => {
@@ -488,9 +487,7 @@ test('Starts budo and chokidar with correct config', (assert) => {
     },
   };
 
-  const elmLive = newElmLive({
-    budo, chokidar, 'cross-spawn': dummyCrossSpawn,
-  });
+  const elmLive = newElmLive({ budo, chokidar });
 
   elmLive([], dummyConfig);
 });
@@ -507,9 +504,7 @@ test('`--open`s the default browser', (assert) => {
     return dummyBudoServer;
   };
 
-  const elmLive = newElmLive({
-    budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
-  });
+  const elmLive = newElmLive({ budo });
 
   elmLive(['--open'], dummyConfig);
 });
@@ -528,9 +523,7 @@ test('Serves at the specified `--port`', (assert) => {
     return dummyBudoServer;
   };
 
-  const elmLive = newElmLive({
-    budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
-  });
+  const elmLive = newElmLive({ budo });
 
   elmLive([`--port=${portNumber}`], dummyConfig);
 });
@@ -550,9 +543,7 @@ test('Serves on the specified `--host`', (assert) => {
     return dummyBudoServer;
   };
 
-  const elmLive = newElmLive({
-    budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
-  });
+  const elmLive = newElmLive({ budo });
 
   elmLive([`--host=${hostName1}`], dummyConfig);
   elmLive([`--host=${hostName2}`], dummyConfig);
@@ -574,9 +565,7 @@ test('Serves from the specified `--dir`', (assert) => {
     return dummyBudoServer;
   };
 
-  const elmLive = newElmLive({
-    budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
-  });
+  const elmLive = newElmLive({ budo });
 
   elmLive([`--dir=${dir}`], dummyConfig);
 });
@@ -592,9 +581,7 @@ test('`--pushstate to support client-side routing', (assert) => {
     return dummyBudoServer;
   };
 
-  const elmLive = newElmLive({
-    budo, chokidar: dummyChokidar, 'cross-spawn': dummyCrossSpawn,
-  });
+  const elmLive = newElmLive({ budo });
 
   elmLive(['--pushstate'], dummyConfig);
 });
@@ -731,9 +718,7 @@ test((
       return dummyCrossSpawn.sync();
     } };
 
-    const elmLive = newElmLive({
-      'cross-spawn': crossSpawn, budo: dummyBudo, chokidar: dummyChokidar,
-    });
+    const elmLive = newElmLive({ 'cross-spawn': crossSpawn });
 
     let run = 0;
     const outputStream = qs((chunk) => {
