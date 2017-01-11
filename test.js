@@ -1,6 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-'use strict';
-
 const path = require('path');
 
 const test = require('ava');
@@ -142,6 +140,37 @@ test((
     );
   }
 });
+
+
+test((
+  'Prints the `--version`'
+), (assert) => new Promise((resolve, reject) => {
+  assert.plan(2);
+  setTimeout(reject, 100);
+
+  const version = '7.8.9';
+
+  const outputStream = qs((chunk) => {
+    assert.is(naked(chunk),
+      `elm-live v${version}\n`,
+      'prints the version number'
+    );
+
+    resolve();
+  });
+
+  const elmLive = newElmLive({
+    '../package.json': { version },
+  });
+
+  const exitCode = elmLive(['--version'], {
+    inputStream: devnull(), outputStream,
+  });
+
+  assert.is(exitCode, 0,
+    'succeeds'
+  );
+}));
 
 
 test((

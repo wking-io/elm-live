@@ -1,6 +1,7 @@
 master:
   fixed bugs:
     - Made `elm-live --help` a lot faster.
+    - Added `elm-live --version`.
 
 2.7.3:
   date: 2017-01-09

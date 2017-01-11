@@ -7,6 +7,7 @@ const defaults = {
   host: 'localhost',
   dir: '.',
   pushstate: false,
+  version: false,
 };
 
 module.exports = (argv) => {
@@ -21,7 +22,7 @@ module.exports = (argv) => {
       }
       return false;
     };
-    if (['help', 'open', 'pushstate'].some(tryBoolOption)) {
+    if (['help', 'open', 'pushstate', 'version'].some(tryBoolOption)) {
       return true;
     }
 

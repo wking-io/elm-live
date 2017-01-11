@@ -19,6 +19,12 @@ module.exports = (argv, options) => {
   const bold = chalk.bold;
   const dim = chalk.dim;
 
+  // Output version
+  if (args.version) {
+    outputStream.write(`${bold('elm-live')} v${packageJson.version}\n`);
+    return SUCCESS;
+  }
+
   const path = require('path');
   const fs = require('fs');
   const spawnSync = require('cross-spawn').sync;
