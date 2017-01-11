@@ -1,22 +1,3 @@
-const spawnSync = require('cross-spawn').sync;
-const path = require('path');
-const fs = require('fs');
-
-const indent = require('indent-string');
-const budo = require('budo');
-const chokidar = require('chokidar');
-const chalk = require('chalk');
-const hasbinSync = require('hasbin').sync;
-
-const parseArgs = require('./parse-args');
-const debounce = require('./debounce');
-
-const SUCCESS = 0;
-const FAILURE = 1;
-
-const bold = chalk.bold;
-const dim = chalk.dim;
-
 /*
   ({
     outputStream: WritableStream,
@@ -25,9 +6,23 @@ const dim = chalk.dim;
     exitCode: Integer | Null
 */
 module.exports = (argv, options) => {
+  const chalk = require('chalk');
+  const packageJson = require('../package.json');
+  const parseArgs = require('./parse-args');
+
   const outputStream = options.outputStream;
   const inputStream = options.inputStream;
   const args = parseArgs(argv);
+
+  const SUCCESS = 0;
+  const FAILURE = 1;
+  const bold = chalk.bold;
+  const dim = chalk.dim;
+
+  const path = require('path');
+  const fs = require('fs');
+  const spawnSync = require('cross-spawn').sync;
+  const hasbinSync = require('hasbin').sync;
 
   // Display help
   if (args.help) {
@@ -50,6 +45,11 @@ module.exports = (argv, options) => {
 
     return SUCCESS;
   }
+
+  const indent = require('indent-string');
+  const budo = require('budo');
+  const chokidar = require('chokidar');
+  const debounce = require('./debounce');
 
   const auxiliaryBuild = (execPath) => {
     if (!execPath) {
