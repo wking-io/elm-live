@@ -1,5 +1,3 @@
-'use strict';
-
 const spawnSync = require('cross-spawn').sync;
 const path = require('path');
 const fs = require('fs');

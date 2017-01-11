@@ -1,4 +1,3 @@
 extends: "airbnb-base"
 rules:
-  curly: [off]  # https://github.com/airbnb/javascript/issues/445
-  strict: [off]  # node v4+ needs it for `let`
+  curly: off  # https://github.com/airbnb/javascript/issues/445
