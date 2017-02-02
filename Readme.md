@@ -169,7 +169,7 @@ SyntaxError: Block-scoped declarations (let, const, function, class) not yet sup
 
 make sure you’re running on node 6+. If you can’t upgrade, consider [transpiling](https://github.com/tomekwi/elm-live/issues/2#issuecomment-156698732) `source/elm-live.js` to ES5.
 
-By the way, [yarn](https://github.com/yarnpkg/yarn) should be warning you about installing incompatible packages. To get the same behavior in npm, [set the `engine-strict`] flag.
+By the way, [yarn](https://github.com/yarnpkg/yarn) should be warning you about installing incompatible packages. To get the same behavior in npm, [set the `engine-strict`](https://docs.npmjs.com/misc/config#engine-strict) flag.
 
 
 
