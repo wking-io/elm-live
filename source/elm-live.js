@@ -201,8 +201,9 @@ ${indent(String(elmMake.error), 2)}
   });
 
   watcher.on('all', debounce((event, filePath) => {
-    if (/^\./.test(filePath)) return;  // Ignore file starting with a dot
-    if (!/\.elm$/.test(filePath)) return;  // Ignore file not ending with .elm
+    const basename = filePath.substring(filePath.lastIndexOf('/') + 1);
+    if (/^\./.test(basename)) return;  // Ignore file starting with a dot
+    if (!/\.elm$/.test(basename)) return;  // Ignore file not ending with .elm
 
     const relativePath = path.relative(process.cwd(), filePath);
     const eventName = eventNameMap[event] || event;
