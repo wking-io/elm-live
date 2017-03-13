@@ -471,7 +471,7 @@ How’s it going?
 
 
 test('Starts budo and chokidar with correct config', (assert) => {
-  assert.plan(8);
+  assert.plan(9);
 
   const budo = (options) => {
     assert.is(options.port, 8000,
@@ -506,11 +506,16 @@ test('Starts budo and chokidar with correct config', (assert) => {
   };
 
   const chokidar = {
-    watch: (glob) => {
-      assert.is(glob, '**/*.elm',
+    watch: (target, options) => {
+      assert.is(target, '.',
         'watches all `*.elm` files in the current directory ' +
         'and its subdirectories'
       );
+      assert.deepEqual(options, {
+        ignoreInitial: true,
+        followSymlinks: false,
+        ignored: ['node_modules/', 'elm-stuff/'],
+      }, 'watches all `*.elm` files and ignore node_modules and elm-stuff/ directories.');
 
       return dummyChokidarWatcher;
     },
@@ -632,7 +637,7 @@ test((
 
   const chokidar = {
     watch: (target, options) => {
-      assert.is(target, '**/*.elm',
+      assert.is(target, '.',
         'passes the right glob to chokidar'
       );
 

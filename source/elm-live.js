@@ -194,9 +194,16 @@ ${indent(String(elmMake.error), 2)}
   };
 
   // Watch Elm files
-  const watcher = chokidar.watch('**/*.elm', { ignoreInitial: true, followSymlinks: false });
+  const watcher = chokidar.watch('.', {
+    ignoreInitial: true,
+    followSymlinks: false,
+    ignored: ['node_modules/', 'elm-stuff/'],
+  });
 
   watcher.on('all', debounce((event, filePath) => {
+    if (/^\./.test(filePath)) return;  // Ignore file starting with a dot
+    if (!/\.elm$/.test(filePath)) return;  // Ignore file not ending with .elm
+
     const relativePath = path.relative(process.cwd(), filePath);
     const eventName = eventNameMap[event] || event;
 
