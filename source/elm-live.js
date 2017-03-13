@@ -202,6 +202,7 @@ ${indent(String(elmMake.error), 2)}
 
   watcher.on('all', debounce((event, filePath) => {
     const basename = filePath.substring(filePath.lastIndexOf('/') + 1);
+    // chokidar has got some trouble handling glob pattern with simlink #103
     if (/^\./.test(basename)) return;  // Ignore file starting with a dot
     if (!/\.elm$/.test(basename)) return;  // Ignore file not ending with .elm
 
