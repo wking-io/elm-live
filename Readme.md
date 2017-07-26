@@ -17,6 +17,8 @@
 
 # elm-live
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/tomekwi/elm-live.svg)](https://greenkeeper.io/)
+
 **A flexible dev server for Elm  
 Live reload included!**
 
