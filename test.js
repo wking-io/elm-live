@@ -441,7 +441,7 @@ How’s it going?
   }));
 
 test("Starts budo and chokidar with correct config", assert => {
-  assert.plan(8);
+  assert.plan(10);
 
   const budo = options => {
     assert.is(
@@ -478,7 +478,17 @@ test("Starts budo and chokidar with correct config", assert => {
       "directs all output to `outputStream`"
     );
 
-    return dummyBudoServer;
+    return {
+      on: (event, callback) => {
+        assert.is(event, "error", "listens to server errors");
+        const error = {};
+        assert.throws(
+          () => callback(error),
+          thrownError => thrownError === error,
+          "rethrows server errors"
+        );
+      }
+    };
   };
 
   const chokidar = {
