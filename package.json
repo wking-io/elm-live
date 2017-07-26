@@ -45,7 +45,7 @@
     "url": "git@github.com:tomekwi/elm-live"
   },
   "devDependencies": {
-    "ava": "^0.16.0",
+    "ava": "^0.18.0",
     "coveralls": "^2.11.9",
     "dev-null": "^0.1.1",
     "eslint": "^3.3.1",
