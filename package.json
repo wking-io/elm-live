@@ -1,6 +1,6 @@
 {
   "name": "elm-live",
-  "version": "2.7.4",
+  "version": "2.7.5",
   "description": "A flexible dev server for Elm. Live reload included!",
   "bin": {
     "elm-live": "bin/elm-live.js"
@@ -24,10 +24,21 @@
     "node": ">= 6.0.0"
   },
   "engineStrict": true,
-  "files": ["**/*.js", "!/test.js", "/Readme.md", "/License.md", "/manpages/"],
-  "man": ["/manpages/elm-live.1"],
+  "files": [
+    "**/*.js",
+    "!/test.js",
+    "/Readme.md",
+    "/License.md",
+    "/manpages/"
+  ],
+  "man": [
+    "/manpages/elm-live.1"
+  ],
   "license": "MIT",
-  "keywords": ["cli", "tool"],
+  "keywords": [
+    "cli",
+    "tool"
+  ],
   "author": "Tomek Wiszniewski <t.wiszniewski@gmail.com>",
   "repository": {
     "type": "git",
