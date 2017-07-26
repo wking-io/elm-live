@@ -262,9 +262,11 @@ test("Informs of compile errors", assert =>
         resolve(
           assert.is(
             naked(chunk),
-            `\nelm-live:
-  elm-make failed! You can find more info above. Keep calm and take your time
-  to fix your code. We’ll try to compile it again as soon as you change a file.
+            `
+elm-live:
+  elm-make failed! You can find more info above. Keep calm
+  and take your time to fix your code. We’ll try to compile it again
+  as soon as you change a file.
 
 `,
             "prints a friendly message afterwards"
@@ -297,8 +299,11 @@ test("Prints any other `elm-make` error", assert =>
     const exitCode = elmLive(["--no-recover"], {
       outputStream: qs(chunk => {
         assert.is(
-          naked(chunk),
-          `\nelm-live: Error while calling elm-make! This output may be helpful:
+          (console.log(naked(chunk)), naked(chunk)),
+          `
+elm-live:
+  Error while calling elm-make! This output may be helpful:
+
   ${message}
 
 `,
@@ -727,9 +732,11 @@ test("Informs of `--before-build` and `--after-build` run errors", assert =>
           resolve(
             assert.is(
               naked(chunk),
-              `\nelm-live:
-  ${buildCommand} failed! You can find more info above. Keep calm and take your time
-  to check why the command is failing. We’ll try to run it again as soon as you change an Elm file.
+              `
+elm-live:
+  testCommand failed! You can find more info above. Keep calm
+  and take your time to check why the command is failing. We’ll try
+  to run it again as soon as you change an Elm file.
 
 `,
               "prints a friendly message afterwards"
@@ -814,7 +821,10 @@ test("Prints any other `--before-build` or `--after-build` command error", asser
           outputStream: qs(chunk => {
             assert.is(
               naked(chunk),
-              `\nelm-live: Error while calling ${buildCommand}! This output may be helpful:
+              `
+elm-live:
+  Error while calling testCommand! This output may be helpful:
+
   ${message}
 
 `,
