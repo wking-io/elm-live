@@ -174,7 +174,8 @@ test("Shouts if `elm-make` can’t be found", assert =>
     assert.plan(3);
 
     const expectedMessage = new RegExp(
-      `^\nelm-live:
+      `^
+elm-live:
   I can’t find the command elm-make!`
     );
 
@@ -299,7 +300,7 @@ test("Prints any other `elm-make` error", assert =>
     const exitCode = elmLive(["--no-recover"], {
       outputStream: qs(chunk => {
         assert.is(
-          (console.log(naked(chunk)), naked(chunk)),
+          naked(chunk),
           `
 elm-live:
   Error while calling elm-make! This output may be helpful:
@@ -655,14 +656,13 @@ test("Watches all `**/*.elm` files in the current directory", assert =>
         chunkNumber++;
         if (chunkNumber !== 3) return;
 
-        const expectedMessage = `\nelm-live:
-  You’ve changed \`${relativePath}\`. Rebuilding!
-
-`;
-
         assert.is(
           naked(chunk),
-          expectedMessage,
+          `
+elm-live:
+  You’ve changed \`${relativePath}\`. Rebuilding!
+
+`,
           "prints a message when a file is changed"
         );
 
@@ -762,7 +762,8 @@ test("Shouts if the `--before-build` or `--after-build` executable can’t be fo
       const beforeCommand = "testCommand";
 
       const expectedMessage = new RegExp(
-        `^\nelm-live:
+        `^
+elm-live:
   I can’t find the command ${beforeCommand}!`
       );
 
