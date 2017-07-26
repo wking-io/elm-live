@@ -55,5 +55,8 @@
     "nyc": "^10.1.2",
     "proxyquire": "^1.7.4",
     "strip-ansi": "^3.0.0"
+  },
+  "greenkeeper": {
+    "ignore": ["chokidar"]
   }
 }
