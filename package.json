@@ -18,7 +18,7 @@
     "develop": "ava --watch",
     "manpages": "scripts/manpages.sh",
     "prepublish": "npm run manpages",
-    "test": "prettier-check source/*.js test.js index.js && eslint . && nyc ava"
+    "test": "prettier-check source/*.js test.js index.js && eslint source/*.js test.js index.js && nyc ava"
   },
   "engines": {
     "node": ">= 6.0.0"
@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "ava": "^0.16.0",
+    "babel-eslint": "^7.2.3",
     "coveralls": "^2.11.9",
     "dev-null": "^0.1.1",
     "eslint": "^3.3.1",
