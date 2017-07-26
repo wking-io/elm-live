@@ -4,12 +4,6 @@
 ) [![Coveralls – test coverage
 ](https://img.shields.io/coveralls/tomekwi/elm-live.svg?style=flat-square
 )](https://coveralls.io/r/tomekwi/elm-live
-) [![David – status of dependencies
-](https://img.shields.io/david/tomekwi/elm-live.svg?style=flat-square
-)](https://david-dm.org/tomekwi/elm-live
-) [![Code style: airbnb
-](https://img.shields.io/badge/code%20style-airbnb-777777.svg?style=flat-square
-)](https://github.com/airbnb/javascript
 )
 
 
