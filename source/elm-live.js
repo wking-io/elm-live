@@ -213,7 +213,8 @@ ${dim("elm-live:")}
   // Watch Elm files
   const watcher = chokidar.watch("**/*.elm", {
     ignoreInitial: true,
-    followSymlinks: false
+    followSymlinks: false,
+    ignored: "elm-stuff/generated-code/*"
   });
 
   watcher.on(
