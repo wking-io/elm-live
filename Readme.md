@@ -182,7 +182,7 @@ Many thanks to [Evan Czaplicki](https://github.com/evancz), the creator of Elm, 
 
 Many thanks to [Matt DesLauriers](https://github.com/mattdesl) for the wonderful [git.io/budo-server](https://git.io/budo-server). That’s what does the heavy lifting on the static server side.
 
-Warm thanks to our amazing contributors! Credits to [Brian](https://github.com/bdukes) for making Windows support possible, [Kurt](https://github.com/kbsymanz) for allowing a configurable `--host` and [Josh](https://github.com/joshmh) for his work on enabling client-side navigation. Thanks to [Ryan](https://github.com/Ryan1729) batch updates are nice and fast. Kudos to [Mathieu](https://github.com/magopian), [Rémy](https://github.com/natim) and [Nicolas](https://github.com/n1k0) for making the developer experience smoother and to [Gabriel](https://github.com/peacememories) for the `--before-build` option.
+Warm thanks to our amazing contributors! Credits to [Brian](https://github.com/bdukes) for making Windows support possible, [Kurt](https://github.com/kbsymanz) for allowing a configurable `--host` and [Josh](https://github.com/joshmh) for his work on enabling client-side navigation. Thanks to [Ryan](https://github.com/Ryan1729) batch updates are nice and fast. Kudos to [Mathieu](https://github.com/magopian), [Rémy](https://github.com/natim) and [Nicolas](https://github.com/n1k0) for making the developer experience smoother and to [Gabriel](https://github.com/peacememories) for the `--before-build` option. Many thanks to [Noah](https://github.com/eeue56) for making sure elm-live works smoothly with [elm-test](https://github.com/elm-community/elm-test).
 
 
 

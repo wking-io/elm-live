@@ -1,6 +1,9 @@
 master:
   fixed bugs:
     - Prevented some cases where changes to non-Elm files got picked up.
+    - >
+      Stopped watching elm-test generated code. Thanks for this, [Noah
+      ](https://github.com/eeue56)!
 
 2.7.4:
   date: 2017-01-11
