@@ -3,30 +3,30 @@ const defaults = {
   open: false,
   help: false,
   recover: true,
-  pathToElmMake: 'elm-make',
-  host: 'localhost',
-  dir: '.',
+  pathToElmMake: "elm-make",
+  host: "localhost",
+  dir: ".",
   pushstate: false,
-  version: false,
+  version: false
 };
 
-module.exports = (argv) => {
+module.exports = argv => {
   const args = {};
   const elmMakeArgs = [];
 
   argv.every((arg, index) => {
-    const tryBoolOption = (boolOption) => {
+    const tryBoolOption = boolOption => {
       if (arg === `--${boolOption}`) {
         args[boolOption] = true;
         return true;
       }
       return false;
     };
-    if (['help', 'open', 'pushstate', 'version'].some(tryBoolOption)) {
+    if (["help", "open", "pushstate", "version"].some(tryBoolOption)) {
       return true;
     }
 
-    if (arg === '--no-recover') {
+    if (arg === "--no-recover") {
       args.recover = false;
       return true;
     }
@@ -38,7 +38,7 @@ module.exports = (argv) => {
       return true;
     }
 
-    const tryStringOption = (option) => {
+    const tryStringOption = option => {
       const pattern = new RegExp(`^${option.arg}=(.*)$`);
       const match = arg.match(pattern);
       if (match) {
@@ -47,17 +47,19 @@ module.exports = (argv) => {
       }
       return false;
     };
-    if ([
-      { arg: '--host', key: 'host' },
-      { arg: '--path-to-elm-make', key: 'pathToElmMake' },
-      { arg: '--dir', key: 'dir' },
-      { arg: '--before-build', key: 'beforeBuild' },
-      { arg: '--after-build', key: 'afterBuild' },
-    ].some(tryStringOption)) {
+    if (
+      [
+        { arg: "--host", key: "host" },
+        { arg: "--path-to-elm-make", key: "pathToElmMake" },
+        { arg: "--dir", key: "dir" },
+        { arg: "--before-build", key: "beforeBuild" },
+        { arg: "--after-build", key: "afterBuild" }
+      ].some(tryStringOption)
+    ) {
       return true;
     }
 
-    if (arg === '--') {
+    if (arg === "--") {
       const elmMakeRest = argv.slice(index + 1);
       elmMakeRest.forEach(elmMakeArg => elmMakeArgs.push(elmMakeArg));
       return false;

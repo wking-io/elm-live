@@ -1,4 +1,5 @@
-extends: "airbnb-base"
+extends:
+  - "airbnb-base"
+  - "prettier"
 rules:
-  curly: off  # https://github.com/airbnb/javascript/issues/445
   global-require: off  # only pull dependencies when needed
