@@ -214,6 +214,7 @@ ${dim("elm-live:")}
   const watcher = chokidar.watch("**/*.elm", {
     ignoreInitial: true,
     followSymlinks: false,
+    usePolling: fs.existsSync("/.dockerenv"),
     ignored: "elm-stuff/generated-code/*"
   });
 
