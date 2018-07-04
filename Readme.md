@@ -1,6 +1,6 @@
 💁‍♂️ a quick friendly reminder that [elm-live is looking for new maintainers](https://github.com/architectcodes/elm-live/issues/123)
 
-***
+&nbsp;
 
 &nbsp;
 
