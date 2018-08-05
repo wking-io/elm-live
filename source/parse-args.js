@@ -3,7 +3,7 @@ const defaults = {
   open: false,
   help: false,
   recover: true,
-  pathToElmMake: "elm-make",
+  pathToElmMake: "elm make",
   host: "localhost",
   dir: ".",
   pushstate: false,

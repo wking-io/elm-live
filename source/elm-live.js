@@ -134,7 +134,7 @@ ${dim("elm-live:")}
       outputStream.write(
         `
 ${dim("elm-live:")}
-  Error while calling ${bold("elm-make")}! This output may be helpful:
+  Error while calling ${bold("elm make")}! This output may be helpful:
 
 ${indent(String(elmMake.error), 2)}
 
@@ -146,7 +146,7 @@ ${indent(String(elmMake.error), 2)}
       outputStream.write(
         `
 ${dim("elm-live:")}
-  ${bold("elm-make")} failed! You can find more info above. Keep calm
+  ${bold("elm make")} failed! You can find more info above. Keep calm
   and take your time to fix your code. We’ll try to compile it again
   as soon as you change a file.
 
