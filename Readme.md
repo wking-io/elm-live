@@ -47,7 +47,7 @@ npm install --global elm elm-live
 npm install --save-dev elm elm-live
 ```
 
-If you’d rather bring your own global `elm-make`, `npm install --global elm-live` will do.
+If you’d rather bring your own global `elm make`, `npm install --global elm-live` will do.
 
 Note that you need *node 6.0+* to run the tool natively. But if you’re stuck on an older version, don’t worry! [Rumour has it](https://github.com/tomekwi/elm-live/issues/2#issuecomment-156698732) that you can transpile the code to ES5!
 
@@ -59,7 +59,7 @@ Note that you need *node 6.0+* to run the tool natively. But if you’re stuck o
 ## SYNOPSIS
 
 ```sh
-elm-live [...<options>] [--] ...<elm-make args>  
+elm-live [...<options>] [--] ...<elm make args>
 elm-live --help
 ```
 
@@ -70,7 +70,7 @@ elm-live --help
 
 ## DESCRIPTION
 
-First, we spawn `elm-make` with the `elm-make args` you’ve given.
+First, we spawn `elm make` with the `elm make args` you’ve given.
 
 When the build is ready, we start a static HTTP server in the current directory. We inject a _live reload_ snippet into every HTML file we serve. Every time a static file has changed, we’ll reload your app in all browsers you’ve opened it with. (Mobile and IE included!)
 
@@ -87,7 +87,7 @@ We also watch all `*.elm` files in the current directory and its subdirectories.
 Set the port to start the server at. If the port is taken, we’ll use the next available one. `PORT` should be a valid port number. Default: `8000`.
 
 #### `--path-to-elm-make=PATH`
-An absolute or relative path to `elm-make`. If you’ve installed _elm-platform_ locally with _npm_ (`npm install --save-dev elm`), you’ll likely want to set this to `node_modules/.bin/elm-make`. Default: `elm-make`.
+An absolute or relative path to `elm make`. If you’ve installed _elm-platform_ locally with _npm_ (`npm install --save-dev elm`), you’ll likely want to set this to `node_modules/.bin/elm make`. Default: `elm make`.
 
 #### `--host=HOSTNAME|IP`
 Set the host interface to attach the server to. Default: `localhost`.
@@ -99,7 +99,7 @@ The base for static content. Default: `.`.
 We’ll open the app in your default browser as soon as the server is up.
 
 #### `--no-recover`
-When _elm-make_ encounters a compile error, we keep _elm-live_ running and give you time to fix your code. Pass `--no-recover` if you want the server to exit immediately whenever it encounters a compile error.
+When _elm make_ encounters a compile error, we keep _elm-live_ running and give you time to fix your code. Pass `--no-recover` if you want the server to exit immediately whenever it encounters a compile error.
 
 #### `--pushstate`
 Serve `index.html` on 404 errors. This lets us use client-side routing in Elm. For instance, we can have a URL like `http://localhost:8000/account` get handled by the Elm _navigation_ package instead of failing with a 404 error.
@@ -110,7 +110,7 @@ Run `EXECUTABLE` before every rebuild. This way you can easily use other tools l
 Heads up! At the moment, we only allow running a single executable without parameters. If you need more than that, please give us a shout at https://git.io/elm-live.before-build-args.
 
 #### `--after-build=EXECUTABLE`
-Just like `--before-build`, but runs after `elm-make`.
+Just like `--before-build`, but runs after `elm make`.
 
 #### `--help`
 You’re looking at it.
