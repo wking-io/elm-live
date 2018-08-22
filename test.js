@@ -169,19 +169,19 @@ test("Prints the `--version`", assert =>
     assert.is(exitCode, 0, "succeeds");
   }));
 
-test("Shouts if `elm-make` can’t be found", assert =>
+test("Shouts if `elm` can’t be found", assert =>
   new Promise(resolve => {
     assert.plan(3);
 
     const expectedMessage = new RegExp(
       `^
 elm-live:
-  I can’t find the command elm-make!`
+  I can’t find the command elm!`
     );
 
     const crossSpawn = {
       sync: command => {
-        assert.is(command, "elm-make", "spawns `elm-make`");
+        assert.is(command, "elm", "spawns `elm`");
 
         return { error: { code: "ENOENT" } };
       }
@@ -212,7 +212,7 @@ test("Exits if `--no-recover`", assert => {
 
   const crossSpawn = {
     sync: command => {
-      assert.is(command, "elm-make", "spawns `elm-make`");
+      assert.is(command, "elm", "spawns `elm`");
 
       return { status };
     }
@@ -230,7 +230,7 @@ test("Exits if `--no-recover`", assert => {
   assert.is(
     elmLive(["--no-recover"], dummyConfig),
     status,
-    "exits with the same status as `elm-make`"
+    "exits with the same status as `elm make`"
   );
 
   assert.is(elmLive([], dummyConfig), null, "keeps running otherwise");
@@ -245,7 +245,7 @@ test("Informs of compile errors", assert =>
 
     const crossSpawn = {
       sync: (command, _, options) => {
-        assert.is(command, "elm-make", "spawns `elm-make`");
+        assert.is(command, "elm", "spawns `elm`");
 
         options.stdio[1].write(message);
 
@@ -257,7 +257,7 @@ test("Informs of compile errors", assert =>
 
     let run = 0;
     const outputStream = qs(chunk => {
-      if (run === 0) assert.is(chunk, message, "prints elm-make output first");
+      if (run === 0) assert.is(chunk, message, "prints elm make output first");
 
       if (run === 1)
         resolve(
@@ -265,7 +265,7 @@ test("Informs of compile errors", assert =>
             naked(chunk),
             `
 elm-live:
-  elm-make failed! You can find more info above. Keep calm
+  elm make failed! You can find more info above. Keep calm
   and take your time to fix your code. We’ll try to compile it again
   as soon as you change a file.
 
@@ -280,7 +280,7 @@ elm-live:
     elmLive([], { outputStream, inputStream: devnull() });
   }));
 
-test("Prints any other `elm-make` error", assert =>
+test("Prints any other `elm make` error", assert =>
   new Promise(resolve => {
     assert.plan(3);
 
@@ -289,7 +289,7 @@ test("Prints any other `elm-make` error", assert =>
 
     const crossSpawn = {
       sync: command => {
-        assert.is(command, "elm-make", "spawns `elm-make`");
+        assert.is(command, "elm", "spawns `elm`");
 
         return { status, error: { toString: () => message } };
       }
@@ -303,7 +303,7 @@ test("Prints any other `elm-make` error", assert =>
           naked(chunk),
           `
 elm-live:
-  Error while calling elm-make! This output may be helpful:
+  Error while calling elm make! This output may be helpful:
 
   ${message}
 
@@ -316,10 +316,10 @@ elm-live:
       inputStream: devnull()
     });
 
-    assert.is(exitCode, status, "exits with whatever code `elm-make` returned");
+    assert.is(exitCode, status, "exits with whatever code `elm make` returned");
   }));
 
-test("Passes correct args to `elm-make`", assert => {
+test("Passes correct args to `elm make`", assert => {
   assert.plan(2);
 
   const elmLiveArgs = ["--port=77", "--no-recover"];
@@ -333,9 +333,13 @@ test("Passes correct args to `elm-make`", assert => {
 
   const crossSpawn = {
     sync: (command, args) => {
-      assert.is(command, "elm-make", "spawns `elm-make`");
+      assert.is(command, "elm", "spawns `elm`");
 
-      assert.deepEqual(args, otherArgs, "passes all not understood arguments");
+      assert.deepEqual(
+        args,
+        ["make", ...otherArgs],
+        "passes all not understood arguments"
+      );
 
       // Kill after one attempt
       return { status: 77, error: {} };
@@ -346,7 +350,7 @@ test("Passes correct args to `elm-make`", assert => {
   elmLive(elmLiveArgs.concat(otherArgs), dummyConfig);
 });
 
-test("Disambiguates `elm-make` args with `--`", assert => {
+test("Disambiguates `elm` args with `--`", assert => {
   assert.plan(2);
 
   const elmMakeBefore = ["--anything", "whatever", "whatever 2"];
@@ -356,13 +360,13 @@ test("Disambiguates `elm-make` args with `--`", assert => {
 
   const crossSpawn = {
     sync: (command, args) => {
-      assert.is(command, "elm-make", "spawns `elm-make`");
+      assert.is(command, "elm", "spawns `elm`");
 
       assert.deepEqual(
         args,
-        elmMakeBefore.concat(elmMakeAfter),
+        ["make", ...elmMakeBefore, ...elmMakeAfter],
         "passes all not understood commands and all commands after the `--` " +
-          "to elm-make"
+          "to elm"
       );
 
       // Kill after one attempt
@@ -374,14 +378,14 @@ test("Disambiguates `elm-make` args with `--`", assert => {
   elmLive(allArgs, dummyConfig);
 });
 
-test("Spawns `--path-to-elm-make` instead of `elm-make` if given", assert => {
+test("Spawns `--path-to-elm` instead of `elm` if given", assert => {
   assert.plan(1);
 
-  const pathToElmMake = "/path/to/any/binary";
+  const pathToElm = "/path/to/any/binary";
 
   const crossSpawn = {
     sync: command => {
-      assert.is(command, pathToElmMake);
+      assert.is(command, pathToElm);
 
       // Kill after one attempt
       return { status: 77, error: {} };
@@ -389,10 +393,10 @@ test("Spawns `--path-to-elm-make` instead of `elm-make` if given", assert => {
   };
 
   const elmLive = newElmLive({ "cross-spawn": crossSpawn });
-  elmLive([`--path-to-elm-make=${pathToElmMake}`], dummyConfig);
+  elmLive([`--path-to-elm=${pathToElm}`], dummyConfig);
 });
 
-test("Redirects elm-make stdio", assert =>
+test("Redirects elm make stdio", assert =>
   new Promise(resolve => {
     assert.plan(4);
 
@@ -406,7 +410,7 @@ How’s it going?
 
     const crossSpawn = {
       sync: (command, _, options) => {
-        assert.is(command, "elm-make", "spawns `elm-make`");
+        assert.is(command, "elm", "spawns `elm`");
 
         assert.is(
           options.stdio[0],
@@ -635,7 +639,7 @@ test("Watches all `**/*.elm` files in the current directory", assert =>
     const failure = { status: 77, error: {} };
     const crossSpawn = {
       sync: command => {
-        if (command !== "elm-make") return success;
+        if (command !== "elm") return success;
         elmMakeRun++;
 
         if (elmMakeRun === 1) return failure;
@@ -646,7 +650,7 @@ test("Watches all `**/*.elm` files in the current directory", assert =>
         );
 
         assert.pass(
-          "retries spawning `elm-make` if things go wrong the first time"
+          "retries spawning `elm make` if things go wrong the first time"
         );
 
         return success;
@@ -704,8 +708,8 @@ test("--before-build and --after-build work", assert =>
 
     assert.deepEqual(
       commandsRun,
-      [beforeCommand, "elm-make", afterCommand],
-      "Calls the `--before-build` executable, `elm-make` " +
+      [beforeCommand, "elm", afterCommand],
+      "Calls the `--before-build` executable, `elm` " +
         "and the `--after-build` executable"
     );
 
