@@ -37,7 +37,8 @@
   "license": "MIT",
   "keywords": [
     "cli",
-    "tool"
+    "tool",
+    "elm"
   ],
   "author": "Tomek Wiszniewski <t.wiszniewski@gmail.com>",
   "repository": {
