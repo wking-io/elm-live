@@ -335,7 +335,11 @@ test("Passes correct args to `elm make`", assert => {
     sync: (command, args) => {
       assert.is(command, "elm", "spawns `elm make`");
 
-      assert.deepEqual(args, ["make", ...otherArgs], "passes all not understood arguments");
+      assert.deepEqual(
+        args,
+        ["make", ...otherArgs],
+        "passes all not understood arguments"
+      );
 
       // Kill after one attempt
       return { status: 77, error: {} };
