@@ -3,7 +3,7 @@ const defaults = {
   open: false,
   help: false,
   recover: true,
-  pathToElmMake: "elm-make",
+  pathToElm: "elm",
   host: "localhost",
   dir: ".",
   pushstate: false,
@@ -50,7 +50,7 @@ module.exports = argv => {
     if (
       [
         { arg: "--host", key: "host" },
-        { arg: "--path-to-elm-make", key: "pathToElmMake" },
+        { arg: "--path-to-elm", key: "pathToElm" },
         { arg: "--dir", key: "dir" },
         { arg: "--before-build", key: "beforeBuild" },
         { arg: "--after-build", key: "afterBuild" }
