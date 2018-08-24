@@ -110,7 +110,7 @@ ${dim("elm-live:")}
       return beforeBuild;
     }
 
-    const elmMake = spawnSync(args.pathToElmMake, args.elmMakeArgs, {
+    const elmMake = spawnSync(args.pathToElm, ["make", ...args.elmMakeArgs], {
       stdio: [inputStream, outputStream, outputStream]
     });
 
@@ -118,10 +118,10 @@ ${dim("elm-live:")}
       outputStream.write(
         `
 ${dim("elm-live:")}
-  I can’t find the command ${bold(args.pathToElmMake)}!
+  I can’t find the command ${bold(args.pathToElm)}!
   Looks like ${bold("elm-platform")} isn’t installed. Make sure you’ve followed
   the steps at https://git.io/elm-platform and that you can call
-  ${bold(args.pathToElmMake)} from your command line.
+  ${bold(args.pathToElm)} from your command line.
 
   If that fails, have a look at open issues:
   https://github.com/tomekwi/elm-live/issues .
@@ -134,7 +134,7 @@ ${dim("elm-live:")}
       outputStream.write(
         `
 ${dim("elm-live:")}
-  Error while calling ${bold("elm-make")}! This output may be helpful:
+  Error while calling ${bold("elm make")}! This output may be helpful:
 
 ${indent(String(elmMake.error), 2)}
 
@@ -146,7 +146,7 @@ ${indent(String(elmMake.error), 2)}
       outputStream.write(
         `
 ${dim("elm-live:")}
-  ${bold("elm-make")} failed! You can find more info above. Keep calm
+  ${bold("elm make")} failed! You can find more info above. Keep calm
   and take your time to fix your code. We’ll try to compile it again
   as soon as you change a file.
 

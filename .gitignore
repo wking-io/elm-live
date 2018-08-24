@@ -3,3 +3,6 @@
 /npm-debug.log
 /manpages/
 /.nyc_output/
+/.vscode/
+/coverage/
+elm-live-*.tgz
