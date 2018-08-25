@@ -7,6 +7,7 @@ const devnull = require("dev-null");
 const qs = require("q-stream");
 const naked = require("strip-ansi");
 const debounce = require("./source/debounce");
+const getElmDirs = require("./source/getElmDirs");
 
 const dummyConfig = { inputStream: devnull(), outputStream: devnull() };
 const dummyCrossSpawn = { sync: () => ({ status: 0 }) };
@@ -888,4 +889,17 @@ is called several times within the wait interval`
     };
 
     setTimeout(checkTimesRan, wait + 200);
+  }));
+
+test("getElmDirs", assert =>
+  new Promise(resolve => {
+    assert.plan(1);
+
+    const elmDirs = getElmDirs("test");
+    const expected = ["src/**/*.elm", "../src/**/*.elm"];
+    const msg = `get elm dirs: ${elmDirs}, expected: ${expected}`;
+
+    assert.deepEqual(elmDirs, expected, msg);
+
+    resolve();
   }));
