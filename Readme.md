@@ -1,9 +1,9 @@
 [![Travis – build status
-](https://img.shields.io/travis/tomekwi/elm-live/master.svg?style=flat-square
-)](https://travis-ci.org/tomekwi/elm-live
+](https://img.shields.io/travis/wking-io/elm-live/master.svg?style=flat-square
+)](https://travis-ci.org/wking-io/elm-live
 ) [![Coveralls – test coverage
-](https://img.shields.io/coveralls/tomekwi/elm-live.svg?style=flat-square
-)](https://coveralls.io/r/tomekwi/elm-live
+](https://img.shields.io/coveralls/wking-io/elm-live.svg?style=flat-square
+)](https://coveralls.io/r/wking-io/elm-live
 )
 
 
@@ -21,7 +21,7 @@ Live reload included!**
 
 <p align="center"><img
   alt="Screencast"
-  src="https://cdn.rawgit.com/tomekwi/elm-live/b990094/screencast.gif"
+  src="https://cdn.rawgit.com/wking-io/elm-live/b990094/screencast.gif"
   title="Sweet, isn’t it?"
   width="405"
 /></p>
@@ -57,7 +57,7 @@ npm install --save-dev elm elm-live
 
 If you’d rather bring your own global `elm`, `npm install --global elm-live` will do.
 
-Note that you need *node 6.0+* to run the tool natively. But if you’re stuck on an older version, don’t worry! [Rumour has it](https://github.com/tomekwi/elm-live/issues/2#issuecomment-156698732) that you can transpile the code to ES5!
+Note that you need *node 6.0+* to run the tool natively. But if you’re stuck on an older version, don’t worry! [Rumour has it](https://github.com/wking-io/elm-live/issues/2#issuecomment-156698732) that you can transpile the code to ES5!
 
 
 
@@ -192,7 +192,7 @@ If you’re seeing one of these:
 SyntaxError: Block-scoped declarations (let, const, function, class) not yet supported outside strict mode
 ```
 
-make sure you’re running on node 6+. If you can’t upgrade, consider [transpiling](https://github.com/tomekwi/elm-live/issues/2#issuecomment-156698732) `source/elm-live.js` to ES5.
+make sure you’re running on node 6+. If you can’t upgrade, consider [transpiling](https://github.com/wking-io/elm-live/issues/2#issuecomment-156698732) `source/elm-live.js` to ES5.
 
 By the way, [yarn](https://github.com/yarnpkg/yarn) should be warning you about installing incompatible packages. To get the same behavior in npm, [set the `engine-strict`](https://docs.npmjs.com/misc/config#engine-strict) flag.
 
@@ -201,11 +201,17 @@ By the way, [yarn](https://github.com/yarnpkg/yarn) should be warning you about 
 
 <a id="/credits"></a>&nbsp;
 
+## Original Author
+Huge shoutout to the creator [Tomek Wiszniewski](https://github.com/tomekwi)!
+
+## Current Owner
+[Will King](https://github.com/wking-io)
+
 ## CREDITS
 
-Many thanks to [Evan Czaplicki](https://github.com/evancz), the creator of Elm, for [git.io/elm-make](https://git.io/elm-make) – the most brilliant language compiler the world has ever seen! Without _elm make_, _elm-live_ would be a car without an engine.
+Many thanks to [Evan Czaplicki](https://github.com/evancz), the creator of Elm, for the [Elm Compiler](https://github.com/elm/compiler) – the most brilliant language compiler the world has ever seen! Without _elm make_, _elm-live_ would be a car without an engine.
 
-Many thanks to [Matt DesLauriers](https://github.com/mattdesl) for the wonderful [git.io/budo-server](https://git.io/budo-server). That’s what does the heavy lifting on the static server side.
+Many thanks to [Matt DesLauriers](https://github.com/mattdesl) for the wonderful [budo](https://github.com/mattdesl/budo). That’s what does the heavy lifting on the static server side.
 
 Warm thanks to our amazing contributors! Credits to [Brian](https://github.com/bdukes) for making Windows support possible, [Kurt](https://github.com/kbsymanz) for allowing a configurable `--host` and [Josh](https://github.com/joshmh) for his work on enabling client-side navigation. Thanks to [Ryan](https://github.com/Ryan1729) batch updates are nice and fast. Kudos to [Mathieu](https://github.com/magopian), [Rémy](https://github.com/natim) and [Nicolas](https://github.com/n1k0) for making the developer experience smoother and to [Gabriel](https://github.com/peacememories) for the `--before-build` option. Many thanks to [Noah](https://github.com/eeue56) for making sure elm-live works smoothly with [elm-test](https://github.com/elm-community/elm-test).
 
@@ -216,4 +222,4 @@ Warm thanks to our amazing contributors! Credits to [Brian](https://github.com/b
 
 ## LICENSE
 
-[MIT](https://git.io/elm-live.License) © [Tomek Wiszniewski](https://github.com/tomekwi)
+[MIT](https://git.io/elm-live.License) © [Will King](https://github.com/wking-io) & [Tomek Wiszniewski](https://github.com/tomekwi)

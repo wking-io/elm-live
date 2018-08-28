@@ -1,3 +1,9 @@
+3.0.0@next:
+  date: 2018-08-24
+  new features:
+    - Upgraded support to Elm 0.19
+    - Moved owner of repo from https://github.com/architectcodes to current owner
+
 2.7.5:
   date: 2017-07-26
   fixed bugs:

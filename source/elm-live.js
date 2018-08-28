@@ -119,12 +119,12 @@ ${dim("elm-live:")}
         `
 ${dim("elm-live:")}
   I can’t find the command ${bold(args.pathToElm)}!
-  Looks like ${bold("elm-platform")} isn’t installed. Make sure you’ve followed
-  the steps at https://git.io/elm-platform and that you can call
+  Looks like ${bold("elm")} isn’t installed. Make sure you’ve followed
+  the steps at https://github.com/elm/compiler and that you can call
   ${bold(args.pathToElm)} from your command line.
 
   If that fails, have a look at open issues:
-  https://github.com/tomekwi/elm-live/issues .
+  https://github.com/wking-io/elm-live/issues .
 
 `
       );

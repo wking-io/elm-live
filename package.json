@@ -40,10 +40,10 @@
     "tool",
     "elm"
   ],
-  "author": "Tomek Wiszniewski <t.wiszniewski@gmail.com>",
+  "author": "William King <contact@wking.io>",
   "repository": {
     "type": "git",
-    "url": "git@github.com:tomekwi/elm-live"
+    "url": "git@github.com:wking-io/elm-live"
   },
   "devDependencies": {
     "ava": "^0.16.0",
