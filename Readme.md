@@ -112,6 +112,11 @@ When _elm make_ encounters a compile error, we keep _elm-live_ running and give 
 #### `--pushstate`
 Serve `index.html` on 404 errors. This lets us use client-side routing in Elm. For instance, we can have a URL like `http://localhost:8000/account` get handled by the Elm _navigation_ package instead of failing with a 404 error.
 
+#### `--proxy=PATH_PREFIX::HOST(::STRIP_PREFIX)
+Proxy requests to paths that start with `PATH_PREFIX` to another server runing at `HOST`. This can be helpful when developing against a backend server serving an API.
+If `STRIP_PREFIX` is given, it will be removed from the start of the path before being proxied.
+As an example `--proxy=/api::http://localhost:8080::/api` will result in requests to `/api/posts` to be proxied to `http://localhost:8080/posts`.
+
 #### `--before-build=EXECUTABLE`
 Run `EXECUTABLE` before every rebuild. This way you can easily use other tools like _elm-css_ or _browserify_ in your workflow.
 

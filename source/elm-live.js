@@ -174,7 +174,8 @@ ${dim("elm-live:")}
 
 `
     );
-    const server = budo({
+
+    const serverConfig = {
       live: true,
       watchGlob: path.join(args.dir, "**/*.{html,css,js}"),
       port: args.port,
@@ -183,7 +184,18 @@ ${dim("elm-live:")}
       dir: args.dir,
       stream: outputStream,
       pushstate: args.pushstate
-    });
+    }
+
+    if (args.proxyPathPrefix && args.proxyHost) {
+      const proxy = require('middleware-proxy');
+      if (args.proxyStripPrefix) {
+        serverConfig.middleware = [proxy(args.proxyPathPrefix, args.proxyHost, args.proxyStripPrefix)];
+      } else {
+        serverConfig.middleware = [proxy(args.proxyPathPrefix, args.proxyHost)];
+      }
+    }
+
+    const server = budo(serverConfig);
     server.on("error", error => {
       throw error;
     });

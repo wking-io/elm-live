@@ -59,6 +59,15 @@ module.exports = argv => {
       return true;
     }
 
+    const proxyPattern = /^--proxy=(.+?)::(.+?)(::(.+))?$/;
+    const proxyMatch = arg.match(proxyPattern);
+    if (proxyMatch) {
+      args.proxyPathPrefix = proxyMatch[1];
+      args.proxyHost = proxyMatch[2];
+      args.proxyStripPrefix = proxyMatch[4];
+      return true
+    }
+
     if (arg === "--") {
       const elmMakeRest = argv.slice(index + 1);
       elmMakeRest.forEach(elmMakeArg => elmMakeArgs.push(elmMakeArg));
