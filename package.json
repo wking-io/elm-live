@@ -24,7 +24,9 @@
     "standard:fix": "standard --fix"
   },
   "husky": {
-    "pre-commit": "npm run format"
+    "hooks": {
+      "pre-commit": "npm run format"
+    }
   },
   "engines": {
     "node": ">= 6.0.0"
