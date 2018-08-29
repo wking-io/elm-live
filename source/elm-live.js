@@ -52,7 +52,7 @@ module.exports = (argv, options) => {
   }
 
   const indent = require("indent-string");
-  const budo = require("budo");
+  const elmServe = require("elm-serve");
   const chokidar = require("chokidar");
   const debounce = require("./debounce");
 
@@ -174,18 +174,14 @@ ${dim("elm-live:")}
 
 `
     );
-    const server = budo({
-      live: true,
+    elmServe({
       watchGlob: path.join(args.dir, "**/*.{html,css,js}"),
       port: args.port,
       host: args.host,
       open: args.open,
       dir: args.dir,
-      stream: outputStream,
-      pushstate: args.pushstate
-    });
-    server.on("error", error => {
-      throw error;
+      pushstate: args.pushstate,
+      startPage: path.join(args.dir, "index.html"),
     });
 
     serverStarted = true;

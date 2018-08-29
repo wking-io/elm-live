@@ -1,18 +1,17 @@
 {
   "name": "elm-live",
-  "version": "3.0.0",
+  "version": "3.0.0-alpha.1",
   "description": "A flexible dev server for Elm. Live reload included!",
   "bin": {
     "elm-live": "bin/elm-live.js"
   },
   "dependencies": {
-    "budo": "^9.0.0",
     "chalk": "^1.1.1",
     "chokidar": "1.6.0",
     "cross-spawn": "^5.0.1",
+    "elm-serve": "0.1.1",
     "hasbin": "^1.2.1",
-    "indent-string": "^3.0.0",
-    "q-stream": "^0.2.0"
+    "indent-string": "^3.0.0"
   },
   "scripts": {
     "develop": "ava --watch",
@@ -59,6 +58,7 @@
     "prettier": "^1.5.3",
     "prettier-check": "^1.0.0",
     "proxyquire": "^1.7.4",
+    "q-stream": "^0.2.0",
     "strip-ansi": "^3.0.0"
   }
 }
