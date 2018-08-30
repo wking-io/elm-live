@@ -6,120 +6,128 @@
     exitCode: Integer | Null
 */
 module.exports = (argv, options) => {
-  const chalk = require("chalk");
-  const packageJson = require("../package.json");
-  const parseArgs = require("./parse-args");
+  const chalk = require('chalk')
+  const packageJson = require('../package.json')
+  const parseArgs = require('./parse-args')
 
-  const outputStream = options.outputStream;
-  const inputStream = options.inputStream;
-  const args = parseArgs(argv);
+  const outputStream = options.outputStream
+  const inputStream = options.inputStream
+  const args = parseArgs(argv)
 
-  const SUCCESS = 0;
-  const FAILURE = 1;
-  const bold = chalk.bold;
-  const dim = chalk.dim;
+  const SUCCESS = 0
+  const FAILURE = 1
+  const bold = chalk.bold
+  const dim = chalk.dim
 
   // Output version
   if (args.version) {
-    outputStream.write(`${bold("elm-live")} v${packageJson.version}\n`);
-    return SUCCESS;
+    outputStream.write(`${bold('elm-live')} v${packageJson.version}\n`)
+    return SUCCESS
   }
 
-  const path = require("path");
-  const fs = require("fs");
-  const spawnSync = require("cross-spawn").sync;
-  const hasbinSync = require("hasbin").sync;
+  const path = require('path')
+  const fs = require('fs')
+  const spawnSync = require('cross-spawn').sync
+  const hasbinSync = require('hasbin').sync
 
   // Display help
   if (args.help) {
-    if (hasbinSync("man")) {
-      const manpagePath = path.resolve(__dirname, "../manpages/elm-live.1");
-      const manProcess = spawnSync("man", [manpagePath], {
+    if (hasbinSync('man')) {
+      const manpagePath = path.resolve(__dirname, '../manpages/elm-live.1')
+      const manProcess = spawnSync('man', [manpagePath], {
         stdio: [inputStream, outputStream, outputStream]
-      });
+      })
 
-      if (manProcess.error) throw manProcess.error;
+      if (manProcess.error) throw manProcess.error
     } else {
       const fallbackPath = path.resolve(
         __dirname,
-        "../manpages/elm-live.1.txt"
-      );
-      const plainTextHelp = fs.readFileSync(fallbackPath, "utf8");
-      outputStream.write(plainTextHelp);
+        '../manpages/elm-live.1.txt'
+      )
+      const plainTextHelp = fs.readFileSync(fallbackPath, 'utf8')
+      outputStream.write(plainTextHelp)
     }
 
-    return SUCCESS;
+    return SUCCESS
   }
 
+<<<<<<< HEAD
   const indent = require("indent-string");
   const elmServe = require("elm-serve");
   const chokidar = require("chokidar");
   const debounce = require("./debounce");
+=======
+  const indent = require('indent-string')
+  const budo = require('budo')
+  const chokidar = require('chokidar')
+  const debounce = require('./debounce')
+>>>>>>> 4e9d6c50317b2a348a140badcb242b002c6411f6
 
   const auxiliaryBuild = execPath => {
     if (!execPath) {
-      return { fatal: false, exitCode: SUCCESS };
+      return { fatal: false, exitCode: SUCCESS }
     }
 
     const process = spawnSync(execPath, [], {
       stdio: [inputStream, outputStream, outputStream]
-    });
+    })
 
-    if (process.error && process.error.code === "ENOENT") {
+    if (process.error && process.error.code === 'ENOENT') {
       outputStream.write(
         `
-${dim("elm-live:")}
+${dim('elm-live:')}
   I can’t find the command ${bold(execPath)}!
   Please make sure you can call ${bold(execPath)}
   from your command line.
 
 `
-      );
+      )
 
-      return { fatal: true, exitCode: FAILURE };
+      return { fatal: true, exitCode: FAILURE }
     } else if (process.error) {
       outputStream.write(
         `
-${dim("elm-live:")}
+${dim('elm-live:')}
   Error while calling ${bold(execPath)}! This output may be helpful:
 
 ${indent(String(process.error), 2)}
 
 `
-      );
+      )
     }
 
-    if (args.recover && process.status !== SUCCESS)
+    if (args.recover && process.status !== SUCCESS) {
       outputStream.write(
         `
-${dim("elm-live:")}
+${dim('elm-live:')}
   ${bold(execPath)} failed! You can find more info above. Keep calm
   and take your time to check why the command is failing. We’ll try
   to run it again as soon as you change an Elm file.
 
 `
-      );
+      )
+    }
 
-    return { fatal: false, exitCode: process.status };
-  };
+    return { fatal: false, exitCode: process.status }
+  }
 
   // Build logic
   const build = () => {
-    const beforeBuild = auxiliaryBuild(args.beforeBuild);
+    const beforeBuild = auxiliaryBuild(args.beforeBuild)
     if (beforeBuild.exitCode !== SUCCESS) {
-      return beforeBuild;
+      return beforeBuild
     }
 
-    const elmMake = spawnSync(args.pathToElm, ["make", ...args.elmMakeArgs], {
+    const elmMake = spawnSync(args.pathToElm, ['make', ...args.elmMakeArgs], {
       stdio: [inputStream, outputStream, outputStream]
-    });
+    })
 
-    if (elmMake.error && elmMake.error.code === "ENOENT") {
+    if (elmMake.error && elmMake.error.code === 'ENOENT') {
       outputStream.write(
         `
-${dim("elm-live:")}
+${dim('elm-live:')}
   I can’t find the command ${bold(args.pathToElm)}!
-  Looks like ${bold("elm")} isn’t installed. Make sure you’ve followed
+  Looks like ${bold('elm')} isn’t installed. Make sure you’ve followed
   the steps at https://github.com/elm/compiler and that you can call
   ${bold(args.pathToElm)} from your command line.
 
@@ -127,113 +135,130 @@ ${dim("elm-live:")}
   https://github.com/wking-io/elm-live/issues .
 
 `
-      );
+      )
 
-      return { fatal: true, exitCode: FAILURE };
+      return { fatal: true, exitCode: FAILURE }
     } else if (elmMake.error) {
       outputStream.write(
         `
-${dim("elm-live:")}
-  Error while calling ${bold("elm make")}! This output may be helpful:
+${dim('elm-live:')}
+  Error while calling ${bold('elm make')}! This output may be helpful:
 
 ${indent(String(elmMake.error), 2)}
 
 `
-      );
+      )
     }
 
-    if (args.recover && elmMake.status !== SUCCESS)
+    if (args.recover && elmMake.status !== SUCCESS) {
       outputStream.write(
         `
-${dim("elm-live:")}
-  ${bold("elm make")} failed! You can find more info above. Keep calm
+${dim('elm-live:')}
+  ${bold('elm make')} failed! You can find more info above. Keep calm
   and take your time to fix your code. We’ll try to compile it again
   as soon as you change a file.
 
 `
-      );
-
-    const afterBuild = auxiliaryBuild(args.afterBuild);
-    if (afterBuild.exitCode !== SUCCESS) {
-      return afterBuild;
+      )
     }
 
-    return { fatal: false, exitCode: elmMake.status };
-  };
+    const afterBuild = auxiliaryBuild(args.afterBuild)
+    if (afterBuild.exitCode !== SUCCESS) {
+      return afterBuild
+    }
+
+    return { fatal: false, exitCode: elmMake.status }
+  }
 
   // Server logic
-  let serverStarted;
+  let serverStarted
   const startServer = () => {
     outputStream.write(
       `
-${dim("elm-live:")}
+${dim('elm-live:')}
   The build has succeeded. Starting the server!${args.open
     ? ` We’ll open your app
   in the default browser as soon as it’s up and running.`
-    : ""}
+    : ''}
 
 `
+<<<<<<< HEAD
     );
     elmServe({
       watchGlob: path.join(args.dir, "**/*.{html,css,js}"),
+=======
+    )
+    const server = budo({
+      live: true,
+      watchGlob: path.join(args.dir, '**/*.{html,css,js}'),
+>>>>>>> 4e9d6c50317b2a348a140badcb242b002c6411f6
       port: args.port,
       host: args.host,
       open: args.open,
       dir: args.dir,
+<<<<<<< HEAD
       pushstate: args.pushstate,
       startPage: path.join(args.dir, "index.html"),
     });
+=======
+      stream: outputStream,
+      pushstate: args.pushstate
+    })
+    server.on('error', error => {
+      throw error
+    })
+>>>>>>> 4e9d6c50317b2a348a140badcb242b002c6411f6
 
-    serverStarted = true;
-  };
+    serverStarted = true
+  }
 
   // First build
-  const firstBuildResult = build();
+  const firstBuildResult = build()
   if (
     firstBuildResult.fatal ||
     (!args.recover && firstBuildResult.exitCode !== SUCCESS)
   ) {
-    return firstBuildResult.exitCode;
+    return firstBuildResult.exitCode
   } else if (firstBuildResult.exitCode === SUCCESS) {
-    startServer();
+    startServer()
   }
 
   const eventNameMap = {
-    add: "added",
-    addDir: "added",
-    change: "changed",
-    unlink: "removed",
-    unlinkDir: "removed"
-  };
+    add: 'added',
+    addDir: 'added',
+    change: 'changed',
+    unlink: 'removed',
+    unlinkDir: 'removed'
+  }
 
   // Watch Elm files
-  const watcher = chokidar.watch("**/*.elm", {
+  const watcher = chokidar.watch('**/*.elm', {
     ignoreInitial: true,
     followSymlinks: false,
-    ignored: "elm-stuff/generated-code/*"
-  });
+    ignored: 'elm-stuff/generated-code/*'
+  })
 
   watcher.on(
-    "all",
+    'all',
     debounce((event, filePath) => {
-      const relativePath = path.relative(process.cwd(), filePath);
-      const eventName = eventNameMap[event] || event;
+      const relativePath = path.relative(process.cwd(), filePath)
+      const eventName = eventNameMap[event] || event
 
       outputStream.write(
         `
-${dim("elm-live:")}
+${dim('elm-live:')}
   You’ve ${eventName} \`${relativePath}\`. Rebuilding!
 
 `
-      );
+      )
 
-      const buildResult = build();
+      const buildResult = build()
       if (!serverStarted && buildResult.exitCode === SUCCESS) {
-        startServer();
+        startServer()
       }
     }),
     100
-  );
+  )
 
-  return null;
-};
+  return null
+}
