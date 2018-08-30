@@ -51,17 +51,10 @@ module.exports = (argv, options) => {
     return SUCCESS
   }
 
-<<<<<<< HEAD
-  const indent = require("indent-string");
-  const elmServe = require("elm-serve");
-  const chokidar = require("chokidar");
-  const debounce = require("./debounce");
-=======
   const indent = require('indent-string')
-  const budo = require('budo')
+  const elmServe = require('elm-serve')
   const chokidar = require('chokidar')
   const debounce = require('./debounce')
->>>>>>> 4e9d6c50317b2a348a140badcb242b002c6411f6
 
   const auxiliaryBuild = execPath => {
     if (!execPath) {
@@ -182,32 +175,16 @@ ${dim('elm-live:')}
     : ''}
 
 `
-<<<<<<< HEAD
-    );
-    elmServe({
-      watchGlob: path.join(args.dir, "**/*.{html,css,js}"),
-=======
     )
-    const server = budo({
-      live: true,
+    elmServe({
       watchGlob: path.join(args.dir, '**/*.{html,css,js}'),
->>>>>>> 4e9d6c50317b2a348a140badcb242b002c6411f6
       port: args.port,
       host: args.host,
       open: args.open,
       dir: args.dir,
-<<<<<<< HEAD
       pushstate: args.pushstate,
-      startPage: path.join(args.dir, "index.html"),
-    });
-=======
-      stream: outputStream,
-      pushstate: args.pushstate
+      startPage: path.join(args.dir, 'index.html')
     })
-    server.on('error', error => {
-      throw error
-    })
->>>>>>> 4e9d6c50317b2a348a140badcb242b002c6411f6
 
     serverStarted = true
   }

@@ -1,10 +1,6 @@
 {
   "name": "elm-live",
-<<<<<<< HEAD
   "version": "3.0.2-alpha.0",
-=======
-  "version": "3.0.1",
->>>>>>> 4e9d6c50317b2a348a140badcb242b002c6411f6
   "description": "A flexible dev server for Elm. Live reload included!",
   "bin": {
     "elm-live": "bin/elm-live.js"
