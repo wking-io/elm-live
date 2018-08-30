@@ -10,7 +10,7 @@
     "chokidar": "1.6.0",
     "commander": "2.17.1",
     "cross-spawn": "^5.0.1",
-    "elm-serve": "0.1.1",
+    "elm-serve": "0.1.2",
     "hasbin": "^1.2.1",
     "indent-string": "^3.0.0"
   },

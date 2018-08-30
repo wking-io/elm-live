@@ -79,7 +79,7 @@ ${chalk.dim('elm-live:')}
       }
     }
 
-    const elmMake = spawnSync(args.pathToElm, ['make', ...args.elmMakeArgs], {
+    const elmMake = spawnSync(args.pathToElm, ['make', ...args.args], {
       stdio: [inputStream, outputStream, outputStream]
     })
 
