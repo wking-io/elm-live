@@ -8,6 +8,7 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "chokidar": "1.6.0",
+    "commander": "2.17.1",
     "cross-spawn": "^5.0.1",
     "elm-serve": "0.1.1",
     "hasbin": "^1.2.1",

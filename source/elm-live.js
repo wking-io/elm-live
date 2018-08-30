@@ -5,51 +5,17 @@
   }) =>
     exitCode: Integer | Null
 */
-module.exports = (argv, options) => {
+module.exports = (args, options) => {
   const chalk = require('chalk')
-  const packageJson = require('../package.json')
-  const parseArgs = require('./parse-args')
 
   const outputStream = options.outputStream
   const inputStream = options.inputStream
-  const args = parseArgs(argv)
 
   const SUCCESS = 0
   const FAILURE = 1
-  const bold = chalk.bold
-  const dim = chalk.dim
-
-  // Output version
-  if (args.version) {
-    outputStream.write(`${bold('elm-live')} v${packageJson.version}\n`)
-    return SUCCESS
-  }
 
   const path = require('path')
-  const fs = require('fs')
   const spawnSync = require('cross-spawn').sync
-  const hasbinSync = require('hasbin').sync
-
-  // Display help
-  if (args.help) {
-    if (hasbinSync('man')) {
-      const manpagePath = path.resolve(__dirname, '../manpages/elm-live.1')
-      const manProcess = spawnSync('man', [manpagePath], {
-        stdio: [inputStream, outputStream, outputStream]
-      })
-
-      if (manProcess.error) throw manProcess.error
-    } else {
-      const fallbackPath = path.resolve(
-        __dirname,
-        '../manpages/elm-live.1.txt'
-      )
-      const plainTextHelp = fs.readFileSync(fallbackPath, 'utf8')
-      outputStream.write(plainTextHelp)
-    }
-
-    return SUCCESS
-  }
 
   const indent = require('indent-string')
   const elmServe = require('elm-serve')
@@ -68,9 +34,9 @@ module.exports = (argv, options) => {
     if (process.error && process.error.code === 'ENOENT') {
       outputStream.write(
         `
-${dim('elm-live:')}
-  I can’t find the command ${bold(execPath)}!
-  Please make sure you can call ${bold(execPath)}
+${chalk.dim('elm-live:')}
+  I can’t find the command ${chalk.bold(execPath)}!
+  Please make sure you can call ${chalk.bold(execPath)}
   from your command line.
 
 `
@@ -80,8 +46,8 @@ ${dim('elm-live:')}
     } else if (process.error) {
       outputStream.write(
         `
-${dim('elm-live:')}
-  Error while calling ${bold(execPath)}! This output may be helpful:
+${chalk.dim('elm-live:')}
+  Error while calling ${chalk.bold(execPath)}! This output may be helpful:
 
 ${indent(String(process.error), 2)}
 
@@ -92,8 +58,8 @@ ${indent(String(process.error), 2)}
     if (args.recover && process.status !== SUCCESS) {
       outputStream.write(
         `
-${dim('elm-live:')}
-  ${bold(execPath)} failed! You can find more info above. Keep calm
+${chalk.dim('elm-live:')}
+  ${chalk.bold(execPath)} failed! You can find more info above. Keep calm
   and take your time to check why the command is failing. We’ll try
   to run it again as soon as you change an Elm file.
 
@@ -106,9 +72,11 @@ ${dim('elm-live:')}
 
   // Build logic
   const build = () => {
-    const beforeBuild = auxiliaryBuild(args.beforeBuild)
-    if (beforeBuild.exitCode !== SUCCESS) {
-      return beforeBuild
+    if (args.hasOwnProperty('beforeBuild')) {
+      const beforeBuild = auxiliaryBuild(args.beforeBuild)
+      if (beforeBuild.exitCode !== SUCCESS) {
+        return beforeBuild
+      }
     }
 
     const elmMake = spawnSync(args.pathToElm, ['make', ...args.elmMakeArgs], {
@@ -118,11 +86,11 @@ ${dim('elm-live:')}
     if (elmMake.error && elmMake.error.code === 'ENOENT') {
       outputStream.write(
         `
-${dim('elm-live:')}
-  I can’t find the command ${bold(args.pathToElm)}!
-  Looks like ${bold('elm')} isn’t installed. Make sure you’ve followed
+${chalk.dim('elm-live:')}
+  I can’t find the command ${chalk.bold(args.pathToElm)}!
+  Looks like ${chalk.bold('elm')} isn’t installed. Make sure you’ve followed
   the steps at https://github.com/elm/compiler and that you can call
-  ${bold(args.pathToElm)} from your command line.
+  ${chalk.bold(args.pathToElm)} from your command line.
 
   If that fails, have a look at open issues:
   https://github.com/wking-io/elm-live/issues .
@@ -134,8 +102,8 @@ ${dim('elm-live:')}
     } else if (elmMake.error) {
       outputStream.write(
         `
-${dim('elm-live:')}
-  Error while calling ${bold('elm make')}! This output may be helpful:
+${chalk.dim('elm-live:')}
+  Error while calling ${chalk.bold('elm make')}! This output may be helpful:
 
 ${indent(String(elmMake.error), 2)}
 
@@ -146,8 +114,8 @@ ${indent(String(elmMake.error), 2)}
     if (args.recover && elmMake.status !== SUCCESS) {
       outputStream.write(
         `
-${dim('elm-live:')}
-  ${bold('elm make')} failed! You can find more info above. Keep calm
+${chalk.dim('elm-live:')}
+  ${chalk.bold('elm make')} failed! You can find more info above. Keep calm
   and take your time to fix your code. We’ll try to compile it again
   as soon as you change a file.
 
@@ -155,9 +123,11 @@ ${dim('elm-live:')}
       )
     }
 
-    const afterBuild = auxiliaryBuild(args.afterBuild)
-    if (afterBuild.exitCode !== SUCCESS) {
-      return afterBuild
+    if (args.hasOwnProperty('afterBuild')) {
+      const afterBuild = auxiliaryBuild(args.afterBuild)
+      if (afterBuild.exitCode !== SUCCESS) {
+        return afterBuild
+      }
     }
 
     return { fatal: false, exitCode: elmMake.status }
@@ -168,7 +138,7 @@ ${dim('elm-live:')}
   const startServer = () => {
     outputStream.write(
       `
-${dim('elm-live:')}
+${chalk.dim('elm-live:')}
   The build has succeeded. Starting the server!${args.open
     ? ` We’ll open your app
   in the default browser as soon as it’s up and running.`
@@ -223,7 +193,7 @@ ${dim('elm-live:')}
 
       outputStream.write(
         `
-${dim('elm-live:')}
+${chalk.dim('elm-live:')}
   You’ve ${eventName} \`${relativePath}\`. Rebuilding!
 
 `
