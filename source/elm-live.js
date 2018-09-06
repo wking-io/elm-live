@@ -5,7 +5,22 @@
   }) =>
     exitCode: Integer | Null
 */
-module.exports = (args, options) => {
+module.exports = (argv, options) => {
+  const args = Object.assign(
+    {
+      port: argv.port || 8000,
+      pathToElm: argv.pathToElm || 'elm',
+      host: argv.host || 'localhost',
+      dir: argv.dir || process.cwd(),
+      open: argv.open || false,
+      recover: argv.recover !== false,
+      pushstate: argv.pushstate || false,
+      elmMakeArgs: argv.args || []
+    },
+    (argv.beforeBuild ? { beforeBuild: argv.beforeBuild } : {}),
+    (argv.afterBuild ? { afterBuild: argv.afterBuild } : {})
+  )
+
   const chalk = require('chalk')
 
   const outputStream = options.outputStream
@@ -78,8 +93,7 @@ ${chalk.dim('elm-live:')}
         return beforeBuild
       }
     }
-
-    const elmMake = spawnSync(args.pathToElm, ['make', ...args.args], {
+    const elmMake = spawnSync(args.pathToElm, ['make', ...args.elmMakeArgs], {
       stdio: [inputStream, outputStream, outputStream]
     })
 
