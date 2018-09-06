@@ -10,8 +10,8 @@ const debounce = require('./source/debounce')
 
 const dummyConfig = { inputStream: devnull(), outputStream: devnull() }
 const dummyCrossSpawn = { sync: () => ({ status: 0 }) }
-const dummyBudoServer = { on: () => {} }
-const dummyBudo = () => dummyBudoServer
+const dummyElmServer = () => {}
+const dummyElmServe = dummyElmServer
 const dummyChokidarWatcher = { on: () => {} }
 const dummyChokidar = { watch: () => dummyChokidarWatcher }
 
@@ -22,152 +22,12 @@ const newElmLive = mocks =>
       {},
       {
         'cross-spawn': dummyCrossSpawn,
-        budo: dummyBudo,
+        'elm-serve': dummyElmServe,
         chokidar: dummyChokidar
       },
       mocks
     )
   )
-
-test('Prints `--help`', assert => {
-  assert.plan(5)
-
-  const crossSpawn = {
-    sync: (command, args, config) => {
-      assert.is(command, 'man', 'spawns `man`')
-
-      assert.is(
-        args[0],
-        path.resolve(__dirname, 'manpages/elm-live.1'),
-        'with the right manpage'
-      )
-
-      assert.is(
-        config.stdio[0],
-        dummyConfig.inputStream,
-        'reads from `inputStream`'
-      )
-
-      assert.is(
-        config.stdio[1],
-        dummyConfig.outputStream,
-        'reads from `outputStream`'
-      )
-
-      return { error: null }
-    }
-  }
-
-  const elmLive = newElmLive({ 'cross-spawn': crossSpawn })
-
-  const exitCode = elmLive(['--help'], dummyConfig)
-
-  assert.is(exitCode, 0, 'succeeds')
-})
-
-test('Falls back to plain text `--help` over stdout', assert =>
-  new Promise((resolve, reject) => {
-    assert.plan(4)
-    setTimeout(reject, 100)
-
-    const expectedHelpContent = `I’m dreaming
-of a white Christmas
-`
-
-    const hasbin = {
-      sync: command => {
-        assert.is(command, 'man', 'checks if `man` is in the PATH')
-
-        return false
-      }
-    }
-
-    const fs = {
-      readFileSync: (file, encoding) => {
-        const expectedLocation = 'manpages/elm-live.1.txt'
-        assert.is(
-          file,
-          path.resolve(__dirname, expectedLocation),
-          `reads the file at \`${expectedLocation}\``
-        )
-
-        if (encoding !== 'utf8') throw new Error('Bad encoding!')
-
-        return expectedHelpContent
-      }
-    }
-
-    const outputStream = qs(chunk => {
-      assert.is(chunk, expectedHelpContent, 'prints the help text')
-
-      resolve()
-    })
-
-    const elmLive = newElmLive({
-      hasbin,
-      fs
-    })
-
-    const exitCode = elmLive(['--help'], {
-      inputStream: devnull(),
-      outputStream
-    })
-
-    assert.is(exitCode, 0, 'succeeds')
-  }))
-
-test('Throws any other `man` error', assert => {
-  assert.plan(2)
-
-  const dummyError = { code: 'unknown' }
-
-  const crossSpawn = {
-    sync: command => {
-      assert.is(command, 'man', 'tries to spawn `man`')
-
-      return { error: dummyError }
-    }
-  }
-
-  const elmLive = newElmLive({
-    'cross-spawn': crossSpawn
-  })
-
-  try {
-    elmLive(['--help'], dummyConfig)
-  } catch (error) {
-    assert.is(error, dummyError, 'throws the same error cross-spawn returns')
-  }
-})
-
-test('Prints the `--version`', assert =>
-  new Promise((resolve, reject) => {
-    assert.plan(2)
-    setTimeout(reject, 100)
-
-    const version = '7.8.9'
-
-    const outputStream = qs(chunk => {
-      assert.is(
-        naked(chunk),
-        `elm-live v${version}\n`,
-        'prints the version number'
-      )
-
-      resolve()
-    })
-
-    const elmLive = newElmLive({
-      '../package.json': { version }
-    })
-
-    const exitCode = elmLive(['--version'], {
-      inputStream: devnull(),
-      outputStream
-    })
-
-    assert.is(exitCode, 0, 'succeeds')
-  }))
 
 test('Shouts if `elm` can’t be found', assert =>
   new Promise(resolve => {
@@ -187,9 +47,9 @@ elm-live:
       }
     }
 
-    const elmLive = newElmLive({ 'cross-spawn': crossSpawn })
+    const elmLive = newElmLive({}, { 'cross-spawn': crossSpawn })
 
-    const exitCode = elmLive([], {
+    const exitCode = elmLive({}, {
       outputStream: qs(chunk => {
         assert.truthy(
           expectedMessage.test(naked(chunk)),
@@ -218,22 +78,22 @@ test('Exits if `--no-recover`', assert => {
     }
   }
 
-  const budo = () => {
+  const elmServe = () => {
     assert.fail('doesn’t start the server until errors are fixed')
   }
 
   const elmLive = newElmLive({
     'cross-spawn': crossSpawn,
-    budo
+    'elm-serve': elmServe
   })
 
   assert.is(
-    elmLive(['--no-recover'], dummyConfig),
+    elmLive({ recover: false }, dummyConfig),
     status,
     'exits with the same status as `elm make`'
   )
 
-  assert.is(elmLive([], dummyConfig), null, 'keeps running otherwise')
+  assert.is(elmLive({}, dummyConfig), null, 'keeps running otherwise')
 })
 
 test('Informs of compile errors', assert =>
@@ -278,7 +138,7 @@ elm-live:
       run++
     })
 
-    elmLive([], { outputStream, inputStream: devnull() })
+    elmLive({ pathToElm: 'elm', recover: true }, { outputStream, inputStream: devnull() })
   }))
 
 test('Prints any other `elm make` error', assert =>
@@ -298,7 +158,7 @@ test('Prints any other `elm make` error', assert =>
 
     const elmLive = newElmLive({ 'cross-spawn': crossSpawn })
 
-    const exitCode = elmLive(['--no-recover'], {
+    const exitCode = elmLive({ recover: false }, {
       outputStream: qs(chunk => {
         assert.is(
           naked(chunk),
@@ -323,7 +183,6 @@ elm-live:
 test('Passes correct args to `elm make`', assert => {
   assert.plan(2)
 
-  const elmLiveArgs = ['--port=77', '--no-recover']
   const otherArgs = [
     '--anything',
     'whatever',
@@ -348,35 +207,7 @@ test('Passes correct args to `elm make`', assert => {
   }
 
   const elmLive = newElmLive({ 'cross-spawn': crossSpawn })
-  elmLive(elmLiveArgs.concat(otherArgs), dummyConfig)
-})
-
-test('Disambiguates `elm make` args with `--`', assert => {
-  assert.plan(2)
-
-  const elmMakeBefore = ['--anything', 'whatever', 'whatever 2']
-  const elmLiveBefore = ['--open', '--no-recover']
-  const elmMakeAfter = ['--port=77', '--beep=boop']
-  const allArgs = [...elmMakeBefore, ...elmLiveBefore, '--', ...elmMakeAfter]
-
-  const crossSpawn = {
-    sync: (command, args) => {
-      assert.is(command, 'elm', 'spawns `elm make`')
-
-      assert.deepEqual(
-        args,
-        ['make', ...elmMakeBefore, ...elmMakeAfter],
-        'passes all not understood commands and all commands after the `--` ' +
-          'to elm make'
-      )
-
-      // Kill after one attempt
-      return { status: 77, error: {} }
-    }
-  }
-
-  const elmLive = newElmLive({ 'cross-spawn': crossSpawn })
-  elmLive(allArgs, dummyConfig)
+  elmLive({ port: 77, recover: false, args: otherArgs }, dummyConfig)
 })
 
 test('Spawns `--path-to-elm` instead of `elm` if given', assert => {
@@ -394,7 +225,7 @@ test('Spawns `--path-to-elm` instead of `elm` if given', assert => {
   }
 
   const elmLive = newElmLive({ 'cross-spawn': crossSpawn })
-  elmLive([`--path-to-elm=${pathToElm}`], dummyConfig)
+  elmLive({ pathToElm }, dummyConfig)
 })
 
 test('Redirects elm make stdio', assert =>
@@ -429,7 +260,7 @@ How’s it going?
 
     let run = 0
     const elmLive = newElmLive({ 'cross-spawn': crossSpawn })
-    elmLive(['--no-recover'], {
+    elmLive({ recover: false }, {
       inputStream,
       outputStream: qs(chunk => {
         if (run === 0) { assert.is(chunk, elmLiveOut, 'directs stdout to the `outputStream`') }
@@ -445,10 +276,10 @@ How’s it going?
     })
   }))
 
-test('Starts budo and chokidar with correct config', assert => {
-  assert.plan(10)
+test('Starts elmServe and chokidar with correct config', assert => {
+  assert.plan(7)
 
-  const budo = options => {
+  const elmServe = options => {
     assert.is(
       options.port,
       8000,
@@ -465,23 +296,17 @@ test('Starts budo and chokidar with correct config', assert => {
 
     assert.is(
       options.dir,
-      '.',
+      process.cwd(),
       'serves the current working directory by default'
     )
 
     assert.is(
       options.watchGlob,
-      '**/*.{html,css,js}',
+      `${process.cwd()}/**/*.{html,css,js}`,
       'reloads the app when an HTML, JS or CSS static file changes'
     )
 
     assert.is(options.pushstate, false, 'disables `--pushstate` by default')
-
-    assert.is(
-      options.stream,
-      dummyConfig.outputStream,
-      'directs all output to `outputStream`'
-    )
 
     return {
       on: (event, callback) => {
@@ -509,23 +334,23 @@ test('Starts budo and chokidar with correct config', assert => {
     }
   }
 
-  const elmLive = newElmLive({ budo, chokidar })
+  const elmLive = newElmLive({ 'elm-serve': elmServe, chokidar })
 
-  elmLive([], dummyConfig)
+  elmLive({ pathToElm: 'elm', recover: true }, dummyConfig)
 })
 
 test('`--open`s the default browser', assert => {
   assert.plan(1)
 
-  const budo = options => {
-    assert.is(options.open, true, 'passes `--open` to budo')
+  const elmServe = options => {
+    assert.is(options.open, true, 'passes `--open` to elmServe')
 
-    return dummyBudoServer
+    return dummyElmServer
   }
 
-  const elmLive = newElmLive({ budo })
+  const elmLive = newElmLive({ 'elm-serve': elmServe })
 
-  elmLive(['--open'], dummyConfig)
+  elmLive({ open: true }, dummyConfig)
 })
 
 test('Serves at the specified `--port`', assert => {
@@ -533,15 +358,15 @@ test('Serves at the specified `--port`', assert => {
 
   const portNumber = 867
 
-  const budo = options => {
-    assert.is(options.port, portNumber, 'passes `--port` to budo')
+  const elmServe = options => {
+    assert.is(options.port, portNumber, 'passes `--port` to elmServe')
 
-    return dummyBudoServer
+    return dummyElmServer
   }
 
-  const elmLive = newElmLive({ budo })
+  const elmLive = newElmLive({ 'elm-serve': elmServe })
 
-  elmLive([`--port=${portNumber}`], dummyConfig)
+  elmLive({ port: portNumber }, dummyConfig)
 })
 
 test('Serves on the specified `--host`', assert => {
@@ -550,19 +375,19 @@ test('Serves on the specified `--host`', assert => {
   const hostName1 = 'localhost'
   const hostName2 = '127.0.0.1'
 
-  const budo = options => {
+  const elmServe = options => {
     assert.true(
       options.host === hostName1 || options.host === hostName2,
-      'passes `--host` to budo'
+      'passes `--host` to elmServe'
     )
 
-    return dummyBudoServer
+    return dummyElmServer
   }
 
-  const elmLive = newElmLive({ budo })
+  const elmLive = newElmLive({ 'elm-serve': elmServe })
 
-  elmLive([`--host=${hostName1}`], dummyConfig)
-  elmLive([`--host=${hostName2}`], dummyConfig)
+  elmLive({ host: hostName1 }, dummyConfig)
+  elmLive({ host: hostName2 }, dummyConfig)
 })
 
 test('Serves from the specified `--dir`', assert => {
@@ -570,32 +395,32 @@ test('Serves from the specified `--dir`', assert => {
 
   const dir = 'relative/or/absolute/path/'
 
-  const budo = options => {
+  const elmServe = options => {
     assert.true(options.dir === dir, 'serves the right files')
     assert.true(
       options.watchGlob === `${dir}**/*.{html,css,js}`,
       'watches the right files'
     )
-    return dummyBudoServer
+    return dummyElmServer
   }
 
-  const elmLive = newElmLive({ budo })
+  const elmLive = newElmLive({ 'elm-serve': elmServe })
 
-  elmLive([`--dir=${dir}`], dummyConfig)
+  elmLive({ dir }, dummyConfig)
 })
 
 test('`--pushstate to support client-side routing', assert => {
   assert.plan(1)
 
-  const budo = options => {
-    assert.is(options.pushstate, true, 'passes `--pushstate` to budo')
+  const elmServe = options => {
+    assert.is(options.pushstate, true, 'passes `--pushstate` to elmServe')
 
-    return dummyBudoServer
+    return dummyElmServer
   }
 
-  const elmLive = newElmLive({ budo })
+  const elmLive = newElmLive({ 'elm-serve': elmServe })
 
-  elmLive(['--pushstate'], dummyConfig)
+  elmLive({ pushstate: true }, dummyConfig)
 })
 
 test('Watches all `**/*.elm` files in the current directory', assert =>
@@ -630,9 +455,9 @@ test('Watches all `**/*.elm` files in the current directory', assert =>
     }
 
     let serverStarted = false
-    const budo = () => {
+    const elmServe = () => {
       serverStarted = true
-      return dummyBudoServer
+      return dummyElmServer
     }
 
     let elmMakeRun = 0
@@ -660,12 +485,12 @@ test('Watches all `**/*.elm` files in the current directory', assert =>
 
     const elmLive = newElmLive({
       chokidar,
-      budo,
+      'elm-serve': elmServe,
       'cross-spawn': crossSpawn
     })
 
     let chunkNumber = 0
-    elmLive([], {
+    elmLive({ pathToElm: 'elm', recover: true }, {
       inputStream: devnull(),
       outputStream: qs(chunk => {
         chunkNumber++
@@ -702,9 +527,13 @@ test('--before-build and --after-build work', assert =>
 
     const elmLive = newElmLive({ 'cross-spawn': crossSpawn })
 
-    elmLive(
-      [`--before-build=${beforeCommand}`, `--after-build=${afterCommand}`],
-      dummyConfig
+    elmLive({
+      pathToElm: 'elm',
+      recover: true,
+      beforeBuild: beforeCommand,
+      afterBuild: afterCommand
+    },
+    dummyConfig
     )
 
     assert.deepEqual(
@@ -721,7 +550,7 @@ test('Informs of `--before-build` and `--after-build` run errors', assert =>
   new Promise(resolve => {
     assert.plan(4);
 
-    ['--before-build', '--after-build'].forEach(buildParameter => {
+    ['beforeBuild', 'afterBuild'].forEach(buildParameter => {
       const buildCommand = 'testCommand'
       const message = 'whatever'
       const status = 1
@@ -761,7 +590,11 @@ elm-live:
         run++
       })
 
-      elmLive([`${buildParameter}=${buildCommand}`], {
+      elmLive({
+        pathToElm: 'elm',
+        recover: true,
+        [buildParameter]: buildCommand
+      }, {
         outputStream,
         inputStream: devnull()
       })
@@ -771,9 +604,7 @@ elm-live:
 
 test('Shouts if the `--before-build` or `--after-build` executable can’t be found', assert =>
   new Promise(resolve => {
-    assert.plan(4);
-
-    ['--before-build', '--after-build'].forEach(buildParameter => {
+    ['beforeBuild', 'afterBuild'].forEach(buildParameter => {
       const beforeCommand = 'testCommand'
 
       const expectedMessage = new RegExp(
@@ -793,7 +624,11 @@ elm-live:
 
       const elmLive = newElmLive({ 'cross-spawn': crossSpawn })
 
-      const exitCode = elmLive([`${buildParameter}=${beforeCommand}`], {
+      const exitCode = elmLive({
+        pathToElm: 'elm',
+        recover: true,
+        [buildParameter]: beforeCommand
+      }, {
         outputStream: qs(chunk => {
           assert.truthy(
             expectedMessage.test(naked(chunk)),
@@ -814,7 +649,7 @@ test('Prints any other `--before-build` or `--after-build` command error', asser
   new Promise(resolve => {
     assert.plan(4);
 
-    ['--before-build', '--after-build'].forEach(buildParameter => {
+    ['beforeBuild', 'afterBuild'].forEach(buildParameter => {
       const buildCommand = 'testCommand'
       const message = 'whatever'
       const status = 9
@@ -831,26 +666,27 @@ test('Prints any other `--before-build` or `--after-build` command error', asser
 
       const elmLive = newElmLive({ 'cross-spawn': crossSpawn })
 
-      const exitCode = elmLive(
-        ['--no-recover', `${buildParameter}=${buildCommand}`],
-        {
-          outputStream: qs(chunk => {
-            assert.is(
-              naked(chunk),
-              `
+      const exitCode = elmLive({
+        recover: false,
+        [buildParameter]: buildCommand
+      }, {
+        outputStream: qs(chunk => {
+          assert.is(
+            naked(chunk),
+            `
 elm-live:
   Error while calling testCommand! This output may be helpful:
 
   ${message}
 
 `,
-              'prints the error’s output'
-            )
+            'prints the error’s output'
+          )
 
-            resolve()
-          }),
-          inputStream: devnull()
-        }
+          resolve()
+        }),
+        inputStream: devnull()
+      }
       )
 
       assert.is(
