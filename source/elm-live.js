@@ -31,8 +31,6 @@ module.exports = (argv, options) => {
 
   const path = require('path')
   const spawnSync = require('cross-spawn').sync
-
-  const indent = require('indent-string')
   const elmServe = require('elm-serve')
   const chokidar = require('chokidar')
   const debounce = require('./debounce')
@@ -60,7 +58,7 @@ ${chalk.dim('elm-live:')}
 ${chalk.dim('elm-live:')}
   Error while calling ${chalk.bold(execPath)}! This output may be helpful:
 
-${indent(String(process.error), 2)}
+${process.error}
 
 `
       )
@@ -115,7 +113,7 @@ ${chalk.dim('elm-live:')}
 ${chalk.dim('elm-live:')}
   Error while calling ${chalk.bold('elm make')}! This output may be helpful:
 
-${indent(String(elmMake.error), 2)}
+${elmMake.error}
 
 `
       )
