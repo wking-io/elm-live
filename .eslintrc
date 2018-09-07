@@ -1,5 +1,0 @@
-extends:
-  - "airbnb-base"
-  - "prettier"
-rules:
-  global-require: off  # only pull dependencies when needed
