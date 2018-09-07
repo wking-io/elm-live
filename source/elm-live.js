@@ -38,10 +38,6 @@ module.exports = (argv, options) => {
   const debounce = require('./debounce')
 
   const auxiliaryBuild = execPath => {
-    if (!execPath) {
-      return { fatal: false, exitCode: SUCCESS }
-    }
-
     const process = spawnSync(execPath, [], {
       stdio: [inputStream, outputStream, outputStream]
     })
@@ -220,6 +216,5 @@ ${chalk.dim('elm-live:')}
     }),
     100
   )
-
   return null
 }

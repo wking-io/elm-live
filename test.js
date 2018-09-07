@@ -47,7 +47,7 @@ elm-live:
       }
     }
 
-    const elmLive = newElmLive({}, { 'cross-spawn': crossSpawn })
+    const elmLive = newElmLive({ 'cross-spawn': crossSpawn })
 
     const exitCode = elmLive({}, {
       outputStream: qs(chunk => {
@@ -544,6 +544,38 @@ test('--before-build and --after-build work', assert =>
     )
 
     resolve()
+  }))
+
+test('Skips `--before-build` and `--after-build` when empty', assert =>
+  new Promise(resolve => {
+    assert.plan(2);
+
+    ['beforeBuild', 'afterBuild'].forEach(buildParameter => {
+      const buildCommand = ''
+      const status = 1
+
+      const crossSpawn = {
+        sync: (command) => {
+          if (command === buildCommand) {
+            return { status }
+          }
+          return dummyCrossSpawn.sync()
+        }
+      }
+
+      const elmLive = newElmLive({ 'cross-spawn': crossSpawn })
+
+      const exitCode = elmLive({
+        pathToElm: 'elm',
+        recover: true,
+        [buildParameter]: buildCommand
+      }, {
+        outputStream: devnull(),
+        inputStream: devnull()
+      })
+      assert.is(exitCode, null, 'Skips empty before and after commands')
+      resolve()
+    })
   }))
 
 test('Informs of `--before-build` and `--after-build` run errors', assert =>
