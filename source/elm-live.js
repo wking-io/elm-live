@@ -58,7 +58,7 @@ ${chalk.dim('elm-live:')}
 ${chalk.dim('elm-live:')}
   Error while calling ${chalk.bold(execPath)}! This output may be helpful:
 
-${process.error}
+  ${process.error}
 
 `
       )
@@ -113,7 +113,7 @@ ${chalk.dim('elm-live:')}
 ${chalk.dim('elm-live:')}
   Error while calling ${chalk.bold('elm make')}! This output may be helpful:
 
-${elmMake.error}
+  ${elmMake.error}
 
 `
       )
