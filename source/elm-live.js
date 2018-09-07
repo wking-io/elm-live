@@ -161,7 +161,7 @@ ${chalk.dim('elm-live:')}
       open: args.open,
       dir: args.dir,
       pushstate: args.pushstate,
-      startPage: path.join(args.dir, 'index.html')
+      startPage: 'index.html'
     })
 
     serverStarted = true
