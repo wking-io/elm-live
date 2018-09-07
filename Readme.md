@@ -33,26 +33,22 @@ Live reload included!**
 
 ## INSTALLATION
 
-### If you are using Elm 0.19
-
-We are in a state where `elm-live` is ready to work with Elm 0.19, but we are waiting on one update from another package before we can officially launch `elm-live` 3.0.0. So, in the meantime use the options below to install `elm-live` for use with 0.19 and check out the [caveat](#my-app-is-not-getting-reloaded) below if you are using `Browser.document` or `Browser.application`.
-
-```sh
-# Globally for a user:
-npm install --global elm elm-live@next
-
-# …or locally for a project:
-npm install --save-dev elm elm-live@next
-```
-
-### If you are using Elm 0.18
-
 ```sh
 # Globally for a user:
 npm install --global elm elm-live
 
 # …or locally for a project:
 npm install --save-dev elm elm-live
+```
+
+### If you are using Elm 0.18
+
+```sh
+# Globally for a user:
+npm install --global elm elm-live@prev
+
+# …or locally for a project:
+npm install --save-dev elm elm-live@prev
 ```
 
 If you’d rather bring your own global `elm`, `npm install --global elm-live` will do.
@@ -149,7 +145,7 @@ $ cat <<——— > index.html
     <script>Elm.Main.embed(document.querySelector("div"));</script>
   </body>
 ———
-$ elm-live Main.elm --output=elm.js --open
+$ elm-live Main.elm --open -- --output=elm.js
 ```
 
 Support client-side routing in Elm:
@@ -162,27 +158,6 @@ $ elm-live Main.elm --open --pushstate
 <a id="/troubleshooting"></a>&nbsp;
 
 ## TROUBLESHOOTING
-
-#### My app is not getting reloaded
-
-If you are using `Browser.sandbox`, `Browser.element`, or Elm 0.18 your HTML file must have an explicit `<body>` tag, so that we know where to inject a LiveReload snippet.
-
-If you are using `Browser.document` or `Browser.application` you will need to manually add the LiveReload script found below right after your opening `<head>` tag.
-
-> We are working with the LiveReload package author to get this updated to where we can inject the script in the `<head>` tag by default, but this is the fix in the meantime
-
-**LiveReload Script to add after `<head>` tag:**
-
-```html
-<script type="text/javascript" src="//localhost:35729/livereload.js?snipver=1" async="" defer=""></script>
-```
-
-If for any reason this is not working verify that the localhost address in the script above matches the port number shown in the output of `elm-live` on the line that reads:
-
-```
-[0001] info  LiveReload running on 35729
-```
-
 
 #### I’m seeing a SyntaxError about block-scoped declarations
 
