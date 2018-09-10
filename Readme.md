@@ -126,32 +126,36 @@ You’re looking at it.
 
 ## EXAMPLES
 
-The simplest scenario:
+### Have the compiler generate your index.html for you.
+
+This command will start the server at https://localhost:8000 and compile your elm code to an index.html file in the folder you are running the command from. Note: the `--open` flag will open the page in the browser for you. 
 
 ```sh
-$ elm-live Main.elm --open
+$ elm-live src/Main.elm --open
 ```
 
-Custom HTML file:
+### Use a custom HTML file
 
-```html
-$ cat <<——— > index.html
-  <!doctype html>
-  <link rel="stylesheet" href="style.css" />
-
-  <body>
-    <div></div>
-    <script src="elm.js"></script>
-    <script>Elm.Main.embed(document.querySelector("div"));</script>
-  </body>
-———
-$ elm-live Main.elm --open -- --output=elm.js
-```
-
-Support client-side routing in Elm:
+This command tells `elm make` to compile your elm code to a file named `elm.js` in the folder you are running the command from. From there you just need to include the script in your index.html as shown in the Elm guide here: https://guide.elm-lang.org/interop/
 
 ```sh
-$ elm-live Main.elm --open --pushstate
+$ elm-live src/Main.elm --open -- --output=elm.js
+```
+
+### Support client-side routing in Elm
+
+This command tells the server to always serve up the index.html no matter what the URL is. This allows Elm to handle the routing clientside. Note: this option is a must when you are using `Browser.Navigation`
+
+```sh
+$ elm-live src/Main.elm --open --pushstate
+```
+
+### Adding the debugger during dev
+
+All possible `elm make` flags are available in `elm-live`. You just need to make sure they are passed after `--` in the command. So the command below shows how to turn on the debugger in `elm make`.
+
+```sh
+elm-live src/Main.elm --open -- --debug
 ```
 
 
