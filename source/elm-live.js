@@ -8,7 +8,7 @@
 module.exports = (argv, options) => {
   const args = Object.assign(
     {
-      port: argv.port || 8000,
+      port: argv.port,
       pathToElm: argv.pathToElm || 'elm',
       host: argv.host || 'localhost',
       dir: argv.dir || process.cwd(),
