@@ -7,7 +7,7 @@ program
   .version(require('../package.json').version)
   .arguments('<elm-main>')
   .usage(`${chalk.magenta('<elm-main>')} [options] [--] [elm make options]`)
-  .option('-p, --port [port]', 'The port to bind to.', parseInt, 8000)
+  .option('-p, --port [port]', 'The port to bind to.', Math.floor, 8000)
   .option('-e, --path-to-elm [path-to-elm]', 'An absolute or relative path to elm. If you’ve installed elm locally with npm you’ll want to set this to `node_modules/.bin/elm`.', 'elm')
   .option('-h, --host [host]', 'Set the host interface to attach the server to.', 'localhost')
   .option('-d, --dir [dir]', 'The base for static content.', process.cwd())
