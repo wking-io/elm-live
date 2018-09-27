@@ -10,7 +10,7 @@
     "chokidar": "1.6.0",
     "commander": "2.17.1",
     "cross-spawn": "^5.0.1",
-    "elm-serve": "0.1.2"
+    "elm-serve": "0.1.3"
   },
   "scripts": {
     "develop": "ava --watch",
