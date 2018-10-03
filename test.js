@@ -7,6 +7,7 @@ const devnull = require('dev-null')
 const qs = require('q-stream')
 const naked = require('strip-ansi')
 const debounce = require('./source/debounce')
+const getSourceDirs = require('./source/get-source-dirs')
 
 const dummyConfig = { inputStream: devnull(), outputStream: devnull() }
 const dummyCrossSpawn = { sync: () => ({ status: 0 }) }
@@ -323,9 +324,9 @@ test('Starts elmServe and chokidar with correct config', assert => {
 
   const chokidar = {
     watch: glob => {
-      assert.is(
+      assert.deepEqual(
         glob,
-        '**/*.elm',
+        ['**/*.elm', 'elm.json', 'elm-package.json'],
         'watches all `*.elm` files in the current directory ' +
           'and its subdirectories'
       )
@@ -425,7 +426,7 @@ test('`--pushstate to support client-side routing', assert => {
 
 test('Watches all `**/*.elm` files in the current directory', assert =>
   new Promise(resolve => {
-    assert.plan(6)
+    assert.plan(7)
 
     const event = 'change'
     const relativePath = path.join('ab', 'c.elm')
@@ -439,7 +440,8 @@ test('Watches all `**/*.elm` files in the current directory', assert =>
 
     const chokidar = {
       watch: (target, options) => {
-        assert.is(target, '**/*.elm', 'passes the right glob to chokidar')
+        assert.deepEqual(target, ['**/*.elm', 'elm.json', 'elm-package.json'], 
+          'passes the right glob to chokidar')
 
         assert.true(
           options.ignoreInitial,
@@ -494,22 +496,53 @@ test('Watches all `**/*.elm` files in the current directory', assert =>
       inputStream: devnull(),
       outputStream: qs(chunk => {
         chunkNumber++
-        if (chunkNumber !== 3) return
-
-        assert.is(
-          naked(chunk),
-          `
+        if (chunkNumber == 3) {
+          assert.is(
+            naked(chunk),
+            `
+elm-live:
+  Watching **/*.elm.
+  
+`,
+            'prints a message with watched paths'
+          )
+        }
+        else if (chunkNumber == 4) {
+          assert.is(
+            naked(chunk),
+            `
 elm-live:
   You’ve changed \`${relativePath}\`. Rebuilding!
-
+  
 `,
-          'prints a message when a file is changed'
-        )
-
-        resolve()
+            'prints a message when a file is changed'
+          )
+  
+          resolve()  
+        }
       })
     })
   }))
+
+test("gets watched paths from the Elm package file", assert => {
+  const testSourceDirs = (testDir, expectedDirs) => {
+    const sourceDirs = getSourceDirs(testDir)
+    const msg = `get elm dirs: ${sourceDirs}, expected: ${expectedDirs}`
+    assert.deepEqual(sourceDirs, expectedDirs, msg)
+  }
+
+  new Promise(resolve => {
+    assert.plan(3)
+
+    testSourceDirs("test/0.18.0", ["src18/**/*.elm", "../elsewhere18/src/**/*.elm"])
+
+    testSourceDirs("test/0.19.0", ["src19/**/*.elm", "../../elsewhere19/**/*.elm"])
+
+    testSourceDirs("test", ["**/*.elm"])
+
+    resolve()
+  })
+})  
 
 test('--before-build and --after-build work', assert =>
   new Promise(resolve => {
