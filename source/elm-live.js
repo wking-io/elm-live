@@ -34,6 +34,7 @@ module.exports = (argv, options) => {
   const elmServe = require('elm-serve')
   const chokidar = require('chokidar')
   const debounce = require('./debounce')
+  const getSourceDirs = require("./get-source-dirs")
 
   const auxiliaryBuild = execPath => {
     const process = spawnSync(execPath, [], {
@@ -186,33 +187,60 @@ ${chalk.dim('elm-live:')}
     unlinkDir: 'removed'
   }
 
-  // Watch Elm files
-  const watcher = chokidar.watch('**/*.elm', {
-    ignoreInitial: true,
-    followSymlinks: false,
-    ignored: 'elm-stuff/generated-code/*'
-  })
+  const packageFileNames = ['elm.json', 'elm-package.json']
 
-  watcher.on(
-    'all',
-    debounce((event, filePath) => {
-      const relativePath = path.relative(process.cwd(), filePath)
-      const eventName = eventNameMap[event] || event
+  const isPackageFilePath = (relativePath) => {
+    return packageFileNames.indexOf(relativePath) > -1
+  }
 
-      outputStream.write(
-        `
+  const watchElmFiles = () => {
+    const sourceDirs = getSourceDirs()
+
+    outputStream.write(
+      `
+${chalk.dim('elm-live:')}
+  Watching ${sourceDirs.join(", ")}.
+  
+`
+    )
+  
+    let watcher = chokidar.watch(sourceDirs.concat(packageFileNames), {
+      ignoreInitial: true,
+      followSymlinks: false,
+      ignored: 'elm-stuff/generated-code/*'
+    })
+  
+    watcher.on(
+      'all',
+      debounce((event, filePath) => {
+        const relativePath = path.relative(process.cwd(), filePath)
+        const eventName = eventNameMap[event] || event
+    
+        outputStream.write(
+          `
 ${chalk.dim('elm-live:')}
   You’ve ${eventName} \`${relativePath}\`. Rebuilding!
-
+  
 `
-      )
+        )
 
-      const buildResult = build()
-      if (!serverStarted && buildResult.exitCode === SUCCESS) {
-        startServer()
-      }
-    }),
-    100
-  )
+        const buildResult = build()
+        if (!serverStarted && buildResult.exitCode === SUCCESS) {
+          startServer()
+        }
+
+        if (isPackageFilePath(relativePath)) {
+          // Package file changes may result in changes to the set 
+          // of watched files
+          watcher.close()
+          watcher = watchElmFiles()
+        }
+      }),
+      100
+    )  
+  }
+
+  watchElmFiles()
+
   return null
 }
