@@ -15,6 +15,8 @@ module.exports = (argv, options) => {
       open: argv.open || false,
       recover: argv.recover !== false,
       pushstate: argv.pushstate || false,
+      proxyPrefix: argv.proxyPrefix || false,
+      proxyHost: argv.proxyHost || false,
       elmMakeArgs: argv.args || []
     },
     (argv.beforeBuild ? { beforeBuild: argv.beforeBuild } : {}),
@@ -162,6 +164,8 @@ ${chalk.dim('elm-live:')}
       open: args.open,
       dir: args.dir,
       pushstate: args.pushstate,
+      proxyPrefix: args.proxyPrefix,
+      proxyHost: args.proxyHost,
       startPage: 'index.html'
     })
 
