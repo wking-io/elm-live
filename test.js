@@ -440,7 +440,7 @@ test('Watches all `**/*.elm` files in the current directory', assert =>
 
     const chokidar = {
       watch: (target, options) => {
-        assert.deepEqual(target, ['**/*.elm', 'elm.json', 'elm-package.json'], 
+        assert.deepEqual(target, ['**/*.elm', 'elm.json', 'elm-package.json'],
           'passes the right glob to chokidar')
 
         assert.true(
@@ -496,53 +496,52 @@ test('Watches all `**/*.elm` files in the current directory', assert =>
       inputStream: devnull(),
       outputStream: qs(chunk => {
         chunkNumber++
-        if (chunkNumber == 3) {
+        if (chunkNumber === 3) {
           assert.is(
             naked(chunk),
             `
 elm-live:
   Watching **/*.elm.
-  
+
 `,
             'prints a message with watched paths'
           )
-        }
-        else if (chunkNumber == 4) {
+        } else if (chunkNumber === 4) {
           assert.is(
             naked(chunk),
             `
 elm-live:
   You’ve changed \`${relativePath}\`. Rebuilding!
-  
+
 `,
             'prints a message when a file is changed'
           )
-  
-          resolve()  
+
+          resolve()
         }
       })
     })
   }))
 
-test("gets watched paths from the Elm package file", assert => {
-  const testSourceDirs = (testDir, expectedDirs) => {
-    const sourceDirs = getSourceDirs(testDir)
-    const msg = `get elm dirs: ${sourceDirs}, expected: ${expectedDirs}`
-    assert.deepEqual(sourceDirs, expectedDirs, msg)
-  }
-
+test('gets watched paths from the Elm package file', assert =>
   new Promise(resolve => {
+    const testSourceDirs = (testDir, expectedDirs) => {
+      const sourceDirs = getSourceDirs(testDir)
+      const msg = `get elm dirs: ${sourceDirs}, expected: ${expectedDirs}`
+      assert.deepEqual(sourceDirs, expectedDirs, msg)
+    }
+
     assert.plan(3)
 
-    testSourceDirs("test/0.18.0", ["src18/**/*.elm", "../elsewhere18/src/**/*.elm"])
+    testSourceDirs('test/0.18.0', ['src18/**/*.elm', '../elsewhere18/src/**/*.elm'])
 
-    testSourceDirs("test/0.19.0", ["src19/**/*.elm", "../../elsewhere19/**/*.elm"])
+    testSourceDirs('test/0.19.0', ['src19/**/*.elm', '../../elsewhere19/**/*.elm'])
 
-    testSourceDirs("test", ["**/*.elm"])
+    testSourceDirs('test', ['**/*.elm'])
 
     resolve()
   })
-})  
+)
 
 test('--before-build and --after-build work', assert =>
   new Promise(resolve => {
