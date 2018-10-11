@@ -14,6 +14,7 @@ program
   .option('-o, --open [open]', 'Open in browser when server starts.', false)
   .option('-r, --no-recover [no-recover]', `Stop server when ${chalk.cyan.underline('elm make')} runs into an issue.`)
   .option('-u, --pushstate [pushstate]', `Forces the index.html file to always be served. Must be used when building with ${chalk.cyan.underline('Browser.application')}.`, false)
+  .option('--start-page [start-page]', 'Specify a custom HTML file', 'index.html')
   .option(
     '-x, --proxyPrefix [prefix]',
     'Proxy requests to paths starting with `prefix` to another server. Requires `--proxyHost` and should be a string like `/api`. Defaults to not proxying'
