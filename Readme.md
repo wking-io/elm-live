@@ -108,6 +108,9 @@ When _elm make_ encounters a compile error, we keep _elm-live_ running and give 
 #### `--pushstate`
 Serve `index.html` on 404 errors. This lets us use client-side routing in Elm. For instance, we can have a URL like `http://localhost:8000/account` get handled by the Elm _navigation_ package instead of failing with a 404 error.
 
+#### `--start-page=STARTPAGE`
+A custom html file to serve other than the default `index.html`.
+
 #### `--before-build=EXECUTABLE`
 Run `EXECUTABLE` before every rebuild. This way you can easily use other tools like _elm-css_ or _browserify_ in your workflow.
 
@@ -142,7 +145,7 @@ This command tells `elm make` to compile your elm code to a file named `elm.js` 
 $ elm-live src/Main.elm --open -- --output=elm.js
 ```
 
-To specify the HTML file you wish to use, there is a `start-page` flag. This avoids the namespace collision of your custom html file and that which is outputted from an `elm make` command. Note the `ouput` option needs to match up with your referenced script in your HTML.
+To specify an HTML file other than the default, you can use the `--start-page` flag. This is an easy way to avoid `elm make` accidentally overriding your custom HTML.
 
 ```sh
 $ elm-live src/Main.elm --open --start-page=custom.html -- --output=elm.js
