@@ -17,7 +17,8 @@ module.exports = (argv, options) => {
       pushstate: argv.pushstate || false,
       proxyPrefix: argv.proxyPrefix || false,
       proxyHost: argv.proxyHost || false,
-      elmMakeArgs: argv.args || []
+      elmMakeArgs: argv.args || [],
+      startPage: argv.startPage || "index.html"
     },
     (argv.beforeBuild ? { beforeBuild: argv.beforeBuild } : {}),
     (argv.afterBuild ? { afterBuild: argv.afterBuild } : {})
@@ -166,7 +167,7 @@ ${chalk.dim('elm-live:')}
       pushstate: args.pushstate,
       proxyPrefix: args.proxyPrefix,
       proxyHost: args.proxyHost,
-      startPage: 'index.html'
+      startPage: args.startPage
     })
 
     serverStarted = true
