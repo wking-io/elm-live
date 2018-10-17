@@ -87,36 +87,42 @@ We also watch all `*.elm` files in the current directory and its subdirectories.
 
 ## OPTIONS
 
-#### `--port=PORT`
+#### `-p, --port [PORT]`
 Set the port to start the server at. If the port is taken, we’ll use the next available one. `PORT` should be a valid port number. Default: `8000`.
 
-#### `--path-to-elm=PATH`
+#### `-e, --path-to-elm [PATH]`
 An absolute or relative path to `elm`. If you’ve installed _elm-platform_ locally with _npm_ (`npm install --save-dev elm`), you’ll likely want to set this to `node_modules/.bin/elm`. Default: `elm`.
 
-#### `--host=HOSTNAME|IP`
+#### `-h, --host [HOSTNAME|IP]`
 Set the host interface to attach the server to. Default: `localhost`.
 
-#### `--dir=PATH`
+#### `-d, --dir=PATH`
 The base for static content. Default: `.`.
 
-#### `--open`
+#### `-o, --open`
 We’ll open the app in your default browser as soon as the server is up.
 
-#### `--no-recover`
+#### `-r, --no-recover`
 When _elm make_ encounters a compile error, we keep _elm-live_ running and give you time to fix your code. Pass `--no-recover` if you want the server to exit immediately whenever it encounters a compile error.
 
-#### `--pushstate`
+#### `-u, --pushstate`
 Serve `index.html` on 404 errors. This lets us use client-side routing in Elm. For instance, we can have a URL like `http://localhost:8000/account` get handled by the Elm _navigation_ package instead of failing with a 404 error.
 
-#### `--start-page=STARTPAGE`
+#### `-s, --start-page [STARTPAGE]`
 A custom html file to serve other than the default `index.html`.
 
-#### `--before-build=EXECUTABLE`
+#### `-x, --proxyPrefix [PREFIX]`
+Proxy requests to paths starting with `prefix` to another server. Requires `--proxyHost` and should be a string like `/api`. Defaults to not proxying
+
+#### `-y, --proxyHost`
+Proxy requests to another server running at `host`. Requires `--proxyHost` and should be a full URL, eg. `http://localhost:9000`. Defaults to not proxying
+
+#### `-b, --before-build [EXECUTABLE]`
 Run `EXECUTABLE` before every rebuild. This way you can easily use other tools like _elm-css_ or _browserify_ in your workflow.
 
 Heads up! At the moment, we only allow running a single executable without parameters. If you need more than that, please give us a shout at https://git.io/elm-live.before-build-args.
 
-#### `--after-build=EXECUTABLE`
+#### `-a, --after-build [EXECUTABLE]`
 Just like `--before-build`, but runs after `elm make`.
 
 #### `--help`
