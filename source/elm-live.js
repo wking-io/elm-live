@@ -18,7 +18,7 @@ module.exports = (argv, options) => {
       proxyPrefix: argv.proxyPrefix || false,
       proxyHost: argv.proxyHost || false,
       elmMakeArgs: argv.args || [],
-      startPage: argv.startPage || "index.html"
+      startPage: argv.startPage || 'index.html'
     },
     (argv.beforeBuild ? { beforeBuild: argv.beforeBuild } : {}),
     (argv.afterBuild ? { afterBuild: argv.afterBuild } : {})
