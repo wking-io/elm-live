@@ -115,7 +115,7 @@ A custom html file to serve other than the default `index.html`.
 Proxy requests to paths starting with `prefix` to another server. Requires `--proxyHost` and should be a string like `/api`. Defaults to not proxying
 
 #### `-y, --proxyHost`
-Proxy requests to another server running at `host`. Requires `--proxyHost` and should be a full URL, eg. `http://localhost:9000`. Defaults to not proxying
+Proxy requests to another server running at `host`. Requires `--proxyPrefix` and should be a full URL, eg. `http://localhost:9000`. Defaults to not proxying
 
 #### `-b, --before-build [EXECUTABLE]`
 Run `EXECUTABLE` before every rebuild. This way you can easily use other tools like _elm-css_ or _browserify_ in your workflow.
