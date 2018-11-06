@@ -38,9 +38,11 @@ module.exports = (argv, options) => {
   const chokidar = require('chokidar')
   const debounce = require('./debounce')
   const getSourceDirs = require('./get-source-dirs')
+  const parseArgs = require('parse-spawn-args').parse
 
   const auxiliaryBuild = execPath => {
-    const process = spawnSync(execPath, [], {
+    const [cmd, ...subArgs] = parseArgs(execPath)
+    const process = spawnSync(cmd, subArgs, {
       stdio: [inputStream, outputStream, outputStream]
     })
 
