@@ -16,7 +16,7 @@
   "scripts": {
     "develop": "ava --watch",
     "test": "nyc ava './lib/test.js' --cwd './lib' && npm run report",
-    "report" : "nyc report --reporter=text-lcov | coveralls",
+    "report": "nyc report --reporter=text-lcov | coveralls",
     "format": "npm run standard:fix && npm run standard",
     "standard": "standard",
     "standard:fix": "standard --fix"
