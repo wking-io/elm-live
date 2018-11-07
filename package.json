@@ -5,6 +5,7 @@
   "bin": {
     "elm-live": "bin/elm-live.js"
   },
+  "main": "./lib/index.js",
   "dependencies": {
     "chalk": "^1.1.1",
     "chokidar": "1.6.0",
@@ -14,7 +15,7 @@
   },
   "scripts": {
     "develop": "ava --watch",
-    "test": "nyc ava",
+    "test": "nyc ava './lib/test.js' --cwd './lib'",
     "format": "npm run standard:fix && npm run standard",
     "standard": "standard",
     "standard:fix": "standard --fix"
@@ -29,10 +30,9 @@
   },
   "engineStrict": true,
   "files": [
-    "**/*.js",
-    "!/test.js",
-    "/Readme.md",
-    "/License.md"
+    "lib/index.js",
+    "lib/src/**/*.js",
+    "bin/elm-live.js"
   ],
   "license": "MIT",
   "keywords": [

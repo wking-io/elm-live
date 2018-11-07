@@ -38,5 +38,5 @@ program
   })
   .parse(process.argv)
 
-const elmLive = require('../source/elm-live')
+const elmLive = require('../lib/src/elm-live')
 elmLive(program, { inputStream: process.stdin, outputStream: process.stdout })
