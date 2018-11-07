@@ -1,6 +1,4 @@
-[![Travis – build status
-](https://img.shields.io/travis/wking-io/elm-live/master.svg?style=flat-square
-)](https://travis-ci.org/wking-io/elm-live
+[![Build Status](https://travis-ci.org/wking-io/elm-live.svg?branch=master)](https://travis-ci.org/wking-io/elm-live)
 [![Coverage Status](https://coveralls.io/repos/github/wking-io/elm-live/badge.svg?branch=master)](https://coveralls.io/github/wking-io/elm-live?branch=master)
 
 
