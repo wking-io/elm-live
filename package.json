@@ -33,7 +33,8 @@
   "files": [
     "lib/index.js",
     "lib/src/**/*.js",
-    "bin/elm-live.js"
+    "bin/elm-live.js",
+    "License.md"
   ],
   "license": "MIT",
   "keywords": [
