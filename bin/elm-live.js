@@ -38,5 +38,31 @@ program
   })
   .parse(process.argv)
 
-const elmLive = require('../lib/src/elm-live')
-elmLive(program, { inputStream: process.stdin, outputStream: process.stdout })
+function hasBadOutput ([val, done], arg) {
+  if (done) {
+    return [val, done]
+  } else if (arg === '--') {
+    return [val, true]
+  }
+
+  return arg.includes('--output') ? [true, true] : [false, false]
+}
+
+const [ isBadOutput ] = program.rawArgs.reduce(hasBadOutput, [false, false])
+
+if (isBadOutput) {
+  console.log(``)
+  console.log(chalk.red.bold(`----------------------`))
+  console.log(chalk.red.bold(`|| ERROR IN COMMAND ||`))
+  console.log(chalk.red.bold(`----------------------`))
+  console.log(``)
+  console.log(`Usage: ${chalk.blue('<elm-main> [options] [--] [elm make options]')}`)
+  console.log(``)
+  console.log(`You have used the ${chalk.blue('elm make')} flag --output in the wrong location. As seen in the usage example about, all ${chalk.blue('elm make')} flags must be added to your command after the -- separator.`)
+  console.log(``)
+  console.log(``)
+  console.log(``)
+} else {
+  const elmLive = require('../lib/src/elm-live')
+  elmLive(program, { inputStream: process.stdin, outputStream: process.stdout })
+}
