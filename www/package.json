@@ -14,8 +14,8 @@
     "gatsby-source-filesystem": "^2.0.4",
     "gatsby-transformer-json": "2.1.5",
     "gatsby-transformer-sharp": "^2.1.4",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1",
+    "react": "16.6.1",
+    "react-dom": "16.6.1",
     "react-helmet": "^5.2.0",
     "safe-prop": "1.1.1"
   },

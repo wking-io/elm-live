@@ -1,18 +1,14 @@
 import React from 'react'
 
-function generateWaypoints (data) {
-  return {}
-}
-
-function initWaypoint ([init, ...data]) {
-  return init
+function initWaypoint (data) {
+  return data['port-default'].options
 }
 
 class Track extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      waypoints: generateWaypoints(props.data),
+      waypoints: {},
       active: initWaypoint(props.data)
     }
     this.getPosition = this.getPosition.bind(this)

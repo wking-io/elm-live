@@ -3,21 +3,27 @@ import { graphql } from 'gatsby'
 
 import Layout from '../components/layout'
 import Track from '../components/track'
+import Waypoint from '../components/waypoint'
 
 function formatData (data) {
-  return data.map(edge => ({ [edge.node.id]: edge.node.options }))
+  return data.reduce(
+    (acc, edge) =>
+      Object.assign(acc, { [edge.node.id]: { options: edge.node.options, position: 0 } }), {})
 }
+
+const height = { height: '400px' }
 
 const IndexPage = ({ data }) => (
   <Layout>
     <Track
       data={formatData(data.allWaypointsJson.edges)}
       render={getPosition => {
-        console.log(getPosition)
         return (
           <div>
             <h1>Usage</h1>
             <pre>elm-live</pre>
+            <section style={height} />
+            <Waypoint id='port-default' getPosition={getPosition} />
           </div>
         )
       }}
