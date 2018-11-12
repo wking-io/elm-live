@@ -1,18 +1,9 @@
+![logo](./elm-live-logo.png)
+
 [![Build Status](https://travis-ci.org/wking-io/elm-live.svg?branch=master)](https://travis-ci.org/wking-io/elm-live)
 [![Coverage Status](https://coveralls.io/repos/github/wking-io/elm-live/badge.svg?branch=master)](https://coveralls.io/github/wking-io/elm-live?branch=master)
 
-
-
-
-# elm-live
-
-**A flexible dev server for Elm  
-Live reload included!**
-
-
-
-
-<a id="/screenshot"></a>&nbsp;
+**A flexible dev server for Elm. Live reload included!**
 
 <p align="center"><img
   alt="Screencast"
@@ -20,11 +11,6 @@ Live reload included!**
   title="Sweet, isn’t it?"
   width="405"
 /></p>
-
-
-
-
-<a id="/installation"></a>&nbsp;
 
 ## INSTALLATION
 
@@ -50,22 +36,12 @@ If you’d rather bring your own global `elm`, `npm install --global elm-live` w
 
 Note that you need *node 6.0+* to run the tool natively. But if you’re stuck on an older version, don’t worry! [Rumour has it](https://github.com/wking-io/elm-live/issues/2#issuecomment-156698732) that you can transpile the code to ES5!
 
-
-
-
-<a id="/synopsis"></a>&nbsp;
-
 ## SYNOPSIS
 
 ```sh
 elm-live [...<options>] [--] ...<elm make args>  
 elm-live --help
 ```
-
-
-
-
-<a id="/description"></a>&nbsp;
 
 ## DESCRIPTION
 
@@ -74,11 +50,6 @@ First, we spawn `elm make` with the `elm make args` you’ve given.
 When the build is ready, we start a static HTTP server in the current directory. We inject a _live reload_ snippet into every HTML file we serve. Every time a static file has changed, we’ll reload your app in all browsers you’ve opened it with. (Mobile and IE included!)
 
 We also watch all `*.elm` files in the current directory and its subdirectories. Whenever you change, add or remove one of them, we’ll rebuild your program and reload the page.
-
-
-
-
-<a id="/options"></a>&nbsp;
 
 ## OPTIONS
 
@@ -106,10 +77,10 @@ Serve `index.html` on 404 errors. This lets us use client-side routing in Elm. F
 #### `-s, --start-page [STARTPAGE]`
 A custom html file to serve other than the default `index.html`.
 
-#### `-x, --proxyPrefix [PREFIX]`
+#### `-x, --proxy-prefix [PREFIX]`
 Proxy requests to paths starting with `prefix` to another server. Requires `--proxyHost` and should be a string like `/api`. Defaults to not proxying
 
-#### `-y, --proxyHost`
+#### `-y, --proxy-host`
 Proxy requests to another server running at `host`. Requires `--proxyPrefix` and should be a full URL, eg. `http://localhost:9000`. Defaults to not proxying
 
 #### `-b, --before-build [EXECUTABLE]`
@@ -168,9 +139,6 @@ All possible `elm make` flags are available in `elm-live`. You just need to make
 elm-live src/Main.elm --open -- --debug
 ```
 
-
-<a id="/troubleshooting"></a>&nbsp;
-
 ## TROUBLESHOOTING
 
 #### I’m seeing a SyntaxError about block-scoped declarations
@@ -185,11 +153,6 @@ make sure you’re running on node 6+. If you can’t upgrade, consider [transpi
 
 By the way, [yarn](https://github.com/yarnpkg/yarn) should be warning you about installing incompatible packages. To get the same behavior in npm, [set the `engine-strict`](https://docs.npmjs.com/misc/config#engine-strict) flag.
 
-
-
-
-<a id="/credits"></a>&nbsp;
-
 ## Original Author
 Huge shoutout to the creator [Tomek Wiszniewski](https://github.com/tomekwi)!
 
@@ -203,11 +166,6 @@ Many thanks to [Evan Czaplicki](https://github.com/evancz), the creator of Elm, 
 Many thanks to [Matt DesLauriers](https://github.com/mattdesl) for the wonderful [budo](https://github.com/mattdesl/budo). That’s what does the heavy lifting on the static server side.
 
 Warm thanks to our amazing contributors! Credits to [Brian](https://github.com/bdukes) for making Windows support possible, [Kurt](https://github.com/kbsymanz) for allowing a configurable `--host` and [Josh](https://github.com/joshmh) for his work on enabling client-side navigation. Thanks to [Ryan](https://github.com/Ryan1729) batch updates are nice and fast. Kudos to [Mathieu](https://github.com/magopian), [Rémy](https://github.com/natim) and [Nicolas](https://github.com/n1k0) for making the developer experience smoother and to [Gabriel](https://github.com/peacememories) for the `--before-build` option. Many thanks to [Noah](https://github.com/eeue56) for making sure elm-live works smoothly with [elm-test](https://github.com/elm-community/elm-test). Thanks to [Darren](https://github.com/darrensiegel) for finding and fixing the bug with `--port` options on the 3.0.0 release.
-
-
-
-
-<a id="/license"></a>&nbsp;
 
 ## LICENSE
 
