@@ -1,0 +1,439 @@
+[
+  {
+    "id": "port-default",
+    "options": {
+      "port": true,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "none"
+    }
+  },
+  {
+    "id": "pathToElm-default",
+    "options": {
+      "port": false,
+      "pathToElm": true,
+      "host": false,
+      "dir": false,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "none"
+    }
+  },
+  {
+    "id": "host-default",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": true,
+      "dir": false,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "none"
+    }
+  },
+  {
+    "id": "dir-default",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": true,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "html"
+    }
+  },
+  {
+    "id": "dir-js",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": true,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "js"
+    }
+  },
+  {
+    "id": "dir-js-root",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": true,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "js-root"
+    }
+  },
+  {
+    "id": "start-page-default",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": true,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "html"
+    }
+  },
+  {
+    "id": "start-page-dir",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": true,
+      "startPage": true,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "html"
+    }
+  },
+  {
+    "id": "start-page-js",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": true,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "js"
+    }
+  },
+  {
+    "id": "start-page-dir-js",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": true,
+      "startPage": true,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "js"
+    }
+  },
+  {
+    "id": "open-default",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": false,
+      "open": true,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "none"
+    }
+  },
+  {
+    "id": "no-recover-default",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": false,
+      "open": false,
+      "noRecover": true,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "none"
+    }
+  },
+  {
+    "id": "pushstate-default",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": true,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "none"
+    }
+  },
+  {
+    "id": "proxy-default",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": true,
+      "proxyPrefix": true,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "none"
+    }
+  },
+  {
+    "id": "before-build-default",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": true,
+      "afterBuild": false,
+      "debug": false,
+      "output": "none"
+    }
+  },
+  {
+    "id": "after-build-default",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": true,
+      "debug": false,
+      "output": "none"
+    }
+  },
+  {
+    "id": "debug-default",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": true,
+      "output": "none"
+    }
+  },
+  {
+    "id": "output-default",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "html"
+    }
+  },
+  {
+    "id": "output-custom",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": true,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "html"
+    }
+  },
+  {
+    "id": "output-custom-dir",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": true,
+      "startPage": true,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "html"
+    }
+  },
+  {
+    "id": "output-js",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": false,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "js"
+    }
+  },
+  {
+    "id": "output-js-custom",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": false,
+      "startPage": true,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "js"
+    }
+  },
+  {
+    "id": "output-js-custom-dir",
+    "options": {
+      "port": false,
+      "pathToElm": false,
+      "host": false,
+      "dir": true,
+      "startPage": true,
+      "open": false,
+      "noRecover": false,
+      "pushstate": false,
+      "proxyHost": false,
+      "proxyPrefix": false,
+      "beforeBuild": false,
+      "afterBuild": false,
+      "debug": false,
+      "output": "js"
+    }
+  }
+]

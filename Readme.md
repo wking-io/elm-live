@@ -1,4 +1,4 @@
-![logo](./elm-live-logo.png)
+<img alt="elm-live" src="./elm-live-logo.png" width="100%" height="auto" />
 
 [![Build Status](https://travis-ci.org/wking-io/elm-live.svg?branch=master)](https://travis-ci.org/wking-io/elm-live)
 [![Coverage Status](https://coveralls.io/repos/github/wking-io/elm-live/badge.svg?branch=master)](https://coveralls.io/github/wking-io/elm-live?branch=master)
