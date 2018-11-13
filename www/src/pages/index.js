@@ -8,7 +8,7 @@ import Track from '../components/track'
 import Waypoint from '../components/waypoint'
 import Elm from '../components/Elm'
 import { filePreview } from '../lib/ports'
-import FilePreview from '../lib/elm'
+import FilePreview from '../Elm/Main.elm'
 
 function getOption (key, data) {
   console.log(data)
