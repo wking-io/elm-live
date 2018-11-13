@@ -1,12 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Either from 'data.either'
 import { safeProp } from 'safe-prop'
 import debounce from 'lodash.debounce'
-
-const trace = label => val => {
-  console.log(`${label}: ${val}`)
-  return val
-}
 
 function always (x) {
   return () => x
@@ -14,13 +10,11 @@ function always (x) {
 
 function isGreater (comparable) {
   return function (data) {
-    console.log(comparable, data)
     return comparable > data
   }
 }
 
 function findActive (gate, data) {
-  console.log(data)
   return Object
     .keys(data)
     .reduce(
@@ -34,32 +28,32 @@ function findActive (gate, data) {
 }
 
 class Track extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      waypoints: {},
-      active: 'port-default'
-    }
-    this.getPosition = this.getPosition.bind(this)
-    this.onScroll = debounce(this.onScroll.bind(this), 100)
+  state = {
+    waypoints: {}
   }
 
-  getPosition (id, top) {
-    this.setState((state) => (state.waypoints[id] = top))
-  }
+  getPosition = (id, top) => this.setState((state) => (state.waypoints[id] = top))
 
-  onScroll () {
-    findActive(window.scrollY + this.props.gate, this.state.waypoints)
-      .map(active => this.setState({ active }))
-  }
+  onScroll = debounce(() => findActive(window.scrollY + this.props.gate, this.state.waypoints)
+    .map(this.props.sendActive), 100)
 
   componentDidMount () {
     window.addEventListener('scroll', this.onScroll)
   }
 
+  componentWillMount () {
+    window.removeEventListener('scroll', this.onScroll)
+  }
+
   render () {
     return this.props.render(this.getPosition)
   }
+}
+
+Track.propTypes = {
+  gate: PropTypes.number.isRequired,
+  render: PropTypes.func.isRequired,
+  sendActive: PropTypes.func.isRequired
 }
 
 export default Track

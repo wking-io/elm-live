@@ -13,32 +13,44 @@ function formatData (data) {
 
 const height = { height: '400px' }
 
-const IndexPage = ({ data }) => (
-  <Layout>
-    <Track
-      gate={500}
-      data={formatData(data.allWaypointsJson.edges)}
-      render={getPosition => {
-        return (
-          <div>
-            <h1>Usage</h1>
-            <pre>elm-live</pre>
-            <section style={height} />
-            <Waypoint id='port-default' getPosition={getPosition} />
-            <section style={height} />
-            <Waypoint id='path-to-elm-default' getPosition={getPosition} />
-            <section style={height} />
-            <Waypoint id='host-default' getPosition={getPosition} />
-            <section style={height} />
-            <Waypoint id='dir-default' getPosition={getPosition} />
-            <section style={height} />
-            <Waypoint id='dir-js' getPosition={getPosition} />
-          </div>
-        )
-      }}
-    />
-  </Layout>
-)
+class IndexPage extends React.Component {
+  state = {
+    active: 'port-default'
+  }
+
+  sendActive = active => {
+    console.log(active)
+  }
+
+  render () {
+    return (
+      <Layout>
+        <Track
+          gate={500}
+          sendActive={this.sendActive}
+          render={getPosition => {
+            return (
+              <div>
+                <h1>Usage</h1>
+                <pre>elm-live</pre>
+                <section style={height} />
+                <Waypoint id='port-default' getPosition={getPosition} />
+                <section style={height} />
+                <Waypoint id='path-to-elm-default' getPosition={getPosition} />
+                <section style={height} />
+                <Waypoint id='host-default' getPosition={getPosition} />
+                <section style={height} />
+                <Waypoint id='dir-default' getPosition={getPosition} />
+                <section style={height} />
+                <Waypoint id='dir-js' getPosition={getPosition} />
+              </div>
+            )
+          }}
+        />
+      </Layout>
+    )
+  }
+}
 
 export default IndexPage
 
