@@ -19,7 +19,7 @@
     }
   },
   {
-    "id": "pathToElm-default",
+    "id": "path-to-elm-default",
     "options": {
       "port": false,
       "pathToElm": true,

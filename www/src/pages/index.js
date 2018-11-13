@@ -16,6 +16,7 @@ const height = { height: '400px' }
 const IndexPage = ({ data }) => (
   <Layout>
     <Track
+      gate={500}
       data={formatData(data.allWaypointsJson.edges)}
       render={getPosition => {
         return (
@@ -24,6 +25,14 @@ const IndexPage = ({ data }) => (
             <pre>elm-live</pre>
             <section style={height} />
             <Waypoint id='port-default' getPosition={getPosition} />
+            <section style={height} />
+            <Waypoint id='path-to-elm-default' getPosition={getPosition} />
+            <section style={height} />
+            <Waypoint id='host-default' getPosition={getPosition} />
+            <section style={height} />
+            <Waypoint id='dir-default' getPosition={getPosition} />
+            <section style={height} />
+            <Waypoint id='dir-js' getPosition={getPosition} />
           </div>
         )
       }}
