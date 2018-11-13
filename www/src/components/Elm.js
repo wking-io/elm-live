@@ -5,15 +5,16 @@ class Elm extends React.Component {
   node = React.createRef()
 
   componentDidMount () {
-    const app = this.props.src.init({
+    this.app = this.props.src.init({
       node: this.node,
-      flags: this.props.flags
+      flags: this.props.flags.getOrElse(null)
     })
 
-    if (this.props.ports) { this.props.ports(app.ports) }
+    if (this.props.ports) { this.ports = this.props.ports(this.app.ports) }
   }
 
-  shouldComponentUpdate () {
+  shouldComponentUpdate (nextProps) {
+    if (this.ports) { this.ports(nextProps) }
     return false
   }
 

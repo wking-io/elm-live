@@ -26,6 +26,7 @@
   ],
   "license": "MIT",
   "scripts": {
+    "develop:elm": "elm make src/Elm/Main.elm --output=src/lib/elm.js --debug",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",

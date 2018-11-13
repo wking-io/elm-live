@@ -35,13 +35,13 @@ class Track extends React.Component {
   getPosition = (id, top) => this.setState((state) => (state.waypoints[id] = top))
 
   onScroll = debounce(() => findActive(window.scrollY + this.props.gate, this.state.waypoints)
-    .map(this.props.sendActive), 100)
+    .map(this.props.updateActive), 100)
 
   componentDidMount () {
     window.addEventListener('scroll', this.onScroll)
   }
 
-  componentWillMount () {
+  componentWillUnmount () {
     window.removeEventListener('scroll', this.onScroll)
   }
 
@@ -53,7 +53,7 @@ class Track extends React.Component {
 Track.propTypes = {
   gate: PropTypes.number.isRequired,
   render: PropTypes.func.isRequired,
-  sendActive: PropTypes.func.isRequired
+  updateActive: PropTypes.func.isRequired
 }
 
 export default Track

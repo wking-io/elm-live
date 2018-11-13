@@ -1,14 +1,20 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import Either from 'data.either'
+import { safePath } from 'safe-prop'
 
 import Layout from '../components/layout'
 import Track from '../components/track'
 import Waypoint from '../components/waypoint'
+import Elm from '../components/Elm'
+import { filePreview } from '../lib/ports'
+import FilePreview from '../lib/elm'
 
-function formatData (data) {
-  return data.reduce(
-    (acc, edge) =>
-      Object.assign(acc, { [edge.node.id]: { options: edge.node.options, position: 0 } }), {})
+function getOption (key, data) {
+  console.log(data)
+  return Either
+    .fromNullable(data.find(edge => edge.node.id === key))
+    .chain(safePath(['node', 'options']))
 }
 
 const height = { height: '400px' }
@@ -18,16 +24,16 @@ class IndexPage extends React.Component {
     active: 'port-default'
   }
 
-  sendActive = active => {
-    console.log(active)
-  }
+  updateActive = active => this.setState({ active })
 
   render () {
+    const options = getOption(this.state.active, this.props.data.allWaypointsJson.edges)
     return (
       <Layout>
+        <Elm src={FilePreview} ports={filePreview} flags={options} options={options} />
         <Track
           gate={500}
-          sendActive={this.sendActive}
+          updateActive={this.updateActive}
           render={getPosition => {
             return (
               <div>
