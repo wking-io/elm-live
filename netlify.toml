@@ -1,0 +1,9 @@
+[build]
+  base = "www/"
+  publish = "public"
+  command = "npm run build"
+
+[context.www]
+  base = "www/"
+  publish = "public"
+  command = "npm run build"
