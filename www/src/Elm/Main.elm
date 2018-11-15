@@ -28,7 +28,7 @@ decodeFlags flags =
 view : Model -> Html Msg
 view model =
     Html.div []
-        [ Html.pre [] [ Html.text "Here" ]
+        [ Html.pre [] [ Html.text "Here too" ]
         ]
 
 
