@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-class Elm extends React.Component {
+class ElmHandler extends React.Component {
   node = React.createRef()
 
   componentDidMount () {
     this.app = this.props.src.init({
-      node: this.node,
+      node: this.node.current,
       flags: this.props.flags.getOrElse(null)
     })
 
@@ -25,10 +25,10 @@ class Elm extends React.Component {
   }
 }
 
-Elm.propTypes = {
+ElmHandler.propTypes = {
   flags: PropTypes.object,
   ports: PropTypes.func,
   src: PropTypes.object.isRequired
 }
 
-export default Elm
+export default ElmHandler

@@ -6,12 +6,11 @@ import { safePath } from 'safe-prop'
 import Layout from '../components/layout'
 import Track from '../components/track'
 import Waypoint from '../components/waypoint'
-import Elm from '../components/Elm'
+import ElmHandler from '../components/ElmHandler'
 import { filePreview } from '../lib/ports'
-import FilePreview from '../Elm/Main.elm'
+import { Elm } from '../Elm/Main.elm'
 
 function getOption (key, data) {
-  console.log(data)
   return Either
     .fromNullable(data.find(edge => edge.node.id === key))
     .chain(safePath(['node', 'options']))
@@ -30,7 +29,7 @@ class IndexPage extends React.Component {
     const options = getOption(this.state.active, this.props.data.allWaypointsJson.edges)
     return (
       <Layout>
-        <Elm src={FilePreview} ports={filePreview} flags={options} options={options} />
+        <ElmHandler src={Elm.Main} ports={filePreview} flags={options} options={options} />
         <Track
           gate={500}
           updateActive={this.updateActive}
