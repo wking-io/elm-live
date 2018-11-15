@@ -1,12 +1,9 @@
 [build]
   base = "www/"
-  publish = "public"
+  publish = "www/public/"
   command = "yarn build"
 
 [context.www]
   base = "www/"
-  publish = "public"
+  publish = "www/public/"
   command = "yarn build"
-
-[build.environment]
-  NODE_VERSION = "8.9.0"
