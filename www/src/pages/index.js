@@ -23,7 +23,7 @@ class IndexPage extends React.Component {
     active: 'port-default'
   }
 
-  updateActive = active => this.setState({ active })
+  updateActive = active => this.state.active === active ? {} : this.setState({ active })
 
   render () {
     const options = getOption(this.state.active, this.props.data.allWaypointsJson.edges)

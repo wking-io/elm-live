@@ -7,15 +7,19 @@
     "dependencies": {
         "direct": {
             "NoRedInk/elm-json-decode-pipeline": "1.0.0",
+            "avh4/elm-color": "1.0.0",
             "elm/browser": "1.0.1",
             "elm/core": "1.0.0",
             "elm/html": "1.0.0",
-            "elm/json": "1.0.0"
+            "elm/json": "1.0.0",
+            "rtfeldman/elm-css": "16.0.0"
         },
         "indirect": {
+            "Skinney/murmur3": "2.0.8",
             "elm/time": "1.0.0",
             "elm/url": "1.0.0",
-            "elm/virtual-dom": "1.0.2"
+            "elm/virtual-dom": "1.0.2",
+            "rtfeldman/elm-hex": "1.0.0"
         }
     },
     "test-dependencies": {
