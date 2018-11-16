@@ -1,13 +1,20 @@
-module FileSystem.Options exposing (FileSystemState(..), Options(..), Output(..), Rest, compile, default)
+module FileSystem.Options exposing (Flags(..), Options(..), Output(..), Rest, compile, default)
 
 
-type Options
-    = Raw FileSystemState
-    | Compiled FileSystemState
+type Options a
+    = Options Flags
+
+
+type Raw
+    = Raw
+
+
+type Compiled
+    = Compiled
 
 
 type alias Rest =
-    { thePort : Bool
+    { port_ : Bool
     , pathToElm : Bool
     , host : Bool
     , open : Bool
@@ -21,8 +28,8 @@ type alias Rest =
     }
 
 
-type FileSystemState
-    = FileSystemState Output Rest
+type Flags
+    = Flags Output Rest
 
 
 type Output
@@ -33,24 +40,19 @@ type Output
     | CustomBuildDir
 
 
-compile : Options -> Options
+compile : Options Raw -> Options Compiled
 compile options =
-    case options of
-        Raw flags ->
-            Compiled flags
-
-        Compiled flags ->
-            Compiled flags
+    options
 
 
-default : Options
+default : Options Raw
 default =
-    Raw (FileSystemState Default empty)
+    Options (Flags Default empty)
 
 
 empty : Rest
 empty =
-    { thePort = False
+    { port_ = False
     , pathToElm = False
     , host = False
     , open = False

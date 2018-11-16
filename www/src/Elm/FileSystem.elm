@@ -12,7 +12,7 @@ import FileSystem.File as File
 import FileSystem.File.Content as Content
 import FileSystem.Id as Id exposing (Id)
 import FileSystem.Node as Node exposing (Node)
-import FileSystem.Options as Options exposing (FileSystemState(..), Options(..), Output(..))
+import FileSystem.Options as Options exposing (Compiled, FileSystemState(..), Options, Output(..), Raw)
 
 
 type FileSystem
@@ -95,7 +95,7 @@ outputNode parent (FileSystemState flags _) =
             ]
 
 
-generate : String -> Options -> List Node
+generate : String -> Options a -> List Node
 generate parent options =
     case options of
         Raw flags ->
