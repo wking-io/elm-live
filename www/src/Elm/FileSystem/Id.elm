@@ -1,7 +1,5 @@
 module FileSystem.Id exposing (Id, equal, generate, toString)
 
-import FileSystem.File.Extension as Extension exposing (Extension)
-
 
 type Id
     = Id String

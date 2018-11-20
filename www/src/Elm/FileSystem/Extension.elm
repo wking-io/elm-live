@@ -1,4 +1,4 @@
-module FileSystem.File.Extension exposing (Extension(..), toExtension, toString)
+module FileSystem.Extension exposing (Extension(..), toExtension, toString)
 
 
 type Extension
