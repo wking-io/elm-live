@@ -61,16 +61,16 @@
     "options": {
       "flags": {
         "port": false,
-      "pathToElm": false,
-      "host": false,
-      "open": false,
-      "noRecover": false,
-      "pushstate": false,
-      "proxyHost": false,
-      "proxyPrefix": false,
-      "beforeBuild": false,
-      "afterBuild": false,
-      "debug": false
+        "pathToElm": false,
+        "host": false,
+        "open": false,
+        "noRecover": false,
+        "pushstate": false,
+        "proxyHost": false,
+        "proxyPrefix": false,
+        "beforeBuild": false,
+        "afterBuild": false,
+        "debug": false
       },
       "output": "DirHtml"
     }
@@ -422,16 +422,16 @@
     "options": {
       "flags": {
         "port": false,
-      "pathToElm": false,
-      "host": false,
-      "open": false,
-      "noRecover": false,
-      "pushstate": false,
-      "proxyHost": false,
-      "proxyPrefix": false,
-      "beforeBuild": false,
-      "afterBuild": false,
-      "debug": false
+        "pathToElm": false,
+        "host": false,
+        "open": false,
+        "noRecover": false,
+        "pushstate": false,
+        "proxyHost": false,
+        "proxyPrefix": false,
+        "beforeBuild": false,
+        "afterBuild": false,
+        "debug": false
       },
       "output": "CustomDirJs"
     }

@@ -66,19 +66,19 @@ export const query = graphql`
         node {
           id
           options {
-            port
-            pathToElm
-            host
-            dir
-            startPage
-            open
-            noRecover
-            pushstate
-            proxyHost
-            proxyPrefix
-            beforeBuild
-            afterBuild
-            debug
+            flags {
+              port
+              pathToElm
+              host
+              open
+              noRecover
+              pushstate
+              proxyHost
+              proxyPrefix
+              beforeBuild
+              afterBuild
+              debug
+            }
             output
           }
         }
