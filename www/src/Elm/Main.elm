@@ -1,26 +1,31 @@
 port module Main exposing (main)
 
 import Browser
+import FileSystem exposing (FileSystem)
 import Html exposing (Html)
 import Json.Decode as Decode
 import Options exposing (Options)
-import FileSystem exposing (FileSystem)
 import Result exposing (Result)
 
+
+
 -- MODEL --
+
+
 type Model
-  = Model (Result Decode.Error FileSystem)
+    = Model (Result Decode.Error Options)
 
 
 init : Decode.Value -> ( Model, Cmd Msg )
 init flags =
     ( decodeModel flags, Cmd.none )
 
+
 decodeModel : Decode.Value -> Model
 decodeModel flags =
-      flags
-        |> Decode.decodeValue Options.decoder
-        |> Result.map FileSystem.fromOptions
+    Decode.decodeValue Options.decoder flags
+        |> Model
+
 
 
 -- VIEW --
@@ -51,7 +56,9 @@ update msg model =
 
 -- SUBSCRIPTIONS --
 
+
 port options : (Decode.Value -> msg) -> Sub msg
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

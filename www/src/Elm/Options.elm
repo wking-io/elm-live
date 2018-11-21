@@ -57,6 +57,46 @@ getFlagType flag =
             LiveFlag
 
 
+flagFromString : String -> OtherFlag
+flagFromString str =
+    case str of
+        "port" ->
+            Port
+
+        "pathToElm" ->
+            PathToElm
+
+        "host" ->
+            Host
+
+        "open" ->
+            Open
+
+        "noRecover" ->
+            NoRecover
+
+        "pushState" ->
+            Pushstate
+
+        "proxyHost" ->
+            ProxyHost
+
+        "proxyPrefix" ->
+            ProxyPrefix
+
+        "beforeBuild" ->
+            BeforeBuild
+
+        "afterBuild" ->
+            AfterBuild
+
+        "debug" ->
+            Debug
+
+        _ ->
+            Port
+
+
 flagToString : OtherFlag -> String
 flagToString flag =
     case flag of
@@ -94,9 +134,73 @@ flagToString flag =
             "--debug"
 
 
-decoder : Decode.Value -> Options
-decoder json =
-    Raw (Flags OutputHtml [])
+outputFromString : String -> Output
+outputFromString str =
+    case str of
+        "OutputHtml" ->
+            OutputHtml
+
+        "OutputJs" ->
+            OutputJs
+
+        "CustomHtml" ->
+            CustomHtml
+
+        "CustomJs" ->
+            CustomJs
+
+        "DirHtml" ->
+            DirHtml
+
+        "DirJs" ->
+            DirJs
+
+        "DirJsRoot" ->
+            DirJsRoot
+
+        "CustomDirHtml" ->
+            CustomDirHtml
+
+        "CustomDirJs" ->
+            CustomDirJs
+
+        "CustomDirJsRoot" ->
+            CustomDirJsRoot
+
+        _ ->
+            OutputHtml
+
+
+flagReducer : ( String, Bool ) -> List OtherFlag -> List OtherFlag
+flagReducer ( k, v ) acc =
+    if v then
+        flagFromString k :: acc
+
+    else
+        acc
+
+
+flagDecoder : Decoder Flags
+flagDecoder =
+    Decode.map2 Flags
+        (Decode.field "output" outputDecoder)
+        (Decode.field "flags" otherFlagDecoder)
+
+
+otherFlagDecoder : Decoder (List OtherFlag)
+otherFlagDecoder =
+    Decode.keyValuePairs Decode.bool
+        |> Decode.map (List.foldl flagReducer [])
+
+
+outputDecoder : Decoder Output
+outputDecoder =
+    Decode.map outputFromString Decode.string
+
+
+decoder : Decoder Options
+decoder =
+    Decode.map Raw flagDecoder
 
 
 
