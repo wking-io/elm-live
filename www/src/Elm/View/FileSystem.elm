@@ -20,27 +20,46 @@ view (FileSystem node) =
                     childrenHtml =
                         List.concatMap (filesHelp focus fileMsg folderMsg) children
                 in
-                case visibility of
-                    Open ->
-                        [ Html.button
-                            [ HA.attribute "aria-expanded" "true"
-                            , HA.attribute "aria-controls" (Id.toString id)
-                            , onClick (folderMsg id)
-                            ]
-                            [ Html.text name ]
-                        , Html.div [ HA.id (Id.toString id) ] childrenHtml
-                        ]
-
-                    Closed ->
-                        [ Html.button
-                            [ HA.attribute "aria-expanded" "false"
-                            , HA.attribute "aria-controls" (Id.toString id)
-                            , onClick (folderMsg id)
-                            ]
-                            [ Html.text name ]
-                        , Html.div [ HA.id (Id.toString id), HA.hidden True ] childrenHtml
-                        ]
+                [ Html.button
+                    [ HA.attribute "aria-expanded" "true"
+                    , HA.attribute "aria-controls" (Id.toString id)
+                    , onClick (folderMsg id)
+                    ]
+                    [ Html.text name ]
+                , Html.div [ HA.id (Id.toString id) ] childrenHtml
+                ]
 
             File data ->
                 [ viewItem focus data fileMsg ]
+        ]
+
+
+viewHelp : Node -> Html msg
+viewHelp node =
+    case node of
+        Folder data children ->
+            [ viewFolder data
+            , List.concatMap viewHelp children
+                |> Html.div [ HA.id (Id.toString id) ]
+            ]
+
+        File data ->
+            [ viewFile data ]
+
+
+viewFolder : FolderData -> Html msg
+viewFolder { id, name } =
+    viewNode Icon.folder name
+
+
+viewFile : FileData -> Html msg
+viewFile { id, name, extension } =
+    viewNode (Icon.fromExtension extension) (name ++ Extension.toExtension extension)
+
+
+viewNode : Icon -> String -> Html msg
+viewNode icon name =
+    Html.div []
+        [ Icon.toHtml icon
+        , Html.p [] [ Html.text name ]
         ]
