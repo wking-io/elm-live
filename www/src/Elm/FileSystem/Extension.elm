@@ -2,11 +2,11 @@ module FileSystem.Extension exposing (Extension(..), toExtension, toString)
 
 
 type Extension
-    = Js
-    | Json
+    = Css
     | Elm
-    | Css
     | Html
+    | Js
+    | Json
 
 
 toString : Extension -> String

@@ -1,4 +1,10 @@
-module Options exposing (Options, decoder)
+module Options exposing
+    ( Options
+    , compile
+    , decoder
+    , uncompile
+    , view
+    )
 
 import Command exposing (Command)
 import FileSystem exposing (FileSystem, Node)
@@ -125,7 +131,7 @@ view { uncompileMsg, compileMsg, options, files } =
                         , HA.id "raw"
                         , onClick uncompileMsg
                         ]
-                        []
+                        [ Html.text "Raw" ]
                     , Html.button
                         [ HA.attribute "role" "tab"
                         , HA.attribute "aria-selected" "true"
@@ -134,7 +140,7 @@ view { uncompileMsg, compileMsg, options, files } =
                         , HA.tabindex -1
                         , onClick compileMsg
                         ]
-                        []
+                        [ Html.text "Compiled" ]
                     ]
                 , Html.div
                     [ HA.tabindex 0
@@ -166,7 +172,7 @@ view { uncompileMsg, compileMsg, options, files } =
                         , HA.id "raw"
                         , onClick uncompileMsg
                         ]
-                        []
+                        [ Html.text "Raw" ]
                     , Html.button
                         [ HA.attribute "role" "tab"
                         , HA.attribute "aria-selected" "true"
@@ -175,7 +181,7 @@ view { uncompileMsg, compileMsg, options, files } =
                         , HA.tabindex -1
                         , onClick compileMsg
                         ]
-                        []
+                        [ Html.text "Compiled" ]
                     ]
                 , Html.div
                     [ HA.tabindex 0

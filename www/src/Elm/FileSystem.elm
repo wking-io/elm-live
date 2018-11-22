@@ -1,5 +1,7 @@
 module FileSystem exposing
-    ( FileSystem
+    ( FileData
+    , FileSystem(..)
+    , FolderData
     , Node
     , fromNode
     , makeCssFile
@@ -9,13 +11,16 @@ module FileSystem exposing
     , makeJsFile
     , makeJsonFile
     , sort
+    , view
     )
 
+import Css
 import FileSystem.Extension as Extension exposing (Extension(..))
 import FileSystem.Id as Id exposing (Id)
-import Html.Styled as Html exposing (Html)
+import Html.Styled as Html exposing (Attribute, Html)
 import Html.Styled.Attributes as HA
 import Html.Styled.Events exposing (onClick)
+import Icon exposing (Icon)
 
 
 type FileSystem
@@ -92,3 +97,58 @@ makeFolder parent name children =
 fromNode : Node -> FileSystem
 fromNode =
     FileSystem
+
+
+
+-- VIEW
+
+
+view : FileSystem -> Html msg
+view (FileSystem node) =
+    case node of
+        Folder data children ->
+            Html.div []
+                [ viewFolder data
+                , List.concatMap viewHelp children
+                    |> Html.div [ HA.id (Id.toString data.id) ]
+                ]
+
+        File data ->
+            Html.div [] [ viewFile data ]
+
+
+viewHelp : Node -> List (Html msg)
+viewHelp node =
+    case node of
+        Folder data children ->
+            [ viewFolder data
+            , List.concatMap viewHelp children
+                |> Html.div [ HA.id (Id.toString data.id) ]
+            ]
+
+        File data ->
+            [ viewFile data ]
+
+
+viewFolder : FolderData -> Html msg
+viewFolder { id, name } =
+    viewNode Icon.folder name
+
+
+viewFile : FileData -> Html msg
+viewFile { id, name, extension } =
+    viewNode Icon.file (name ++ Extension.toExtension extension)
+
+
+viewNode : Icon msg -> String -> Html msg
+viewNode icon name =
+    Html.div []
+        [ viewIcon [] [ Icon.toHtml icon ]
+        , Html.p [] [ Html.text name ]
+        ]
+
+
+viewIcon : List (Attribute msg) -> List (Html msg) -> Html msg
+viewIcon =
+    Html.styled Html.div
+        [ Css.width (Css.px 20) ]

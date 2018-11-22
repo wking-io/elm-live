@@ -1,8 +1,8 @@
 port module Main exposing (main)
 
 import Browser
-import FileSystem exposing (FileSystem)
-import Html exposing (Html)
+import FileSystem
+import Html.Styled as Html exposing (Html)
 import Json.Decode as Decode
 import Options exposing (Options)
 import Result exposing (Result)
@@ -32,10 +32,33 @@ decodeModel flags =
 
 
 view : Model -> Html Msg
-view model =
+view (Model res) =
+    res
+        |> Result.map viewOk
+        |> Result.mapError logError
+        |> Result.withDefault viewErr
+
+
+viewOk : Options -> Html Msg
+viewOk opts =
     Html.div []
-        [ Html.pre [] [ Html.text "Here too" ]
+        [ Options.view
+            { compileMsg = Compile
+            , uncompileMsg = Uncompile
+            , options = opts
+            , files = FileSystem.view
+            }
         ]
+
+
+logError : Decode.Error -> Decode.Error
+logError error =
+    Debug.log "Decoder Error:" error
+
+
+viewErr : Html Msg
+viewErr =
+    Html.div [] [ Html.text "Sorry, there was an error decoding the flags for this scenario." ]
 
 
 
@@ -44,13 +67,21 @@ view model =
 
 type Msg
     = UpdateOptions Decode.Value
+    | Compile
+    | Uncompile
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
+update msg (Model optionsRes) =
     case msg of
         UpdateOptions json ->
             ( decodeModel json, Cmd.none )
+
+        Compile ->
+            ( Result.map Options.compile optionsRes |> Model, Cmd.none )
+
+        Uncompile ->
+            ( Result.map Options.uncompile optionsRes |> Model, Cmd.none )
 
 
 
@@ -73,7 +104,7 @@ main : Program Decode.Value Model Msg
 main =
     Browser.element
         { init = init
-        , view = view
+        , view = view >> Html.toUnstyled
         , update = update
         , subscriptions = subscriptions
         }
