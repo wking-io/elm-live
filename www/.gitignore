@@ -70,3 +70,6 @@ yarn-error.log
 
 # Elm Stuff
 elm-stuff
+
+# ENV
+.env.*

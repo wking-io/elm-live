@@ -13,6 +13,7 @@
     "gatsby-plugin-react-helmet": "^3.0.0",
     "gatsby-plugin-sharp": "2.0.12",
     "gatsby-source-filesystem": "^2.0.4",
+    "gatsby-source-graphql": "2.0.6",
     "gatsby-transformer-json": "2.1.5",
     "gatsby-transformer-sharp": "^2.1.4",
     "lodash.debounce": "4.0.8",

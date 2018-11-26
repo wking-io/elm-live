@@ -84,5 +84,21 @@ export const query = graphql`
         }
       }
     }
+    github {
+      repository(owner: "wking-io", name: "elm-live") {
+        forkCount
+        url
+        releases(first: 1, orderBy: { field: CREATED_AT, direction: DESC } ) {
+          nodes {
+            tag {
+              name
+            }
+          }
+        }
+        stargazers {
+          totalCount
+        }
+      }
+    }
   }
 `
