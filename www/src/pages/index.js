@@ -6,7 +6,7 @@ import { safePath } from 'safe-prop'
 import Layout from '../components/layout'
 import Track from '../components/track'
 import Waypoint from '../components/waypoint'
-import ElmHandler from '../components/ElmHandler'
+import ElmHandler from '../components/elm-handler'
 import { filePreview } from '../lib/ports'
 import { Elm } from '../Elm/Main.elm'
 

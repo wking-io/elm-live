@@ -1,9 +1,10 @@
 {
-  "name": "gatsby-starter-default",
-  "description": "Gatsby default starter",
+  "name": "elm-live-website",
+  "description": "Website for elm-live using Gatsby and Elm.",
   "version": "1.0.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Will King <contact@wking.io>",
   "dependencies": {
+    "babel-plugin-styled-components": "1.9.0",
     "data.either": "1.5.2",
     "gatsby": "^2.0.19",
     "gatsby-image": "^2.0.15",
@@ -12,6 +13,7 @@
     "gatsby-plugin-offline": "^2.0.11",
     "gatsby-plugin-react-helmet": "^3.0.0",
     "gatsby-plugin-sharp": "2.0.12",
+    "gatsby-plugin-styled-components": "3.0.3",
     "gatsby-source-filesystem": "^2.0.4",
     "gatsby-source-graphql": "2.0.6",
     "gatsby-transformer-json": "2.1.5",
@@ -21,7 +23,8 @@
     "react": "16.6.1",
     "react-dom": "16.6.1",
     "react-helmet": "^5.2.0",
-    "safe-prop": "1.1.1"
+    "safe-prop": "1.1.1",
+    "styled-components": "4.1.1"
   },
   "keywords": [
     "gatsby"
@@ -34,11 +37,8 @@
     "format": "prettier --write \"src/**/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "prettier": "^1.14.2"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/wking-io/elm-live"
   }
 }
