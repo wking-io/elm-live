@@ -4,7 +4,7 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    title: 'elm-live | Docs'
+    title: 'Documentation | elm-live'
   },
   plugins: [
     'gatsby-plugin-react-helmet',

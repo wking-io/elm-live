@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 import Either from 'data.either'
 import { safePath } from 'safe-prop'
 
+import Header from '../components/header'
 import Layout from '../components/layout'
 import Track from '../components/track'
 import Waypoint from '../components/waypoint'
@@ -16,7 +17,19 @@ function getOption (key, data) {
     .chain(safePath(['node', 'options']))
 }
 
-const height = { height: '400px' }
+function getStats (data) {
+  return Either
+    .of((a, b, c) => [{ name: 'Forks', stat: a }, { name: 'Stars', stat: b }, { name: 'Version', stat: c }])
+    .ap(safePath(['repository', 'forkCount']))
+    .ap(
+      safePath(['repository', 'releases', 'nodes'])
+        .map(a => a[0])
+        .chain(safePath(['tag', 'name']))
+    )
+    .ap(safePath(['stargazers', 'totalCount']))
+}
+
+const getRepoUrl = safePath(['repository', 'url'])
 
 class IndexPage extends React.Component {
   state = {
@@ -27,9 +40,11 @@ class IndexPage extends React.Component {
 
   render () {
     const options = getOption(this.state.active, this.props.data.allWaypointsJson.edges)
+    const stats = getStats(this.props.data.github)
+    const repoUrl = getRepoUrl(this.props.data.github)
     return (
       <Layout>
-        <ElmHandler src={Elm.Main} ports={filePreview} flags={options} options={options} />
+        <Header repoUrl={repoUrl} stats={stats} />
         <Track
           gate={500}
           updateActive={this.updateActive}
@@ -38,20 +53,16 @@ class IndexPage extends React.Component {
               <div>
                 <h1>Usage</h1>
                 <pre>elm-live</pre>
-                <section style={height} />
                 <Waypoint id='port-default' getPosition={getPosition} />
-                <section style={height} />
                 <Waypoint id='path-to-elm-default' getPosition={getPosition} />
-                <section style={height} />
                 <Waypoint id='host-default' getPosition={getPosition} />
-                <section style={height} />
                 <Waypoint id='dir-default' getPosition={getPosition} />
-                <section style={height} />
                 <Waypoint id='dir-js' getPosition={getPosition} />
               </div>
             )
           }}
         />
+        <ElmHandler src={Elm.Main} ports={filePreview} flags={options} options={options} />
       </Layout>
     )
   }

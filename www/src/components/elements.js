@@ -1,20 +1,48 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css, createGlobalStyle } from 'styled-components'
 
-const colors = {
+export const colors = {
   white: '#FFFFFF',
   black: '#0D1F2D',
+  grey: '#CFD2D5',
   lightGrey: '#F3F4F5',
   primary: '#FFA01C',
   primaryDark: '#EF6300'
 }
 
-const Mono = textColor => css`
+// ======================
+// GLOBAL
+// ======================
+
+export const GlobalStyle = createGlobalStyle`
+  html {
+    font-size: 4px;
+  }
+
+  body {
+    font-size: 4rem;
+  }
+`
+
+// ======================
+// LAYOUT
+// ======================
+
+export const Wrapper = styled.div`
+  width: 90%;
+  max-width: 962px;
+`
+
+// ======================
+// TYPOGRAPHY
+// ======================
+
+export const Mono = textColor => css`
   color: ${textColor};
   font-family: "Fira Mono", Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
 `
 
-const Sans = textColor => css`
+export const Sans = textColor => css`
   color: ${textColor};
   font-family: "Fira Sans", system-ui, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 `
@@ -73,6 +101,12 @@ export const Body = styled.p`
   ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
   font-size: 4rem;
   line-height: 6rem;
+`
+
+export const BodySmall = styled.p`
+  ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
+  font-size: 3.5rem;
+  line-height: 4.5rem;
 `
 
 export const Link = styled.a`
