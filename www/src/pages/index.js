@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 import Either from 'data.either'
 import { safePath } from 'safe-prop'
 
+import { Wrapper } from '../components/elements'
 import Header from '../components/header'
 import Layout from '../components/layout'
 import Track from '../components/track'
@@ -18,15 +19,18 @@ function getOption (key, data) {
 }
 
 function getStats (data) {
+  const forks = safePath(['repository', 'forkCount'], data)
+  const stars = safePath(['repository', 'stargazers', 'totalCount'], data)
+  const version = safePath(['repository', 'releases', 'nodes'], data)
+    .map(a => a[0])
+    .chain(safePath(['tag', 'name']))
+    .map(v => v.substring(1))
+
   return Either
-    .of((a, b, c) => [{ name: 'Forks', stat: a }, { name: 'Stars', stat: b }, { name: 'Version', stat: c }])
-    .ap(safePath(['repository', 'forkCount']))
-    .ap(
-      safePath(['repository', 'releases', 'nodes'])
-        .map(a => a[0])
-        .chain(safePath(['tag', 'name']))
-    )
-    .ap(safePath(['stargazers', 'totalCount']))
+    .of(a => b => c => [{ name: 'Forks', value: a }, { name: 'Stars', value: b }, { name: 'Version', value: c }])
+    .ap(forks)
+    .ap(stars)
+    .ap(version)
 }
 
 const getRepoUrl = safePath(['repository', 'url'])
@@ -45,24 +49,26 @@ class IndexPage extends React.Component {
     return (
       <Layout>
         <Header repoUrl={repoUrl} stats={stats} />
-        <Track
-          gate={500}
-          updateActive={this.updateActive}
-          render={getPosition => {
-            return (
-              <div>
-                <h1>Usage</h1>
-                <pre>elm-live</pre>
-                <Waypoint id='port-default' getPosition={getPosition} />
-                <Waypoint id='path-to-elm-default' getPosition={getPosition} />
-                <Waypoint id='host-default' getPosition={getPosition} />
-                <Waypoint id='dir-default' getPosition={getPosition} />
-                <Waypoint id='dir-js' getPosition={getPosition} />
-              </div>
-            )
-          }}
-        />
-        <ElmHandler src={Elm.Main} ports={filePreview} flags={options} options={options} />
+        <Wrapper>
+          <Track
+            gate={500}
+            updateActive={this.updateActive}
+            render={getPosition => {
+              return (
+                <div>
+                  <h1>Usage</h1>
+                  <pre>elm-live</pre>
+                  <Waypoint id='port-default' getPosition={getPosition} />
+                  <Waypoint id='path-to-elm-default' getPosition={getPosition} />
+                  <Waypoint id='host-default' getPosition={getPosition} />
+                  <Waypoint id='dir-default' getPosition={getPosition} />
+                  <Waypoint id='dir-js' getPosition={getPosition} />
+                </div>
+              )
+            }}
+          />
+          <ElmHandler src={Elm.Main} ports={filePreview} flags={options} options={options} />
+        </Wrapper>
       </Layout>
     )
   }
