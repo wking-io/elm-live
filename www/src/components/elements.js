@@ -53,6 +53,13 @@ export const Wrapper = styled.div`
   margin: 0 auto;
 `
 
+export const Aspect = styled.div`
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: ${props => `${(props.y / props.x) * 100}%`};
+`
+
 // ======================
 // TYPOGRAPHY
 // ======================
