@@ -17,10 +17,12 @@ export const colors = {
 export const GlobalStyle = createGlobalStyle`
   html {
     font-size: 4px;
+    margin: 0;
   }
 
   body {
     font-size: 4rem;
+    margin: 0;
   }
 `
 
@@ -87,9 +89,11 @@ export const HeadingFive = styled.h5`
 
 export const Jumbo = styled.p`
   ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
-  font-size: 12rem;
+  font-size: 7rem;
   font-weight: bold;
   line-height: 1;
+
+  @media ()
 `
 
 export const HeadingBox = styled.div`
@@ -130,4 +134,20 @@ export const CodeBlock = styled.pre`
   ${props => props.light ? Mono(colors.white) : Sans(colors.black)}
   background-color: ${props => props.noBg ? colors.white : colors.lightGrey};
   padding: 7rem;
+`
+
+// ======================
+// BUTTONS
+// ======================
+
+export const NoButton = styled.button`
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+
+  &:hover {
+    background: none;
+    border: none;
+  }
 `
