@@ -10,6 +10,23 @@ export const colors = {
   primaryDark: '#EF6300'
 }
 
+const sizes = {
+  sm: 576,
+  md: 768,
+  lg: 992,
+  xl: 1200
+}
+
+// iterate through the sizes and create a media template
+export const media = Object.keys(sizes).reduce((accumulator, label) => {
+  accumulator[label] = (...args) => css`
+    @media (min-width: ${sizes[label] / 16}em) {
+      ${css(...args)};
+    }
+  `
+  return accumulator
+}, {})
+
 // ======================
 // GLOBAL
 // ======================
@@ -93,7 +110,13 @@ export const Jumbo = styled.p`
   font-weight: bold;
   line-height: 1;
 
-  @media ()
+  ${media.md`
+    font-size: 10rem;
+  `}
+
+  ${media.lg`
+    font-size: 12rem;
+  `}
 `
 
 export const HeadingBox = styled.div`
