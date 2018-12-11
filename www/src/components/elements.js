@@ -79,6 +79,7 @@ export const HeadingOne = styled.h1`
   font-size: 8rem;
   font-weight: bold;
   line-height: 9rem;
+  margin: 0 0 3rem;
 `
 
 export const HeadingTwo = styled.h2`
@@ -86,6 +87,7 @@ export const HeadingTwo = styled.h2`
   font-size: 6rem;
   font-weight: bold;
   line-height: 7rem;
+  margin: 0 0 3rem;
 `
 
 export const HeadingThree = styled.h3`
@@ -93,6 +95,7 @@ export const HeadingThree = styled.h3`
   font-size: 4.5rem;
   font-weight: bold;
   line-height: 6rem;
+  margin: 0 0 3rem;
 `
 
 export const HeadingFour = styled.h4`
@@ -100,6 +103,7 @@ export const HeadingFour = styled.h4`
   font-size: 3.5rem;
   font-weight: bold;
   line-height: 4rem;
+  margin: 0 0 3rem;
   text-transform: uppercase;
 `
 
@@ -108,6 +112,7 @@ export const HeadingFive = styled.h5`
   font-size: 3.5rem;
   font-weight: bold;
   line-height: 4rem;
+  margin: 0 0 3rem;
   text-transform: uppercase;
 `
 
@@ -136,12 +141,14 @@ export const Body = styled.p`
   ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
   font-size: 4rem;
   line-height: 6rem;
+  margin: 0 0 3rem;
 `
 
 export const BodySmall = styled.p`
   ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
   font-size: 3.5rem;
   line-height: 4.5rem;
+  margin: 0 0 3rem;
 `
 
 export const Link = styled.a`
@@ -156,12 +163,12 @@ export const Link = styled.a`
 `
 
 export const Code = styled.code`
-  ${props => props.light ? Mono(colors.white) : Sans(colors.black)}
+  ${props => props.light ? Mono(colors.white) : Mono(colors.black)}
   background-color: ${colors.lightGrey};
 `
 
 export const CodeBlock = styled.pre`
-  ${props => props.light ? Mono(colors.white) : Sans(colors.black)}
+  ${props => props.light ? Mono(colors.white) : Mono(colors.black)}
   background-color: ${props => props.noBg ? colors.white : colors.lightGrey};
   padding: 7rem;
 `
@@ -179,5 +186,24 @@ export const NoButton = styled.button`
   &:hover {
     background: none;
     border: none;
+  }
+`
+
+// ======================
+// LINKS
+// ======================
+
+export const UnderlineAnchor = styled.a`
+  background-image: linear-gradient(to right, ${colors.primary} 0%, ${colors.primaryDark} 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 0.5rem;
+  background-position: 0 100%;
+  color: ${colors.black};
+  font-style: italic;
+  text-decoration: none;
+
+  &:hover {
+    background-image: linear-gradient(to right, ${colors.primaryDark} 0%, ${colors.primaryDark} 100%);
+    text-decoration: none;
   }
 `

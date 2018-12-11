@@ -5,6 +5,7 @@ import { safePath } from 'safe-prop'
 
 import { Wrapper } from '../components/elements'
 import Header from '../components/header'
+import Intro from '../components/intro'
 import Layout from '../components/layout'
 import Track from '../components/track'
 import Waypoint from '../components/waypoint'
@@ -49,6 +50,7 @@ class IndexPage extends React.Component {
     return (
       <Layout>
         <Header repoUrl={repoUrl} stats={stats} />
+        <Intro />
         <Wrapper>
           <Track
             gate={500}

@@ -1,7 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
-import { colors, media, Sans, Wrapper, Aspect } from './elements'
+import { colors, media, HeadingOne, Body, Code, UnderlineAnchor, Wrapper, Aspect } from './elements'
 
 const IntroWrapper = styled.div`
   border: 0.25rem solid ${colors.grey};
@@ -17,7 +17,17 @@ const IntroIconFrame = styled.div`
   `}
 `
 
-const EditorSvg = styled.div`
+const EditorAnimation = keyframes`
+  0% {
+    z-index: 1;
+  }
+
+  100% {
+    z-index: 2;
+  }
+`
+
+const EditorSvg = styled.svg`
   position: absolute;
   top: 0;
   left: 0;
@@ -58,7 +68,7 @@ const EditorIcon = () => (
     <path fill='#99b1bc' d='M321.61 323.11h61.22v14h-61.22z' />
     <path fill='#4d7489' d='M234.07 349.18h111.6v14h-111.6z' />
     <path fill='#99b1bc' d='M358.66 349.18h59.66v14h-59.66z' />
-    <path d='M552 503.37H0V0h552zm-550-2h548V2H2z' fill='#0d1f2d' />
+    <path fill='#0d1f2d' d='M552 503.37H0V0h552zm-550-2h548V2H2z' />
     <path fill='#1e202b' d='M14.8 36h78.26v6H14.8z' />
     <path fill='#375363' d='M14.8 71.61h9.14v9.14H14.8zM30.8 71.61h78.26v9.14H30.8zM31.55 88.36h9.14v9.14h-9.14zM47.55 88.36h78.26v9.14H47.55zM31.55 105.11h9.14v9.14h-9.14zM47.55 105.11h51.44v9.14H47.55zM31.55 122.04h9.14v9.14h-9.14zM47.55 122.04h67.14v9.14H47.55z' />
     <path fill='#99b1bc' d='M31.55 171.96h9.14v9.14h-9.14zM47.55 171.96h78.26v9.14H47.55z' />
@@ -66,7 +76,37 @@ const EditorIcon = () => (
   </EditorSvg>
 )
 
-const BrowserSvg = styled.div`
+const EditorAnimation = keyframes`
+  0% {
+    z-index: 2;
+  }
+
+  100% {
+    z-index: 1;
+  }
+
+  0% {
+    z-index: 2;
+  }
+
+  100% {
+    
+  }
+
+  100% {
+    z-index: 1;
+  }
+
+  100% {
+    z-index: 2;
+  }
+
+  100% {
+    z-index: 2;
+  }
+`
+
+const BrowserSvg = styled.svg`
   position: absolute;
   bottom: 0;
   right: 0;
@@ -108,10 +148,20 @@ const IntroIllustration = () => (
   </IntroIconFrame>
 )
 
-export const Intro = () => (
+const IntroContent = styled.div`
+  padding: 4rem;
+`
+
+const Intro = () => (
   <Wrapper>
     <IntroWrapper>
       <IntroIllustration />
+      <IntroContent>
+        <HeadingOne>A flexible dev server for Elm. Live reload included.</HeadingOne>
+        <Body>A thin wrapper around <Code>elm make</Code>, <Code>elm-live</Code> is a dev server that gives you a few extra convenience features during development. Features include pushstate for SPA development, proxies, and more. Usage and API documentation is below. Check out how to <UnderlineAnchor href="#usage">get started</UnderlineAnchor> or jump straight to the <UnderlineAnchor href="#docs">API Documentation</UnderlineAnchor>.</Body>
+      </IntroContent>
     </IntroWrapper>
   </Wrapper>
 )
+
+export default Intro
