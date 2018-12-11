@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
-import { colors, media, HeadingOne, Body, Code, UnderlineAnchor, Wrapper, Aspect } from './elements'
+import { colors, media, setKeyframes, HeadingOne, Body, Code, UnderlineAnchor, Wrapper, Aspect } from './elements'
 
 const IntroWrapper = styled.div`
   border: 0.25rem solid ${colors.grey};
@@ -17,21 +17,43 @@ const IntroIconFrame = styled.div`
   `}
 `
 
-const EditorAnimation = keyframes`
-  0% {
-    z-index: 1;
-  }
+const EditorAnimation = keyframes`${setKeyframes(22, {
+  7: `{ z-index: 1; }`,
+  11: `{ z-index: 2; }`,
+  18: `{ z-index: 1; }`,
+  22: `{ z-index: 2; }`
+})}`
 
-  100% {
-    z-index: 2;
-  }
-`
+const CodeSnippetAnimation = keyframes`${setKeyframes(22, {
+  2: `{ transform: scaleX(1); }`,
+  3: `{ transform: scaleX(0); }`,
+  4: `{ transform: scaleX(0); }`,
+  5: `{ transform: scaleX(1); }`,
+  13: `{ transform: scaleX(1); }`,
+  14: `{ transform: scaleX(0); }`,
+  15: `{ transform: scaleX(0); }`,
+  16: `{ transform: scaleX(1); }`
+})}`
 
 const EditorSvg = styled.svg`
   position: absolute;
   top: 0;
   left: 0;
   width: 60%;
+  z-index: 2;
+  animation: ${EditorAnimation} 10s steps(1, end) 0s infinite both;
+`
+
+const CodeSnippet = styled.div`
+  background-color: ${colors.blueLight};
+  height: 2.5%;
+  left: 36.65%;
+  position: absolute;
+  top: 24.95%;
+  width: 7%;
+  z-index: 3;
+  transform-origin: left center;
+  animation: ${CodeSnippetAnimation} 10s steps(6, end) 0s infinite both;
 `
 
 const EditorIcon = () => (
@@ -76,49 +98,53 @@ const EditorIcon = () => (
   </EditorSvg>
 )
 
-const EditorAnimation = keyframes`
-  0% {
-    z-index: 2;
-  }
+const BrowserAnimation = keyframes`${setKeyframes(22, {
+  7: `{ z-index: 4; }`,
+  11: `{ z-index: 1; }`,
+  18: `{ z-index: 4; }`,
+  22: `{ z-index: 1; }`
+})}`
 
-  100% {
-    z-index: 1;
-  }
+const ButtonBackgroundAnimation = keyframes`${setKeyframes(22, {
+  9: `{ opacity: 0; }`,
+  20: `{ opacity: 1; }`
+})}`
 
-  0% {
-    z-index: 2;
-  }
+const ButtonTextAnimation = keyframes`${setKeyframes(22, {
+  9: `{ fill: #ffffff; }`,
+  20: `{ fill: ${colors.blue}; }`
+})}`
 
-  100% {
-    
-  }
-
-  100% {
-    z-index: 1;
-  }
-
-  100% {
-    z-index: 2;
-  }
-
-  100% {
-    z-index: 2;
-  }
-`
+console.log(setKeyframes(22, {
+  9: `{ fill: #ffffff; }`,
+  20: `{ fill: ${colors.blue}; }`
+}))
 
 const BrowserSvg = styled.svg`
   position: absolute;
   bottom: 0;
   right: 0;
   width: 60%;
+  z-index: 1;
+  animation: ${BrowserAnimation} 10s steps(1, end) 0s infinite both;
+
+  & .button-bg {
+    fill: #ffffff;
+    animation: ${ButtonBackgroundAnimation} 10s steps(1, end) 0s infinite both;
+  }
+
+  & .button-text {
+    fill: ${colors.blue};
+    animation: ${ButtonTextAnimation} 10s steps(1, end) 0s infinite both;
+  }
 `
 
 const BrowserIcon = () => (
   <BrowserSvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 552 502.87'>
     <defs>
       <linearGradient id='linear-gradient' x1='64.2' y1='232.21' x2='175.2' y2='232.21' gradientUnits='userSpaceOnUse'>
-        <stop offset='0' stop-color='#ffa01c' />
-        <stop offset='1' stop-color='#ef6300' />
+        <stop offset='0' stopColor='#ffa01c' />
+        <stop offset='1' stopColor='#ef6300' />
       </linearGradient>
     </defs>
     <path fill='#d3dee2' d='M1.5 1h550v25H1.5z' />
@@ -132,8 +158,8 @@ const BrowserIcon = () => (
     <path fill='#4d7489' d='M64.7 423.13h118.4v78.74H64.7zM218.87 423.13h118.4v78.74h-118.4zM373.05 423.13h118.4v78.74h-118.4z' />
     <path fill='#0d1f2d' d='M552 502.87H0V0h552zm-550-2h548V2H2z' />
     <path fill='url(#linear-gradient)' d='M64.2 221.71h111v21h-111z' />
-    <path fill='#ffffff' d='M65.2 222.71h109v19h-109z' />
-    <path fill='#4d7489' d='M81.95 231.21h75.5v2h-75.5z' />
+    <path class='button-bg' d='M65.2 222.71h109v19h-109z' />
+    <path class='button-text' d='M81.95 231.21h75.5v2h-75.5z' />
     <path fill='#d3dee2' d='M239.76 101.28h251.69v181.43H239.76z' />
     <path fill='#4d7489' d='M64.93 150.66h230.18v14H64.93zM64.93 179.36h204.68v14H64.93zM160.23 379.36h254.2v14h-254.2z' />
   </BrowserSvg>
@@ -142,6 +168,7 @@ const BrowserIcon = () => (
 const IntroIllustration = () => (
   <IntroIconFrame>
     <Aspect x={20} y={13}>
+      <CodeSnippet />
       <EditorIcon />
       <BrowserIcon />
     </Aspect>
@@ -158,7 +185,7 @@ const Intro = () => (
       <IntroIllustration />
       <IntroContent>
         <HeadingOne>A flexible dev server for Elm. Live reload included.</HeadingOne>
-        <Body>A thin wrapper around <Code>elm make</Code>, <Code>elm-live</Code> is a dev server that gives you a few extra convenience features during development. Features include pushstate for SPA development, proxies, and more. Usage and API documentation is below. Check out how to <UnderlineAnchor href="#usage">get started</UnderlineAnchor> or jump straight to the <UnderlineAnchor href="#docs">API Documentation</UnderlineAnchor>.</Body>
+        <Body>A thin wrapper around <Code>elm make</Code>, <Code>elm-live</Code> is a dev server that gives you a few extra convenience features during development. Features include pushstate for SPA development, proxies, and more. Usage and API documentation is below. Check out how to <UnderlineAnchor href='#usage'>get started</UnderlineAnchor> or jump straight to the <UnderlineAnchor href='#docs'>API Documentation</UnderlineAnchor>.</Body>
       </IntroContent>
     </IntroWrapper>
   </Wrapper>

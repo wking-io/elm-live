@@ -4,6 +4,8 @@ import styled, { css, createGlobalStyle } from 'styled-components'
 export const colors = {
   white: '#FFFFFF',
   black: '#0D1F2D',
+  blue: '#4D7489',
+  blueLight: '#99b1bc',
   grey: '#CFD2D5',
   lightGrey: '#F3F4F5',
   primary: '#FFA01C',
@@ -15,6 +17,12 @@ const sizes = {
   md: 768,
   lg: 992,
   xl: 1200
+}
+
+export function setKeyframes (total, styles) {
+  return Array
+    .from({ length: total })
+    .map((_, i) => `${(100 / total) * i}% ${styles[i + 1] || `{}`}`)
 }
 
 // iterate through the sizes and create a media template
