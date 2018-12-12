@@ -58,7 +58,7 @@ export const GlobalStyle = createGlobalStyle`
 // ======================
 
 export const Wrapper = styled.div`
-  width: 90%;
+  width: 85%;
   max-width: 962px;
   margin: 0 auto;
 `
@@ -145,6 +145,11 @@ export const HeadingBox = styled.div`
   background-color: ${props => props.dark ? colors.secondaryDarkest : colors.white};
   border: 1px solid ${colors.secondaryDarkest};
   padding: 2rem;
+
+  & > * {
+    margin: 0;
+    color: ${props => props.dark ? colors.white : colors.secondaryDarkest};
+  }
 `
 
 export const Body = styled.p`
@@ -181,6 +186,8 @@ export const CodeBlock = styled.pre`
   ${props => props.light ? Mono(colors.white) : Mono(colors.secondaryDarkest)}
   background-color: ${props => props.noBg ? colors.white : colors.secondaryLightest};
   padding: 7rem;
+  overflow-x: scroll;
+  overflow-y: visible;
 `
 
 // ======================
@@ -222,12 +229,20 @@ const HeadingLinkWrapper = styled.div`
   display: flex;
   align-items: center;
 
+  & a {
+    display: none;
+  }
+
   &:hover a {
     opacity: 1;
   }
 
   ${media.sm`
     margin-left: -7rem;
+
+    & a {
+      display: block;
+    }
   `}
 `
 

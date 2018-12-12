@@ -7,7 +7,7 @@ const IntroWrapper = styled.div`
   border: 0.25rem solid ${colors.secondaryLighter};
   display: flex;
   flex-direction: column;
-  margin-bottom: 18rem;
+  margin-bottom: 14rem;
 
   ${media.lg`
     flex-direction: row;

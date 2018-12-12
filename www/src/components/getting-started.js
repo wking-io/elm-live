@@ -1,7 +1,6 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
 
-import { colors, media, generateKeyframes, HeadingOne, Body, Code, HeadingLink, UnderlineAnchor, Wrapper, Aspect, CodeBlock, HeadingTwo } from './elements'
+import { HeadingOne, Body, Code, HeadingLink, Wrapper, CodeBlock, HeadingTwo } from './elements'
 
 const GettingStarted = ({ location }) => (
   <Wrapper>
