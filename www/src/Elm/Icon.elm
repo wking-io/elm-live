@@ -22,10 +22,11 @@ folder =
             [ Svg.defs
                 []
                 [ Svg.linearGradient
-                    [ SA.id "a"
+                    [ SA.id "folder"
                     , SA.y1 "62"
                     , SA.x2 "125"
                     , SA.y2 "62"
+                    , SA.gradientUnits "userSpaceOnUse"
                     ]
                     [ Svg.stop [ SA.offset "0", SA.stopColor "#ffa01c" ] []
                     , Svg.stop [ SA.offset "1", SA.stopColor "#ef6300" ] []
@@ -33,7 +34,7 @@ folder =
                 ]
             , Svg.path
                 [ SA.d "M55.25 12H6a6 6 0 0 0-6 6v88a6 6 0 0 0 6 6h113a6 6 0 0 0 6-6V32a6 6 0 0 0-6-6H75.75a6 6 0 0 1-4-1.48l-12.6-11a6 6 0 0 0-3.9-1.52z"
-                , SA.fill "url(#a)"
+                , SA.fill "url(#folder)"
                 ]
                 []
             , Svg.path

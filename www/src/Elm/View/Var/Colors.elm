@@ -1,10 +1,10 @@
-module View.Var.Colors exposing (black, gradient, primary, primaryDark, primaryLight)
+module View.Var.Colors exposing (secondaryDarkest, gradient, primary, primaryDark, primaryLight)
 
 import Css exposing (BackgroundImage, Color, ListStyle)
 
 
-black : Color
-black =
+secondaryDarkest : Color
+secondaryDarkest =
     Css.rgb 13 31 45
 
 

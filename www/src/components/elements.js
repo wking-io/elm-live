@@ -3,13 +3,16 @@ import styled, { css, createGlobalStyle } from 'styled-components'
 
 export const colors = {
   white: '#FFFFFF',
-  black: '#0D1F2D',
-  blue: '#4D7489',
-  blueLight: '#99b1bc',
-  grey: '#CFD2D5',
-  lightGrey: '#F3F4F5',
-  primary: '#FFA01C',
-  primaryDark: '#EF6300'
+  secondaryDarkest: '#0D1F2D',
+  secondaryDarker: '#1A3547',
+  secondaryDark: '#375363',
+  secondary: '#4D7489',
+  secondaryLight: '#99B1BC',
+  secondaryLighter: '#D3DEE2',
+  secondaryLightest: '#F3F4F5',
+  primaryDark: '#EF6300',
+  primary: '#F77F00',
+  primaryLight: '#FFA01C'
 }
 
 const sizes = {
@@ -19,11 +22,10 @@ const sizes = {
   xl: 1200
 }
 
-export function setKeyframes (total, styles) {
-  return Array
+export const generateKeyframes = total => frames =>
+  Array
     .from({ length: total })
-    .map((_, i) => `${(100 / total) * i}% ${styles[i + 1] || `{}`}`)
-}
+    .reduce((acc, _, i) => frames[i + 1] ? `${acc} ${(100 / total) * i}% { ${frames[i + 1]} }` : acc, '')
 
 // iterate through the sizes and create a media template
 export const media = Object.keys(sizes).reduce((accumulator, label) => {
@@ -83,23 +85,23 @@ export const Sans = textColor => css`
 `
 
 export const HeadingOne = styled.h1`
-  ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
+  ${props => props.light ? Sans(colors.white) : Sans(colors.secondaryDarkest)}
   font-size: 8rem;
   font-weight: bold;
   line-height: 9rem;
-  margin: 0 0 3rem;
+  margin: 2rem 0 3rem;
 `
 
 export const HeadingTwo = styled.h2`
-  ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
+  ${props => props.light ? Sans(colors.white) : Sans(colors.secondaryDarkest)}
   font-size: 6rem;
   font-weight: bold;
   line-height: 7rem;
-  margin: 0 0 3rem;
+  margin: 2rem 0 3rem;
 `
 
 export const HeadingThree = styled.h3`
-  ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
+  ${props => props.light ? Sans(colors.white) : Sans(colors.secondaryDarkest)}
   font-size: 4.5rem;
   font-weight: bold;
   line-height: 6rem;
@@ -107,7 +109,7 @@ export const HeadingThree = styled.h3`
 `
 
 export const HeadingFour = styled.h4`
-  ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
+  ${props => props.light ? Sans(colors.white) : Sans(colors.secondaryDarkest)}
   font-size: 3.5rem;
   font-weight: bold;
   line-height: 4rem;
@@ -116,7 +118,7 @@ export const HeadingFour = styled.h4`
 `
 
 export const HeadingFive = styled.h5`
-  ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
+  ${props => props.light ? Sans(colors.white) : Sans(colors.secondaryDarkest)}
   font-size: 3.5rem;
   font-weight: bold;
   line-height: 4rem;
@@ -125,7 +127,7 @@ export const HeadingFive = styled.h5`
 `
 
 export const Jumbo = styled.p`
-  ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
+  ${props => props.light ? Sans(colors.white) : Sans(colors.secondaryDarkest)}
   font-size: 7rem;
   font-weight: bold;
   line-height: 1;
@@ -140,27 +142,27 @@ export const Jumbo = styled.p`
 `
 
 export const HeadingBox = styled.div`
-  background-color: ${props => props.dark ? colors.black : colors.white};
-  border: 1px solid ${colors.black};
+  background-color: ${props => props.dark ? colors.secondaryDarkest : colors.white};
+  border: 1px solid ${colors.secondaryDarkest};
   padding: 2rem;
 `
 
 export const Body = styled.p`
-  ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
+  ${props => props.light ? Sans(colors.white) : Sans(colors.secondaryDarkest)}
   font-size: 4rem;
   line-height: 6rem;
-  margin: 0 0 3rem;
+  margin: 0 0 6rem;
 `
 
 export const BodySmall = styled.p`
-  ${props => props.light ? Sans(colors.white) : Sans(colors.black)}
+  ${props => props.light ? Sans(colors.white) : Sans(colors.secondaryDarkest)}
   font-size: 3.5rem;
   line-height: 4.5rem;
   margin: 0 0 3rem;
 `
 
 export const Link = styled.a`
-  background-image: linear-gradient(to right, ${colors.primary} 0%, ${colors.primaryDark} 100%);
+  background-image: linear-gradient(to right, ${colors.primaryLight} 0%, ${colors.primaryDark} 100%);
   background-repeat: no-repeat;
   background-size: 100% 0.2em;
   background-position: 0 88%;
@@ -171,13 +173,13 @@ export const Link = styled.a`
 `
 
 export const Code = styled.code`
-  ${props => props.light ? Mono(colors.white) : Mono(colors.black)}
-  background-color: ${colors.lightGrey};
+  ${props => props.light ? Mono(colors.white) : Mono(colors.secondaryDarkest)}
+  background-color: ${colors.secondaryLightest};
 `
 
 export const CodeBlock = styled.pre`
-  ${props => props.light ? Mono(colors.white) : Mono(colors.black)}
-  background-color: ${props => props.noBg ? colors.white : colors.lightGrey};
+  ${props => props.light ? Mono(colors.white) : Mono(colors.secondaryDarkest)}
+  background-color: ${props => props.noBg ? colors.white : colors.secondaryLightest};
   padding: 7rem;
 `
 
@@ -206,7 +208,7 @@ export const UnderlineAnchor = styled.a`
   background-repeat: no-repeat;
   background-size: 100% 0.5rem;
   background-position: 0 100%;
-  color: ${colors.black};
+  color: ${colors.secondaryDarkest};
   font-style: italic;
   text-decoration: none;
 
@@ -215,3 +217,34 @@ export const UnderlineAnchor = styled.a`
     text-decoration: none;
   }
 `
+
+const HeadingLinkWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  &:hover a {
+    opacity: 1;
+  }
+
+  ${media.sm`
+    margin-left: -7rem;
+  `}
+`
+
+const HeadingLinkIcon = styled.a`
+  margin: 0 2rem 0 0;
+  width: 5rem;
+  opacity: 0;
+  transform: rotate(-45deg);
+`
+
+export const HeadingLink = ({ children, linkId, location }) => (
+  <HeadingLinkWrapper>
+    <HeadingLinkIcon href={`${location}#${linkId}`}>
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12'>
+        <path fill={colors.secondaryLight} d='M18,0H13.2V2.4H18a3.6,3.6,0,1,1,0,7.2H13.2V12H18A6,6,0,0,0,18,0ZM10.8,9.6H6A3.6,3.6,0,0,1,6,2.4h4.8V0H6A6,6,0,0,0,6,12h4.8ZM7.2,4.8h9.6V7.2H7.2Z' />
+      </svg>
+    </HeadingLinkIcon>
+    <div>{children}</div>
+  </HeadingLinkWrapper>
+)

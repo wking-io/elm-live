@@ -3,15 +3,11 @@ import { graphql } from 'gatsby'
 import Either from 'data.either'
 import { safePath } from 'safe-prop'
 
-import { Wrapper } from '../components/elements'
+import Layout from '../components/layout'
 import Header from '../components/header'
 import Intro from '../components/intro'
-import Layout from '../components/layout'
-import Track from '../components/track'
-import Waypoint from '../components/waypoint'
-import ElmHandler from '../components/elm-handler'
-import { filePreview } from '../lib/ports'
-import { Elm } from '../Elm/Main.elm'
+import GettingStarted from '../components/getting-started'
+import Documentation from '../components/documentation'
 
 function getOption (key, data) {
   return Either
@@ -51,26 +47,8 @@ class IndexPage extends React.Component {
       <Layout>
         <Header repoUrl={repoUrl} stats={stats} />
         <Intro />
-        <Wrapper>
-          <Track
-            gate={500}
-            updateActive={this.updateActive}
-            render={getPosition => {
-              return (
-                <div>
-                  <h1>Usage</h1>
-                  <pre>elm-live</pre>
-                  <Waypoint id='port-default' getPosition={getPosition} />
-                  <Waypoint id='path-to-elm-default' getPosition={getPosition} />
-                  <Waypoint id='host-default' getPosition={getPosition} />
-                  <Waypoint id='dir-default' getPosition={getPosition} />
-                  <Waypoint id='dir-js' getPosition={getPosition} />
-                </div>
-              )
-            }}
-          />
-          <ElmHandler src={Elm.Main} ports={filePreview} flags={options} options={options} />
-        </Wrapper>
+        <GettingStarted location={this.props.location.href} />
+        <Documentation location={this.props.location.href} options={options} updateActive={this.updateActive} />
       </Layout>
     )
   }

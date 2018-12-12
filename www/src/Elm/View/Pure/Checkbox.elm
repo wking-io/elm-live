@@ -37,7 +37,7 @@ checkboxLabel : List (Attribute msg) -> List (Html msg) -> Html msg
 checkboxLabel =
     Html.styled Html.label
         [ Css.padding2 (Css.rem 2) (Css.rem 3)
-        , Css.border3 (Css.rem 0.5) Css.solid Colors.black
+        , Css.border3 (Css.rem 0.5) Css.solid Colors.secondaryDarkest
         , Css.borderRadius (Css.rem 0.5)
         , Css.backgroundImage Colors.gradient
         , Css.backgroundPosition2 (Css.px -6) (Css.px 6)
