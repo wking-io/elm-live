@@ -186,8 +186,7 @@ export const CodeBlock = styled.pre`
   ${props => props.light ? Mono(colors.white) : Mono(colors.secondaryDarkest)}
   background-color: ${props => props.noBg ? colors.white : colors.secondaryLightest};
   padding: 7rem;
-  overflow-x: scroll;
-  overflow-y: visible;
+  overflow: auto;
 `
 
 // ======================
