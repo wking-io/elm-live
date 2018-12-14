@@ -23,6 +23,7 @@ program
     '-y, --proxyHost [proxyhost]',
     'Proxy requests to another server running at `host`. Requires `--proxyHost` and should be a full URL, eg. `http://localhost:9000`. Defaults to not proxying'
   )
+  .option('-S, --ssl [ssl]', `Start an https server instead of http. Defaults to false.`, false)
   .option('-b, --before-build [before-build]', `Run EXECUTABLE before every rebuild. This way you can easily use other tools like ${chalk.cyan.underline('elm-css')} or ${chalk.cyan.underline('browserify')} in your workflow.`)
   .option('-a, --after-build [after-build]', `Just like ${chalk.cyan.underline('--before-build')}, but runs after ${chalk.cyan.underline('elm make')}.`)
   .on('--help', () => {
