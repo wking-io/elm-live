@@ -252,7 +252,7 @@ const HeadingLinkIcon = styled.a`
   transform: rotate(-45deg);
 `
 
-export const HeadingLink = ({ children, linkId, location }) => (
+export const HeadingLinkBase = location => ({ children, linkId }) => (
   <HeadingLinkWrapper>
     <HeadingLinkIcon href={`${location}#${linkId}`}>
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12'>
