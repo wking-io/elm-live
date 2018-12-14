@@ -91,6 +91,9 @@ An absolute or relative path to `elm`. If you’ve installed _elm-platform_ loca
 #### `-h, --host [HOSTNAME|IP]`
 Set the host interface to attach the server to. Default: `localhost`.
 
+#### `-S, --ssl`
+Start an https server instead of http. Defaults to false.
+
 #### `-d, --dir=PATH`
 The base for static content. Default: `.`.
 
@@ -132,7 +135,7 @@ You’re looking at it.
 
 ### Have the compiler generate your index.html for you.
 
-This command will start the server at https://localhost:8000 and compile your elm code to an index.html file in the folder you are running the command from. Note: the `--open` flag will open the page in the browser for you. 
+This command will start the server at http://localhost:8000 and compile your elm code to an index.html file in the folder you are running the command from. Note: the `--open` flag will open the page in the browser for you. 
 
 ```sh
 $ elm-live src/Main.elm --open
