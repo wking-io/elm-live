@@ -1,6 +1,7 @@
 port module Main exposing (main)
 
 import Browser
+import Css
 import FileSystem
 import Html.Styled as Html exposing (Html)
 import Json.Decode as Decode
@@ -13,7 +14,7 @@ import Result exposing (Result)
 
 
 type Model
-    = Model (Result Decode.Error Options)
+    = Model (Result Decode.Error ( Options, Bool ))
 
 
 init : Decode.Value -> ( Model, Cmd Msg )
@@ -24,6 +25,7 @@ init flags =
 decodeModel : Decode.Value -> Model
 decodeModel flags =
     Decode.decodeValue Options.decoder flags
+        |> Result.map (\opts -> ( opts, False ))
         |> Model
 
 
@@ -39,10 +41,12 @@ view (Model res) =
         |> Result.withDefault viewErr
 
 
-viewOk : Options -> Html Msg
-viewOk opts =
-    Html.div []
-        [ Options.view
+viewOk : ( Options, Bool ) -> Html Msg
+viewOk ( opts, isOpen ) =
+    Html.styled Html.div
+        [ Css.height (Css.pct 100) ]
+        []
+        [ Options.viewFiles
             { compileMsg = Compile
             , uncompileMsg = Uncompile
             , options = opts
@@ -72,16 +76,26 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg (Model optionsRes) =
+update msg (Model res) =
     case msg of
         UpdateOptions json ->
             ( decodeModel json, Cmd.none )
 
         Compile ->
-            ( Result.map Options.compile optionsRes |> Model, Cmd.none )
+            ( compile res, Cmd.none )
 
         Uncompile ->
-            ( Result.map Options.uncompile optionsRes |> Model, Cmd.none )
+            ( uncompile res, Cmd.none )
+
+
+compile : Result Decode.Error ( Options, Bool ) -> Model
+compile result =
+    Result.map (\( opts, isOpen ) -> ( Options.compile opts, isOpen )) result |> Model
+
+
+uncompile : Result Decode.Error ( Options, Bool ) -> Model
+uncompile result =
+    Result.map (\( opts, isOpen ) -> ( Options.uncompile opts, isOpen )) result |> Model
 
 
 

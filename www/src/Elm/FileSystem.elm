@@ -3,7 +3,11 @@ module FileSystem exposing
     , FileSystem(..)
     , FolderData
     , Node
+    , firstTabActive
+    , firstTabInactive
     , fromNode
+    , lastTabActive
+    , lastTabInactive
     , makeCssFile
     , makeElmFile
     , makeFolder
@@ -11,16 +15,22 @@ module FileSystem exposing
     , makeJsFile
     , makeJsonFile
     , sort
+    , spacer
     , view
+    , wrapper
     )
 
 import Css
+import Css.Media as Media exposing (withMedia)
 import FileSystem.Extension as Extension exposing (Extension(..))
 import FileSystem.Id as Id exposing (Id)
 import Html.Styled as Html exposing (Attribute, Html)
 import Html.Styled.Attributes as HA
 import Html.Styled.Events exposing (onClick)
 import Icon exposing (Icon)
+import View.Var.Colors as Colors
+import View.Var.Fonts as Fonts
+import View.Var.Sizes as Sizes exposing (screen)
 
 
 type FileSystem
@@ -101,6 +111,103 @@ fromNode =
 
 
 -- VIEW
+
+
+type TabPosition
+    = First
+    | Last
+
+
+type TabState
+    = Active
+    | Inactive
+
+
+firstTabActive : List (Attribute msg) -> List (Html msg) -> Html msg
+firstTabActive =
+    tab ( First, Active )
+
+
+firstTabInactive : List (Attribute msg) -> List (Html msg) -> Html msg
+firstTabInactive =
+    tab ( First, Inactive )
+
+
+lastTabActive : List (Attribute msg) -> List (Html msg) -> Html msg
+lastTabActive =
+    tab ( Last, Active )
+
+
+lastTabInactive : List (Attribute msg) -> List (Html msg) -> Html msg
+lastTabInactive =
+    tab ( Last, Inactive )
+
+
+tab : ( TabPosition, TabState ) -> List (Attribute msg) -> List (Html msg) -> Html msg
+tab tabSettings =
+    let
+        stateStyles =
+            case tabSettings of
+                ( First, Active ) ->
+                    [ Css.backgroundColor Colors.white
+                    , Css.borderTop3 (Css.px 1) Css.solid Colors.white
+                    , Css.borderRight3 (Css.px 1) Css.solid Colors.white
+                    , Css.borderBottom3 (Css.px 1) Css.solid Colors.secondaryDarkest
+                    , Css.borderLeft3 (Css.px 1) Css.solid Colors.white
+                    ]
+
+                ( First, Inactive ) ->
+                    [ Css.backgroundColor Colors.secondaryLightest
+                    , Css.borderTop3 (Css.px 1) Css.solid Colors.secondaryDarkest
+                    , Css.borderRight3 (Css.px 1) Css.solid Colors.secondaryDarkest
+                    , Css.borderBottom3 (Css.px 1) Css.solid Colors.secondaryDarkest
+                    , Css.borderLeft3 (Css.px 1) Css.solid Colors.white
+                    ]
+
+                ( Last, Active ) ->
+                    [ Css.backgroundColor Colors.white
+                    , Css.borderTop3 (Css.px 1) Css.solid Colors.white
+                    , Css.borderRight3 (Css.px 1) Css.solid Colors.white
+                    , Css.borderBottom3 (Css.px 1) Css.solid Colors.secondaryDarkest
+                    , Css.borderLeft3 (Css.px 1) Css.solid Colors.white
+                    ]
+
+                ( Last, Inactive ) ->
+                    [ Css.backgroundColor Colors.secondaryLightest
+                    , Css.borderTop3 (Css.px 1) Css.solid Colors.secondaryDarkest
+                    , Css.borderRight3 (Css.px 1) Css.solid Colors.white
+                    , Css.borderBottom3 (Css.px 1) Css.solid Colors.secondaryDarkest
+                    , Css.borderLeft3 (Css.px 1) Css.solid Colors.secondaryDarkest
+                    ]
+    in
+    Html.styled Html.button
+        ([ Css.width (Css.pct 50)
+         , Fonts.sans
+         , Css.padding (Css.rem 5)
+         , Css.fontWeight Css.bold
+         ]
+            ++ stateStyles
+        )
+
+
+wrapper : List (Attribute msg) -> List (Html msg) -> Html msg
+wrapper =
+    Html.styled Html.div
+        [ Css.displayFlex
+        , Css.flexDirection Css.columnReverse
+        , Css.height (Css.pct 100)
+        ]
+
+
+spacer : List (Attribute msg) -> List (Html msg) -> Html msg
+spacer =
+    Html.styled Html.div
+        [ Css.padding (Css.rem 6)
+        , Css.flex (Css.int 1)
+        , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
+            [ Css.padding (Css.rem 12)
+            ]
+        ]
 
 
 view : FileSystem -> Html msg

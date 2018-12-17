@@ -34,16 +34,14 @@ const FileWrapper = styled.div`
 `
 
 const FileSystem = styled.div`
-  padding: 6rem;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   position: ${props => props.isFixed ? 'fixed' : 'absolute'};
   top: 0;
   right: 0;
   background-color: ${colors.white};
 
   ${media.md`
-    padding: 12rem;
     width: 100rem;
     border-left: 1px solid ${colors.secondaryDarkest};
   `}

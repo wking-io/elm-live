@@ -3,7 +3,7 @@ module Options exposing
     , compile
     , decoder
     , uncompile
-    , view
+    , viewFiles
     )
 
 import Command exposing (Command)
@@ -115,34 +115,34 @@ type alias ViewConfig msg =
     }
 
 
-view : ViewConfig msg -> Html msg
-view { uncompileMsg, compileMsg, options, files } =
+viewFiles : ViewConfig msg -> Html msg
+viewFiles { uncompileMsg, compileMsg, options, files } =
     case options of
         Raw _ _ ->
-            Html.div []
+            FileSystem.wrapper []
                 [ Html.div
                     [ HA.attribute "role" "tablist"
                     , HA.attribute "aria-label" "File Preview"
                     ]
-                    [ Html.button
+                    [ FileSystem.firstTabActive
                         [ HA.attribute "role" "tab"
                         , HA.attribute "aria-selected" "true"
                         , HA.attribute "aria-controls" "raw-tab"
                         , HA.id "raw"
                         , onClick uncompileMsg
                         ]
-                        [ Html.text "Raw" ]
-                    , Html.button
+                        [ Html.text "Raw Preview" ]
+                    , FileSystem.lastTabInactive
                         [ HA.attribute "role" "tab"
-                        , HA.attribute "aria-selected" "true"
+                        , HA.attribute "aria-selected" ""
                         , HA.attribute "aria-controls" "compiled-tab"
                         , HA.id "compiled"
                         , HA.tabindex -1
                         , onClick compileMsg
                         ]
-                        [ Html.text "Compiled" ]
+                        [ Html.text "Compiled Preview" ]
                     ]
-                , Html.div
+                , FileSystem.spacer
                     [ HA.tabindex 0
                     , HA.attribute "role" "tabpanel"
                     , HA.id "raw-tab"
@@ -160,20 +160,20 @@ view { uncompileMsg, compileMsg, options, files } =
                 ]
 
         Compiled _ _ ->
-            Html.div []
+            FileSystem.wrapper []
                 [ Html.div
                     [ HA.attribute "role" "tablist"
                     , HA.attribute "aria-label" "File Preview"
                     ]
-                    [ Html.button
+                    [ FileSystem.firstTabInactive
                         [ HA.attribute "role" "tab"
-                        , HA.attribute "aria-selected" "true"
+                        , HA.attribute "aria-selected" "false"
                         , HA.attribute "aria-controls" "raw-tab"
                         , HA.id "raw"
                         , onClick uncompileMsg
                         ]
-                        [ Html.text "Raw" ]
-                    , Html.button
+                        [ Html.text "Raw Preview" ]
+                    , FileSystem.lastTabActive
                         [ HA.attribute "role" "tab"
                         , HA.attribute "aria-selected" "true"
                         , HA.attribute "aria-controls" "compiled-tab"
@@ -181,7 +181,7 @@ view { uncompileMsg, compileMsg, options, files } =
                         , HA.tabindex -1
                         , onClick compileMsg
                         ]
-                        [ Html.text "Compiled" ]
+                        [ Html.text "Compiled Preview" ]
                     ]
                 , Html.div
                     [ HA.tabindex 0
@@ -191,7 +191,7 @@ view { uncompileMsg, compileMsg, options, files } =
                     , HA.hidden True
                     ]
                     []
-                , Html.div
+                , FileSystem.spacer
                     [ HA.tabindex 0
                     , HA.attribute "role" "tabpanel"
                     , HA.id "compile-tab"
