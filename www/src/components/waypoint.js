@@ -6,10 +6,7 @@ function distanceFromTop (el, scroll) {
 }
 
 class Waypoint extends React.Component {
-  constructor (props) {
-    super(props)
-    this._ref = React.createRef()
-  }
+  _ref = React.createRef()
 
   componentDidMount () {
     const { getPosition, id } = this.props

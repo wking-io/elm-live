@@ -42,6 +42,9 @@ export const media = Object.keys(sizes).reduce((accumulator, label) => {
 // ======================
 
 export const GlobalStyle = createGlobalStyle`
+  *, *:before, *:after {
+    box-sizing: border-box;
+  }
   html {
     font-size: 4px;
     margin: 0;
@@ -123,7 +126,7 @@ export const HeadingFive = styled.h5`
   font-weight: bold;
   line-height: 4rem;
   margin: 0 0 3rem;
-  text-transform: uppercase;
+  text-transform: ${props => props.lower ? 'none' : 'uppercase'};
 `
 
 export const Jumbo = styled.p`

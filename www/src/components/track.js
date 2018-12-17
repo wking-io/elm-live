@@ -35,7 +35,7 @@ class Track extends React.Component {
   getPosition = (id, top) => this.setState((state) => (state.waypoints[id] = top))
 
   onScroll = debounce(() => findActive(window.scrollY + this.props.gate, this.state.waypoints)
-    .map(this.props.updateActive), 100)
+    .map(this.props.updateActive), 1)
 
   componentDidMount () {
     window.addEventListener('scroll', this.onScroll)

@@ -121,11 +121,6 @@ const ButtonBackgroundAnimation = keyframes`${introKeyframes({
   20: `opacity: 1;`
 })}`
 
-console.log(introKeyframes({
-  9: `opacity: 0;`,
-  20: `opacity: 1;`
-}))
-
 const BrowserSvg = styled.svg`
   position: absolute;
   bottom: 0;

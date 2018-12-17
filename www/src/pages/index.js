@@ -15,6 +15,12 @@ function getOption (key, data) {
     .chain(safePath(['node', 'options']))
 }
 
+function getName (key, data) {
+  return Either
+    .fromNullable(data.find(edge => edge.node.id === key))
+    .chain(safePath(['node', 'name']))
+}
+
 function getStats (data) {
   const forks = safePath(['repository', 'forkCount'], data)
   const stars = safePath(['repository', 'stargazers', 'totalCount'], data)
@@ -43,12 +49,13 @@ class IndexPage extends React.Component {
     const options = getOption(this.state.active, this.props.data.allWaypointsJson.edges)
     const stats = getStats(this.props.data.github)
     const repoUrl = getRepoUrl(this.props.data.github)
+    const activeName = getName(this.state.active, this.props.data.allWaypointsJson.edges)
     return (
       <Layout>
         <Header repoUrl={repoUrl} stats={stats} />
         <Intro />
         <GettingStarted location={this.props.location.href} />
-        <Documentation location={this.props.location.href} options={options} updateActive={this.updateActive} />
+        <Documentation location={this.props.location.href} options={options} updateActive={this.updateActive} activeName={activeName} />
       </Layout>
     )
   }
@@ -62,6 +69,7 @@ export const query = graphql`
       edges {
         node {
           id
+          name
           options {
             flags {
               port
