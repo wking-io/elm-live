@@ -38,7 +38,9 @@ module.exports = {
     },
     {
       resolve: 'gatsby-plugin-elm',
-      options: {}
+      options: {
+        debug: false,
+      }
     },
     {
       resolve: 'gatsby-source-graphql',

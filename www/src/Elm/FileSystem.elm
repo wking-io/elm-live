@@ -151,7 +151,7 @@ tab tabSettings =
                 ( First, Active ) ->
                     [ Css.backgroundColor Colors.white
                     , Css.borderTop3 (Css.px 1) Css.solid Colors.white
-                    , Css.borderRight3 (Css.px 1) Css.solid Colors.white
+                    , Css.borderRight (Css.px 0)
                     , Css.borderBottom3 (Css.px 1) Css.solid Colors.secondaryDarkest
                     , Css.borderLeft3 (Css.px 1) Css.solid Colors.white
                     ]
@@ -169,7 +169,7 @@ tab tabSettings =
                     , Css.borderTop3 (Css.px 1) Css.solid Colors.white
                     , Css.borderRight3 (Css.px 1) Css.solid Colors.white
                     , Css.borderBottom3 (Css.px 1) Css.solid Colors.secondaryDarkest
-                    , Css.borderLeft3 (Css.px 1) Css.solid Colors.white
+                    , Css.borderLeft (Css.px 0)
                     ]
 
                 ( Last, Inactive ) ->
@@ -183,19 +183,31 @@ tab tabSettings =
     Html.styled Html.button
         ([ Css.width (Css.pct 50)
          , Fonts.sans
+         , Css.fontSize (Css.rem 4)
          , Css.padding (Css.rem 5)
-         , Css.fontWeight Css.bold
+         , Css.fontWeight (Css.int 500)
          ]
             ++ stateStyles
         )
 
 
-wrapper : List (Attribute msg) -> List (Html msg) -> Html msg
-wrapper =
+wrapper : Bool -> List (Attribute msg) -> List (Html msg) -> Html msg
+wrapper isOpen =
+    let
+        display =
+            if isOpen then
+                Css.displayFlex
+
+            else
+                Css.display Css.none
+    in
     Html.styled Html.div
-        [ Css.displayFlex
+        [ display
         , Css.flexDirection Css.columnReverse
         , Css.height (Css.pct 100)
+        , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
+            [ Css.displayFlex
+            ]
         ]
 
 

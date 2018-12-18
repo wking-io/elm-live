@@ -3,10 +3,13 @@ module Options exposing
     , compile
     , decoder
     , uncompile
+    , viewCommand
     , viewFiles
     )
 
 import Command exposing (Command)
+import Css
+import Css.Media as Media exposing (withMedia)
 import FileSystem exposing (FileSystem, Node)
 import Html.Styled as Html exposing (Html)
 import Html.Styled.Attributes as HA
@@ -14,6 +17,8 @@ import Html.Styled.Events exposing (onClick)
 import Json.Decode as Decode exposing (Decoder)
 import Options.Flag as Flag exposing (Flag)
 import Options.Output as Output exposing (Output)
+import View.Var.Colors as Colors
+import View.Var.Sizes as Sizes exposing (screen)
 
 
 type Options
@@ -107,19 +112,31 @@ flagsToCommand flags cmd =
 -- VIEW
 
 
+boolToString : Bool -> String
+boolToString bool =
+    if bool then
+        "true"
+
+    else
+        "false"
+
+
 type alias ViewConfig msg =
     { uncompileMsg : msg
     , compileMsg : msg
     , options : Options
     , files : FileSystem -> Html msg
+    , isOpen : Bool
     }
 
 
 viewFiles : ViewConfig msg -> Html msg
-viewFiles { uncompileMsg, compileMsg, options, files } =
+viewFiles { uncompileMsg, compileMsg, options, files, isOpen } =
     case options of
         Raw _ _ ->
-            FileSystem.wrapper []
+            FileSystem.wrapper isOpen
+                [ HA.attribute "aria-hidden" <| boolToString <| not isOpen
+                ]
                 [ Html.div
                     [ HA.attribute "role" "tablist"
                     , HA.attribute "aria-label" "File Preview"
@@ -160,7 +177,9 @@ viewFiles { uncompileMsg, compileMsg, options, files } =
                 ]
 
         Compiled _ _ ->
-            FileSystem.wrapper []
+            FileSystem.wrapper isOpen
+                [ HA.attribute "aria-hidden" <| boolToString <| not isOpen
+                ]
                 [ Html.div
                     [ HA.attribute "role" "tablist"
                     , HA.attribute "aria-label" "File Preview"
@@ -199,3 +218,30 @@ viewFiles { uncompileMsg, compileMsg, options, files } =
                     ]
                     [ files (toFileSystem options) ]
                 ]
+
+
+viewCommand : ( Options, Bool ) -> Html msg
+viewCommand ( opts, isOpen ) =
+    Html.styled Html.div
+        [ Css.flex (Css.int 1)
+        , Css.marginTop (Css.rem -0.25)
+        , Css.backgroundColor Colors.white
+        , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
+            [ Css.position Css.fixed
+            , Css.left (Css.rem 0)
+            , Css.bottom (Css.rem 0)
+            , Css.width (Css.calc (Css.vw 100) Css.minus (Css.rem 100))
+            ]
+        ]
+        [ HA.attribute "aria-hidden" <| boolToString <| not isOpen
+        ]
+        [ Html.styled Html.pre
+            [ Css.borderTop3 (Css.rem 0.25) Css.solid Colors.secondaryDarkest
+            , Css.borderBottom3 (Css.rem 0.25) Css.solid Colors.secondaryDarkest
+            , Css.padding (Css.rem 5)
+            , Css.margin (Css.rem 0)
+            , Css.lineHeight (Css.pct 120)
+            ]
+            []
+            [ Html.text "elm-live src/Main.elm" ]
+        ]

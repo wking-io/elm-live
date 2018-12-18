@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import debounce from 'lodash.debounce'
 
 import { colors, media, HeadingOne, HeadingBox, Body, Code, HeadingLinkBase, HeadingTwo, HeadingThree, HeadingFive } from './elements'
 
@@ -35,14 +34,19 @@ const FileWrapper = styled.div`
 
 const FileSystem = styled.div`
   width: 100%;
-  height: 100%;
   position: ${props => props.isFixed ? 'fixed' : 'absolute'};
-  top: 0;
+  bottom: 0;
   right: 0;
   background-color: ${colors.white};
+  z-index: 99;
+
+  & > div {
+    height: 100%;
+  }
 
   ${media.md`
     width: 100rem;
+    height: 100%;
     border-left: 1px solid ${colors.secondaryDarkest};
   `}
 `
@@ -72,10 +76,9 @@ const DocumenationGuide = styled.div`
 `
 
 class Documentation extends React.Component {
-
   state = {
     isFixed: false,
-    contentHeight : 0,
+    contentHeight: 0
   }
 
   _ref = React.createRef()
@@ -91,7 +94,7 @@ class Documentation extends React.Component {
   }
 
   render () {
-    const { location, updateActive, options, activeName } = this.props;
+    const { location, updateActive, options, activeName } = this.props
     const HeadingLink = HeadingLinkBase(location)
     return (
       <DocumentationWrapper id='documentation' ref={this._ref}>
@@ -162,7 +165,7 @@ class Documentation extends React.Component {
         </ContentWrapper>
         <FileWrapper>
           <FileSystem isFixed={this.state.isFixed}>
-            <ElmHandler src={Elm.Main} ports={filePreview} flags={options} options={options} />
+            <ElmHandler style={{ height: '100%' }} src={Elm.Main} ports={filePreview} flags={options} options={options} />
           </FileSystem>
         </FileWrapper>
       </DocumentationWrapper>
