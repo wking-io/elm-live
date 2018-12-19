@@ -153,7 +153,7 @@ tab tabSettings =
                     , Css.borderTop3 (Css.px 1) Css.solid Colors.white
                     , Css.borderRight (Css.px 0)
                     , Css.borderBottom3 (Css.px 1) Css.solid Colors.secondaryDarkest
-                    , Css.borderLeft3 (Css.px 1) Css.solid Colors.white
+                    , Css.borderLeft (Css.px 0)
                     ]
 
                 ( First, Inactive ) ->
@@ -167,7 +167,7 @@ tab tabSettings =
                 ( Last, Active ) ->
                     [ Css.backgroundColor Colors.white
                     , Css.borderTop3 (Css.px 1) Css.solid Colors.white
-                    , Css.borderRight3 (Css.px 1) Css.solid Colors.white
+                    , Css.borderRight (Css.px 0)
                     , Css.borderBottom3 (Css.px 1) Css.solid Colors.secondaryDarkest
                     , Css.borderLeft (Css.px 0)
                     ]

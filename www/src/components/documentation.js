@@ -105,12 +105,13 @@ class Documentation extends React.Component {
             render={getPosition => {
               return (
                 <div>
-                  <Waypoint id='port-default' getPosition={getPosition} />
+                  <Waypoint id='default' getPosition={getPosition} />
                   <DocumenationGuide isFixed={this.state.isFixed}>
                     <HeadingBox><HeadingFive>API Documentation:</HeadingFive></HeadingBox>
                     <HeadingBox dark><HeadingFive lower>{activeName.getOrElse('Default')}</HeadingFive></HeadingBox>
                   </DocumenationGuide>
                   <HeadingLink location={location} linkId='flags'><HeadingOne id='flags'># Flags</HeadingOne></HeadingLink>
+                  <Waypoint id='port-default' getPosition={getPosition} />
                   <HeadingLink linkId='port'><HeadingTwo id='port'># --port</HeadingTwo></HeadingLink>
                   <Body>This one is pretty straightforward. By default elm-live runs its server on port 4000. The —port flag let's you change that to something else. If you don't know what ports are or do you can check out this awesome overview here: link to awesome overview.</Body>
                   <Waypoint id='path-to-elm-default' getPosition={getPosition} />

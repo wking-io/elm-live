@@ -1,5 +1,25 @@
 [
   {
+    "id": "default",
+    "name": "default",
+    "options": {
+      "flags": {
+        "port": false,
+        "pathToElm": false,
+        "host": false,
+        "open": false,
+        "noRecover": false,
+        "pushstate": false,
+        "proxyHost": false,
+        "proxyPrefix": false,
+        "beforeBuild": false,
+        "afterBuild": false,
+        "debug": false
+      },
+      "output": "OutputHtml"
+    }
+  },
+  {
     "id": "port-default",
     "name": "--port",
     "options": {

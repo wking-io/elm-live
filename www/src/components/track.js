@@ -23,7 +23,7 @@ function findActive (gate, data) {
           .chain(always(safeProp(key, data)))
           .map(isGreater(gate))
           .chain(isGreater => isGreater ? Either.Right(key) : acc)
-          .leftMap(always('No active property found.')), Either.Right('port-default')
+          .leftMap(always('No active property found.')), Either.Right('default')
     )
 }
 

@@ -68,7 +68,7 @@ viewOk ( opts, isOpen ) =
             , files = FileSystem.view
             , isOpen = isOpen
             }
-        , Options.viewCommand ( opts, isOpen )
+        , Options.viewCommand opts
         , viewToggle isOpen
         ]
 

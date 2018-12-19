@@ -40,7 +40,7 @@ const getRepoUrl = safePath(['repository', 'url'])
 
 class IndexPage extends React.Component {
   state = {
-    active: 'port-default'
+    active: 'default'
   }
 
   updateActive = active => this.state.active === active ? {} : this.setState({ active })

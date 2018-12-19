@@ -91,7 +91,7 @@ toString flag =
             "--port=1234"
 
         PathToElm ->
-            "--pathToElm=node_modules/.bin/elm"
+            "--path-to-elm=node_modules/.bin/elm"
 
         Host ->
             "--host=elm-live.test"

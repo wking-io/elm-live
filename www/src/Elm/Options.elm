@@ -9,7 +9,6 @@ module Options exposing
 
 import Command exposing (Command)
 import Css
-import Css.Media as Media exposing (withMedia)
 import FileSystem exposing (FileSystem, Node)
 import Html.Styled as Html exposing (Html)
 import Html.Styled.Attributes as HA
@@ -17,8 +16,6 @@ import Html.Styled.Events exposing (onClick)
 import Json.Decode as Decode exposing (Decoder)
 import Options.Flag as Flag exposing (Flag)
 import Options.Output as Output exposing (Output)
-import View.Var.Colors as Colors
-import View.Var.Sizes as Sizes exposing (screen)
 
 
 type Options
@@ -220,28 +217,8 @@ viewFiles { uncompileMsg, compileMsg, options, files, isOpen } =
                 ]
 
 
-viewCommand : ( Options, Bool ) -> Html msg
-viewCommand ( opts, isOpen ) =
-    Html.styled Html.div
-        [ Css.flex (Css.int 1)
-        , Css.marginTop (Css.rem -0.25)
-        , Css.backgroundColor Colors.white
-        , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
-            [ Css.position Css.fixed
-            , Css.left (Css.rem 0)
-            , Css.bottom (Css.rem 0)
-            , Css.width (Css.calc (Css.vw 100) Css.minus (Css.rem 100))
-            ]
-        ]
-        [ HA.attribute "aria-hidden" <| boolToString <| not isOpen
-        ]
-        [ Html.styled Html.pre
-            [ Css.borderTop3 (Css.rem 0.25) Css.solid Colors.secondaryDarkest
-            , Css.borderBottom3 (Css.rem 0.25) Css.solid Colors.secondaryDarkest
-            , Css.padding (Css.rem 5)
-            , Css.margin (Css.rem 0)
-            , Css.lineHeight (Css.pct 120)
-            ]
-            []
-            [ Html.text "elm-live src/Main.elm" ]
-        ]
+viewCommand : Options -> Html msg
+viewCommand opts =
+    opts
+        |> toCommand
+        |> Command.view
