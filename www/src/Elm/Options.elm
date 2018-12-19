@@ -9,6 +9,7 @@ module Options exposing
 
 import Command exposing (Command)
 import Css
+import Css.Media as Media exposing (withMedia)
 import FileSystem exposing (FileSystem, Node)
 import Html.Styled as Html exposing (Html)
 import Html.Styled.Attributes as HA
@@ -16,6 +17,8 @@ import Html.Styled.Events exposing (onClick)
 import Json.Decode as Decode exposing (Decoder)
 import Options.Flag as Flag exposing (Flag)
 import Options.Output as Output exposing (Output)
+import View.Var.Fonts as Fonts
+import View.Var.Sizes as Sizes exposing (screen)
 
 
 type Options
@@ -171,6 +174,24 @@ viewFiles { uncompileMsg, compileMsg, options, files, isOpen } =
                     , HA.hidden True
                     ]
                     []
+                , Html.styled Html.div
+                    [ Css.padding4 (Css.rem 6) (Css.rem 6) (Css.rem 0) (Css.rem 6)
+                    , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
+                        [ Css.padding4 (Css.rem 12) (Css.rem 12) (Css.rem 0) (Css.rem 12)
+                        ]
+                    ]
+                    []
+                    [ Html.styled Html.h4
+                        [ Fonts.sans
+                        , Css.fontSize (Css.rem 3.5)
+                        , Css.fontWeight Css.bold
+                        , Css.lineHeight (Css.rem 4)
+                        , Css.margin3 (Css.px 0) (Css.px 0) (Css.rem 3)
+                        , Css.textTransform Css.uppercase
+                        ]
+                        []
+                        [ Html.text "File Preview" ]
+                    ]
                 ]
 
         Compiled _ _ ->
@@ -214,6 +235,24 @@ viewFiles { uncompileMsg, compileMsg, options, files, isOpen } =
                     , HA.attribute "aria-labellby" "compile"
                     ]
                     [ files (toFileSystem options) ]
+                , Html.styled Html.div
+                    [ Css.padding4 (Css.rem 6) (Css.rem 6) (Css.rem 0) (Css.rem 6)
+                    , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
+                        [ Css.padding4 (Css.rem 12) (Css.rem 12) (Css.rem 0) (Css.rem 12)
+                        ]
+                    ]
+                    []
+                    [ Html.styled Html.h4
+                        [ Fonts.sans
+                        , Css.fontSize (Css.rem 3.5)
+                        , Css.fontWeight Css.bold
+                        , Css.lineHeight (Css.rem 4)
+                        , Css.margin3 (Css.px 0) (Css.px 0) (Css.rem 3)
+                        , Css.textTransform Css.uppercase
+                        ]
+                        []
+                        [ Html.text "File Preview" ]
+                    ]
                 ]
 
 

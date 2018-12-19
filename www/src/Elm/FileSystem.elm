@@ -214,10 +214,10 @@ wrapper isOpen =
 spacer : List (Attribute msg) -> List (Html msg) -> Html msg
 spacer =
     Html.styled Html.div
-        [ Css.padding (Css.rem 6)
+        [ Css.padding4 (Css.rem 3) (Css.rem 6) (Css.rem 6) (Css.rem 6)
         , Css.flex (Css.int 1)
         , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
-            [ Css.padding (Css.rem 12)
+            [ Css.padding4 (Css.rem 6) (Css.rem 12) (Css.rem 12) (Css.rem 12)
             ]
         ]
 
@@ -261,13 +261,18 @@ viewFile { id, name, extension } =
 
 viewNode : Icon msg -> String -> Html msg
 viewNode icon name =
-    Html.div []
+    Html.styled Html.div
+        [ Css.displayFlex
+        , Css.alignItems Css.center
+        , Css.marginBottom (Css.rem 5)
+        ]
+        []
         [ viewIcon [] [ Icon.toHtml icon ]
-        , Html.p [] [ Html.text name ]
+        , Html.styled Html.p [ Fonts.mono, Css.lineHeight (Css.pct 100), Css.margin4 (Css.rem 0) (Css.rem 0) (Css.rem 2) (Css.rem 0) ] [] [ Html.text name ]
         ]
 
 
 viewIcon : List (Attribute msg) -> List (Html msg) -> Html msg
 viewIcon =
     Html.styled Html.div
-        [ Css.width (Css.px 20) ]
+        [ Css.width (Css.rem 8), Css.marginRight (Css.rem 4) ]
