@@ -176,7 +176,7 @@ viewFiles { uncompileMsg, compileMsg, options, files, isOpen } =
                     ]
                     []
                 , Html.styled Html.div
-                    [ Css.padding4 (Css.rem 6) (Css.rem 6) (Css.rem 0) (Css.rem 6)
+                    [ Css.padding4 (Css.rem 11) (Css.rem 6) (Css.rem 2) (Css.rem 6)
                     , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
                         [ Css.padding4 (Css.rem 12) (Css.rem 12) (Css.rem 0) (Css.rem 12)
                         ]
@@ -237,7 +237,7 @@ viewFiles { uncompileMsg, compileMsg, options, files, isOpen } =
                     ]
                     [ files (toFileSystem options) ]
                 , Html.styled Html.div
-                    [ Css.padding4 (Css.rem 6) (Css.rem 6) (Css.rem 0) (Css.rem 6)
+                    [ Css.padding4 (Css.rem 11) (Css.rem 6) (Css.rem 2) (Css.rem 6)
                     , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
                         [ Css.padding4 (Css.rem 12) (Css.rem 12) (Css.rem 0) (Css.rem 12)
                         ]

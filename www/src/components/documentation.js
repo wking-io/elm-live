@@ -73,6 +73,7 @@ const DocumenationGuide = styled.div`
   ${media.md`
     padding: 12rem;
     left: 0;
+    z-index: 1;
   `}
 `
 

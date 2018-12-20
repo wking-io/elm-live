@@ -252,8 +252,8 @@ viewHelp node =
 viewLevel : List (Attribute msg) -> List (Html msg) -> Html msg
 viewLevel =
     Html.styled Html.div
-        [ Css.marginLeft (Css.rem 4)
-        , Css.paddingLeft (Css.rem 8)
+        [ Css.marginLeft (Css.rem 3)
+        , Css.paddingLeft (Css.rem 6)
         , Css.position Css.relative
         , Css.before
             [ Css.property "content" "''"
@@ -262,7 +262,20 @@ viewLevel =
             , Css.width (Css.rem 0.5)
             , Css.backgroundColor Colors.secondaryLighter
             , Css.left (Css.rem 0)
-            , Css.top (Css.rem -4)
+            , Css.top (Css.rem -3)
+            ]
+        , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
+            [ Css.marginLeft (Css.rem 4)
+            , Css.paddingLeft (Css.rem 8)
+            , Css.before
+                [ Css.property "content" "''"
+                , Css.position Css.absolute
+                , Css.height (Css.pct 100)
+                , Css.width (Css.rem 0.5)
+                , Css.backgroundColor Colors.secondaryLighter
+                , Css.left (Css.rem 0)
+                , Css.top (Css.rem -4)
+                ]
             ]
         ]
 
@@ -293,9 +306,9 @@ viewNode isRoot icon name =
                 [ Css.property "content" "''"
                 , Css.position Css.absolute
                 , Css.height (Css.rem 0.5)
-                , Css.width (Css.rem 5)
+                , Css.width (Css.rem 4)
                 , Css.backgroundColor Colors.secondaryLighter
-                , Css.left (Css.rem -8)
+                , Css.left (Css.rem -6)
                 , Css.top (Css.pct 50)
                 , Css.transform (Css.translateY (Css.pct -50))
                 ]
@@ -303,17 +316,39 @@ viewNode isRoot icon name =
     Html.styled Html.div
         [ Css.displayFlex
         , Css.alignItems Css.center
-        , Css.marginBottom (Css.rem 5)
+        , Css.marginBottom (Css.rem 3)
         , Css.position Css.relative
         , Css.before before
+        , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
+            [ Css.marginBottom (Css.rem 5)
+            , Css.before
+                [ Css.width (Css.rem 5)
+                , Css.left (Css.rem -8)
+                ]
+            ]
         ]
         []
         [ viewIcon [] [ Icon.toHtml icon ]
-        , Html.styled Html.p [ Fonts.mono, Css.lineHeight (Css.pct 100), Css.margin4 (Css.rem 0) (Css.rem 0) (Css.rem 2) (Css.rem 0) ] [] [ Html.text name ]
+        , Html.styled Html.p
+            [ Fonts.mono
+            , Css.lineHeight (Css.pct 100)
+            , Css.margin4 (Css.rem 0) (Css.rem 0) (Css.rem 2) (Css.rem 0)
+            , Css.fontSize (Css.rem 3)
+            , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
+                [ Css.fontSize (Css.rem 4) ]
+            ]
+            []
+            [ Html.text name ]
         ]
 
 
 viewIcon : List (Attribute msg) -> List (Html msg) -> Html msg
 viewIcon =
     Html.styled Html.div
-        [ Css.width (Css.rem 8), Css.marginRight (Css.rem 4) ]
+        [ Css.width (Css.rem 6)
+        , Css.marginRight (Css.rem 3)
+        , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
+            [ Css.width (Css.rem 8)
+            , Css.marginRight (Css.rem 4)
+            ]
+        ]
