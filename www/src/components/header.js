@@ -6,9 +6,17 @@ import { colors, media, Sans, Wrapper, BodySmall, Jumbo, NoButton } from './elem
 const menuIconSize = '4.5rem'
 
 const NavWrapper = styled.div`
+  background-color: ${colors.white};
   border-bottom: 0.5rem solid ${colors.secondaryDarkest};
   display: flex;
+  left: 50%;
+  max-width: 962px;
   padding: 4rem 0;
+  position: fixed;
+  top: 0;
+  transform: translateX(-50%);
+  width: 85%;
+  z-index: 999;
 `
 
 const LogoWrapper = styled.div`
@@ -102,12 +110,13 @@ function MenuToggle () {
 const MissingStats = styled.div`
   height: 24rem;
   border-left: 1px solid ${colors.secondaryLighter};
+  margin: 16.5rem 0 0;
 `
 
 const StatList = styled.ul`
   display: flex;
   list-style-type: none;
-  margin: 0;
+  margin: 16.5rem 0 0;
   padding: 0;
 `
 

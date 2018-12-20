@@ -11,9 +11,12 @@ import { Elm } from '../Elm/Main.elm'
 
 const DocumentationWrapper = styled.div`
   margin-top: 18rem;
-  border-top: 0.25rem solid ${colors.secondaryDarkest};
-  border-bottom: 0.25rem solid ${colors.secondaryDarkest};
+  border-top: 0.5rem solid ${colors.secondaryDarkest};
+  border-bottom: 0.5rem solid ${colors.secondaryDarkest};
   width: 100%;
+  position: relative;
+  z-index: 9999;
+  background-color: ${colors.white};
 
   ${media.lg`
     display: flex;
@@ -54,6 +57,7 @@ const FileSystem = styled.div`
 const ContentWrapper = styled.div`
   position: relative;
   padding: 26rem 6rem 6rem;
+  flex: 1;
 
   ${media.md`
     padding: 32rem 12rem 12rem;
@@ -74,6 +78,13 @@ const DocumenationGuide = styled.div`
     padding: 12rem;
     left: 0;
     z-index: 1;
+    max-width: 962px;
+  `}
+
+  ${media.docMax`
+    padding: 12rem 0;
+    left: ${props => props.isFixed ? 'calc((100% - 100rem - 962px) / 2)' : '50%'};
+    transform: ${props => props.isFixed ? 'translateX(0)' : 'translateX(-50%)'};
   `}
 `
 
@@ -106,7 +117,7 @@ class Documentation extends React.Component {
             updateActive={updateActive}
             render={getPosition => {
               return (
-                <div>
+                <div style={{ maxWidth: '962px', margin: '0 auto' }}>
                   <Waypoint id='default' getPosition={getPosition} />
                   <DocumenationGuide isFixed={this.state.isFixed}>
                     <HeadingBox><HeadingFive>API Documentation:</HeadingFive></HeadingBox>

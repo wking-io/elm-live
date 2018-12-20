@@ -175,7 +175,7 @@ const IntroContent = styled.div`
   padding: 4rem;
 
   ${media.lg`
-    width: 30%;
+    width: 35%;
     padding: 6rem;
   `}
 `
