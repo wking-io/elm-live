@@ -227,9 +227,9 @@ view (FileSystem node) =
     case node of
         Folder data children ->
             Html.div []
-                [ viewFolder data
+                [ viewRootFolder data
                 , List.concatMap viewHelp children
-                    |> Html.div [ HA.id (Id.toString data.id) ]
+                    |> viewLevel [ HA.id (Id.toString data.id) ]
                 ]
 
         File data ->
@@ -242,29 +242,70 @@ viewHelp node =
         Folder data children ->
             [ viewFolder data
             , List.concatMap viewHelp children
-                |> Html.div [ HA.id (Id.toString data.id) ]
+                |> viewLevel [ HA.id (Id.toString data.id) ]
             ]
 
         File data ->
             [ viewFile data ]
 
 
+viewLevel : List (Attribute msg) -> List (Html msg) -> Html msg
+viewLevel =
+    Html.styled Html.div
+        [ Css.marginLeft (Css.rem 4)
+        , Css.paddingLeft (Css.rem 8)
+        , Css.position Css.relative
+        , Css.before
+            [ Css.property "content" "''"
+            , Css.position Css.absolute
+            , Css.height (Css.pct 100)
+            , Css.width (Css.rem 0.5)
+            , Css.backgroundColor Colors.secondaryLighter
+            , Css.left (Css.rem 0)
+            , Css.top (Css.rem -4)
+            ]
+        ]
+
+
+viewRootFolder : FolderData -> Html msg
+viewRootFolder { id, name } =
+    viewNode True Icon.folder name
+
+
 viewFolder : FolderData -> Html msg
 viewFolder { id, name } =
-    viewNode Icon.folder name
+    viewNode False Icon.folder name
 
 
 viewFile : FileData -> Html msg
 viewFile { id, name, extension } =
-    viewNode Icon.file (name ++ Extension.toExtension extension)
+    viewNode False Icon.file (name ++ Extension.toExtension extension)
 
 
-viewNode : Icon msg -> String -> Html msg
-viewNode icon name =
+viewNode : Bool -> Icon msg -> String -> Html msg
+viewNode isRoot icon name =
+    let
+        before =
+            if isRoot then
+                []
+
+            else
+                [ Css.property "content" "''"
+                , Css.position Css.absolute
+                , Css.height (Css.rem 0.5)
+                , Css.width (Css.rem 5)
+                , Css.backgroundColor Colors.secondaryLighter
+                , Css.left (Css.rem -8)
+                , Css.top (Css.pct 50)
+                , Css.transform (Css.translateY (Css.pct -50))
+                ]
+    in
     Html.styled Html.div
         [ Css.displayFlex
         , Css.alignItems Css.center
         , Css.marginBottom (Css.rem 5)
+        , Css.position Css.relative
+        , Css.before before
         ]
         []
         [ viewIcon [] [ Icon.toHtml icon ]

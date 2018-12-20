@@ -17,6 +17,7 @@ import Html.Styled.Events exposing (onClick)
 import Json.Decode as Decode exposing (Decoder)
 import Options.Flag as Flag exposing (Flag)
 import Options.Output as Output exposing (Output)
+import View.Var.Colors as Colors
 import View.Var.Fonts as Fonts
 import View.Var.Sizes as Sizes exposing (screen)
 
@@ -186,7 +187,7 @@ viewFiles { uncompileMsg, compileMsg, options, files, isOpen } =
                         , Css.fontSize (Css.rem 3.5)
                         , Css.fontWeight Css.bold
                         , Css.lineHeight (Css.rem 4)
-                        , Css.margin3 (Css.px 0) (Css.px 0) (Css.rem 3)
+                        , Css.margin3 (Css.rem 0) (Css.rem 0) (Css.rem 3)
                         , Css.textTransform Css.uppercase
                         ]
                         []
@@ -256,8 +257,31 @@ viewFiles { uncompileMsg, compileMsg, options, files, isOpen } =
                 ]
 
 
-viewCommand : Options -> Html msg
-viewCommand opts =
-    opts
-        |> toCommand
-        |> Command.view
+viewCommand : Options -> Bool -> Html msg
+viewCommand opts isOpen =
+    let
+        display =
+            if isOpen then
+                Css.display Css.none
+
+            else
+                Css.display Css.block
+    in
+    Html.styled Html.div
+        [ Css.flex (Css.int 1)
+        , Css.marginTop (Css.rem -0.25)
+        , Css.backgroundColor Colors.white
+        , display
+        , withMedia [ Media.all [ Media.minWidth screen.md ] ]
+            [ Css.display Css.block
+            , Css.position Css.absolute
+            , Css.right (Css.rem 100)
+            , Css.bottom (Css.rem 0)
+            , Css.width (Css.calc (Css.vw 100) Css.minus (Css.rem 104))
+            ]
+        ]
+        []
+        [ opts
+            |> toCommand
+            |> Command.view
+        ]

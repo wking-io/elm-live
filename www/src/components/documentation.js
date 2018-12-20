@@ -68,6 +68,7 @@ const DocumenationGuide = styled.div`
   width: 100%;
   padding: 6rem;
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1) 64%, rgba(255, 255, 255, 0));
+  z-index: 9999;
 
   ${media.md`
     padding: 12rem;
