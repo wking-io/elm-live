@@ -2,6 +2,7 @@ port module Main exposing (main)
 
 import Browser
 import Css
+import Css.Media as Media exposing (withMedia)
 import FileSystem
 import Html.Styled as Html exposing (Html)
 import Html.Styled.Attributes as HA
@@ -11,6 +12,7 @@ import Options exposing (Options)
 import Result exposing (Result)
 import View.Var.Colors as Colors
 import View.Var.Fonts as Fonts
+import View.Var.Sizes as Sizes exposing (screen)
 
 
 
@@ -85,6 +87,8 @@ viewToggle isOpen =
         , Css.padding (Css.rem 5)
         , Css.fontWeight (Css.int 500)
         , Css.border3 (Css.rem 0.25) Css.solid Colors.secondaryDarkest
+        , withMedia [ Media.only Media.screen [ Media.minWidth screen.md ] ]
+            [ Css.display Css.none ]
         ]
         [ onClick ToggleView ]
         [ Html.text (getToggleText isOpen) ]

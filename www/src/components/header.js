@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { colors, media, Sans, Wrapper, BodySmall, Jumbo, NoButton } from './elements'
@@ -88,6 +89,7 @@ const MenuWrapper = styled.div`
 const MenuButton = styled(NoButton)`
   height: ${menuIconSize};
   width: ${menuIconSize};
+  cursor: pointer;
 `
 
 function MenuIcon () {
@@ -99,9 +101,9 @@ function MenuIcon () {
   )
 }
 
-function MenuToggle () {
+function MenuToggle ({ handleClick }) {
   return (
-    <MenuButton>
+    <MenuButton onClick={handleClick}>
       <MenuIcon />
     </MenuButton>
   )
@@ -157,23 +159,36 @@ const renderStats = statsArr => (
   </StatList>
 )
 
-const Header = ({ repoUrl, stats }) => (
-  <Wrapper>
-    <NavWrapper>
-      <LogoWrapper>
-        <LogoIcon />
-        <LogoText>elm-live</LogoText>
-      </LogoWrapper>
-      <IconWrapper>
-        <a href='https://wking.io/'><WebIcon /></a>
-        <a href={repoUrl.getOrElse('https://github.com/wking-io/elm-live')}><GithubIcon /></a>
-      </IconWrapper>
-      <MenuWrapper>
-        <MenuToggle />
-      </MenuWrapper>
-    </NavWrapper>
-    {stats.fold(renderMissingStats, renderStats)}
-  </Wrapper>
-)
+export default class Header extends React.Component {
+  state = { menuOpen: false }
+  toggleMenu = (e) => {
+    console.log(e)
+    this.setState(({ menuOpen }) => ({ menuOpen: !menuOpen }))
+  }
+  render () {
+    const { repoUrl, stats } = this.props
+    return (
+      <Wrapper>
+        <NavWrapper>
+          <LogoWrapper>
+            <LogoIcon />
+            <LogoText>elm-live</LogoText>
+          </LogoWrapper>
+          <IconWrapper>
+            <a href='https://wking.io/'><WebIcon /></a>
+            <a href={repoUrl.getOrElse('https://github.com/wking-io/elm-live')}><GithubIcon /></a>
+          </IconWrapper>
+          <MenuWrapper>
+            <MenuToggle handleClick={this.toggleMenu} />
+          </MenuWrapper>
+        </NavWrapper>
+        {stats.fold(renderMissingStats, renderStats)}
+      </Wrapper>
+    )
+  }
+}
 
-export default Header
+Header.propTypes = {
+  repoUrl: PropTypes.object.isRequired,
+  stats: PropTypes.object.isRequired
+}
