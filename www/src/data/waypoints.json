@@ -2,6 +2,7 @@
   {
     "id": "default",
     "name": "default",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,
@@ -22,6 +23,7 @@
   {
     "id": "port-default",
     "name": "--port",
+    "showInMenu": true,
     "options": {
       "flags": {
         "port": true,
@@ -42,6 +44,7 @@
   {
     "id": "path-to-elm-default",
     "name": "--path-to-elm",
+    "showInMenu": true,
     "options": {
       "flags": {
         "port": false,
@@ -62,6 +65,7 @@
   {
     "id": "host-default",
     "name": "--host",
+    "showInMenu": true,
     "options": {
       "flags": {
         "port": false,
@@ -82,6 +86,7 @@
   {
     "id": "dir-default",
     "name": "--dir",
+    "showInMenu": true,
     "options": {
       "flags": {
         "port": false,
@@ -102,6 +107,7 @@
   {
     "id": "dir-js",
     "name": "--dir",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,
@@ -122,6 +128,7 @@
   {
     "id": "dir-js-root",
     "name": "--dir",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,
@@ -142,6 +149,7 @@
   {
     "id": "start-page-default",
     "name": "--start-page",
+    "showInMenu": true,
     "options": {
       "flags": {
         "port": false,
@@ -162,6 +170,7 @@
   {
     "id": "start-page-dir",
     "name": "--start-page",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,
@@ -182,6 +191,7 @@
   {
     "id": "start-page-js",
     "name": "--start-page",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,
@@ -202,6 +212,7 @@
   {
     "id": "start-page-dir-js",
     "name": "--start-page",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,
@@ -222,6 +233,7 @@
   {
     "id": "open-default",
     "name": "--open",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,
@@ -242,6 +254,7 @@
   {
     "id": "no-recover-default",
     "name": "--no-recover",
+    "showInMenu": true,
     "options": {
       "flags": {
         "port": false,
@@ -262,6 +275,7 @@
   {
     "id": "pushstate-default",
     "name": "--pushstate",
+    "showInMenu": true,
     "options": {
       "flags": {
         "port": false,
@@ -282,6 +296,7 @@
   {
     "id": "proxy-default",
     "name": "--proxy",
+    "showInMenu": true,
     "options": {
       "flags": {
         "port": false,
@@ -302,6 +317,7 @@
   {
     "id": "before-build-default",
     "name": "--before-build",
+    "showInMenu": true,
     "options": {
       "flags": {
         "port": false,
@@ -322,6 +338,7 @@
   {
     "id": "after-build-default",
     "name": "--after-build",
+    "showInMenu": true,
     "options": {
       "flags": {
         "port": false,
@@ -342,6 +359,7 @@
   {
     "id": "debug-default",
     "name": "--debug",
+    "showInMenu": true,
     "options": {
       "flags": {
         "port": false,
@@ -362,6 +380,7 @@
   {
     "id": "output-default",
     "name": "--output",
+    "showInMenu": true,
     "options": {
       "flags": {
         "port": false,
@@ -382,6 +401,7 @@
   {
     "id": "output-custom",
     "name": "--output",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,
@@ -402,6 +422,7 @@
   {
     "id": "output-custom-dir",
     "name": "--output",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,
@@ -422,6 +443,7 @@
   {
     "id": "output-js",
     "name": "--output",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,
@@ -442,6 +464,7 @@
   {
     "id": "output-js-custom",
     "name": "--output",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,
@@ -462,6 +485,7 @@
   {
     "id": "output-js-custom-dir",
     "name": "--output",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,
@@ -482,6 +506,7 @@
   {
     "id": "output-js-custom-dir-root",
     "name": "--output",
+    "showInMenu": false,
     "options": {
       "flags": {
         "port": false,

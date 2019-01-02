@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { colors, media, Sans, Wrapper, BodySmall, Jumbo, NoButton } from './elements'
+import { colors, media, Sans, Mono, Wrapper, BodySmall, Jumbo, NoButton } from './elements'
 
 const menuIconSize = '4.5rem'
 
@@ -109,6 +109,50 @@ function MenuToggle ({ handleClick }) {
   )
 }
 
+const MenuListWrapper = styled.div`
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  max-width: 400px;
+  background-color: ${colors.white};
+  padding: 20rem;
+`
+
+const MenuList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+`
+
+const MenuItem = styled.li`
+  margin: 0;
+`
+
+const MenuLink = styled.li`
+  ${Mono(colors.black)}
+  text-decoration: none;
+  cursor: pointer;
+  padding: 2rem 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+function Menu ({ menuItems, menuOpen }) {
+  return (
+    <MenuListWrapper>
+      <MenuList>
+        {menuItems.map(name =>
+          <MenuItem><MenuLink href={name.getOrElse('--not-found').replace('--', '#')}>{name.getOrElse('--not-found')}</MenuLink></MenuItem>
+        )}
+      </MenuList>
+    </MenuListWrapper>
+  )
+}
+
 const MissingStats = styled.div`
   height: 24rem;
   border-left: 1px solid ${colors.secondaryLighter};
@@ -162,11 +206,10 @@ const renderStats = statsArr => (
 export default class Header extends React.Component {
   state = { menuOpen: false }
   toggleMenu = (e) => {
-    console.log(e)
     this.setState(({ menuOpen }) => ({ menuOpen: !menuOpen }))
   }
   render () {
-    const { repoUrl, stats } = this.props
+    const { repoUrl, stats, menuItems } = this.props
     return (
       <Wrapper>
         <NavWrapper>
@@ -180,6 +223,7 @@ export default class Header extends React.Component {
           </IconWrapper>
           <MenuWrapper>
             <MenuToggle handleClick={this.toggleMenu} />
+            <Menu menuItems={menuItems} menuOpen={this.state.menuOpen} />
           </MenuWrapper>
         </NavWrapper>
         {stats.fold(renderMissingStats, renderStats)}
