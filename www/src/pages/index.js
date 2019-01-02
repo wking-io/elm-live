@@ -15,12 +15,6 @@ function getOption (key, data) {
     .chain(safePath(['node', 'options']))
 }
 
-function getMenuItems (data) {
-  return Either
-    .fromNullable(data.filter(edge => edge.node.showInMenu))
-    .chain(items => items.map(safePath(['node', 'name'])))
-}
-
 function getName (key, data) {
   return Either
     .fromNullable(data.find(edge => edge.node.id === key))
@@ -56,10 +50,9 @@ class IndexPage extends React.Component {
     const stats = getStats(this.props.data.github)
     const repoUrl = getRepoUrl(this.props.data.github)
     const activeName = getName(this.state.active, this.props.data.allWaypointsJson.edges)
-    const menuItems = getMenuItems(this.props.data.allWaypointsJson.edges)
     return (
       <Layout>
-        <Header repoUrl={repoUrl} stats={stats} menuItems={menuItems} />
+        <Header repoUrl={repoUrl} stats={stats} />
         <Intro />
         <GettingStarted location={this.props.location.href} />
         <Documentation location={this.props.location.href} options={options} updateActive={this.updateActive} activeName={activeName} />
@@ -77,7 +70,6 @@ export const query = graphql`
         node {
           id
           name
-          showInMenu
           options {
             flags {
               port

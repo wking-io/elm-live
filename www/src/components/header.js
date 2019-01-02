@@ -109,7 +109,7 @@ function MenuToggle ({ handleClick }) {
   )
 }
 
-const MenuListWrapper = styled.div`
+const MenuBox = styled.div`
   position: fixed;
   right: 0;
   top: 0;
@@ -118,12 +118,15 @@ const MenuListWrapper = styled.div`
   max-width: 400px;
   background-color: ${colors.white};
   padding: 20rem;
+  border-left: 0.25rem solid ${colors.black};
+  z-index: 9999;
+  transform: ${props => props.menuOpen ? 'translateX(0)' : 'translateX(400px)'};
 `
 
 const MenuList = styled.ul`
   list-style-type: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 `
 
 const MenuItem = styled.li`
@@ -141,15 +144,14 @@ const MenuLink = styled.li`
   }
 `
 
-function Menu ({ menuItems, menuOpen }) {
+function Menu ({ menuOpen, toggleMenu }) {
   return (
-    <MenuListWrapper>
+    <MenuBox menuOpen={menuOpen}>
+      <MenuToggle handleClick={toggleMenu} />
       <MenuList>
-        {menuItems.map(name =>
-          <MenuItem><MenuLink href={name.getOrElse('--not-found').replace('--', '#')}>{name.getOrElse('--not-found')}</MenuLink></MenuItem>
-        )}
+        <MenuItem><MenuLink href='#port'>--port</MenuLink></MenuItem>
       </MenuList>
-    </MenuListWrapper>
+    </MenuBox>
   )
 }
 
@@ -209,7 +211,7 @@ export default class Header extends React.Component {
     this.setState(({ menuOpen }) => ({ menuOpen: !menuOpen }))
   }
   render () {
-    const { repoUrl, stats, menuItems } = this.props
+    const { repoUrl, stats } = this.props
     return (
       <Wrapper>
         <NavWrapper>
@@ -223,9 +225,9 @@ export default class Header extends React.Component {
           </IconWrapper>
           <MenuWrapper>
             <MenuToggle handleClick={this.toggleMenu} />
-            <Menu menuItems={menuItems} menuOpen={this.state.menuOpen} />
           </MenuWrapper>
         </NavWrapper>
+        <Menu menuOpen={this.state.menuOpen} toggleMenu={this.toggleMenu} />
         {stats.fold(renderMissingStats, renderStats)}
       </Wrapper>
     )
