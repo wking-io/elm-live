@@ -1,3 +1,8 @@
+3.4.1:
+  date: 2019-05-25
+  new features:
+    - Bug Fix: Fixing performance issue
+
 3.4.0:
   date: 2018-12-14
   new features:
