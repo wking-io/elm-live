@@ -194,7 +194,7 @@ By the way, [yarn](https://github.com/yarnpkg/yarn) should be warning you about 
 <a id="/credits"></a>&nbsp;
 
 ## Original Author
-Huge shoutout to the creator [Tomek Wiszniewski](https://github.com/tomekwi)!
+Huge shoutout to the creator [Tomek Wiszniewski](https://github.com/architectcodes)!
 
 ## Current Owner
 [Will King](https://github.com/wking-io)
