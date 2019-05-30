@@ -53,7 +53,7 @@
     "dev-null": "^0.1.1",
     "eslint": "5.16.0",
     "eslint-plugin-import": "2.14.0",
-    "husky": "0.14.3",
+    "husky": "2.3.0",
     "nyc": "14.1.1",
     "proxyquire": "^1.7.4",
     "q-stream": "^0.2.0",
