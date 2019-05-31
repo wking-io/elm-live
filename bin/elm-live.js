@@ -64,6 +64,6 @@ if (isBadOutput) {
   console.log(``)
   console.log(``)
 } else {
-  const elmLive = require('../lib/src/elm-live')
-  elmLive(program, { input: process.stdin, output: process.stdout })
+  const elmLive = require('../lib')
+  elmLive({ program, input: process.stdin, output: process.stdout })
 }
