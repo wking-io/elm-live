@@ -2,6 +2,7 @@
 
 const program = require('commander')
 const chalk = require('chalk')
+const { badOutput, help } = require('../lib/src/messages')
 
 program
   .version(require('../package.json').version)
@@ -26,17 +27,7 @@ program
   .option('-S, --ssl [ssl]', `Start an https server instead of http. Defaults to false.`, false)
   .option('-b, --before-build [before-build]', `Run EXECUTABLE before every rebuild. This way you can easily use other tools like ${chalk.cyan.underline('elm-css')} or ${chalk.cyan.underline('browserify')} in your workflow.`)
   .option('-a, --after-build [after-build]', `Just like ${chalk.cyan.underline('--before-build')}, but runs after ${chalk.cyan.underline('elm make')}.`)
-  .on('--help', () => {
-    console.log(`    Only ${chalk.magenta('<elm-main>')} is required. If you want to pass on specific options to ${chalk.cyan.underline('elm make')} make sure they are passed after the -- in the command.`)
-    console.log()
-    console.log(
-      `    If you have any problems, do not hesitate to file an issue:`
-    )
-    console.log(
-      `      ${chalk.cyan('https://github.com/wking-io/elm-live')}`
-    )
-    console.log()
-  })
+  .on('--help', help)
   .parse(process.argv)
 
 function hasBadOutput ([val, done], arg) {
@@ -52,17 +43,7 @@ function hasBadOutput ([val, done], arg) {
 const [ isBadOutput ] = program.rawArgs.reduce(hasBadOutput, [false, false])
 
 if (isBadOutput) {
-  console.log(``)
-  console.log(chalk.red.bold(`----------------------`))
-  console.log(chalk.red.bold(`|| ERROR IN COMMAND ||`))
-  console.log(chalk.red.bold(`----------------------`))
-  console.log(``)
-  console.log(`Usage: ${chalk.blue('<elm-main> [options] [--] [elm make options]')}`)
-  console.log(``)
-  console.log(`You have used the ${chalk.blue('elm make')} flag --output in the wrong location. As seen in the usage example about, all ${chalk.blue('elm make')} flags must be added to your command after the -- separator.`)
-  console.log(``)
-  console.log(``)
-  console.log(``)
+  process.stdout.write(badOutput)
 } else {
   const elmLive = require('../lib')
   elmLive({ program, input: process.stdin, output: process.stdout })
