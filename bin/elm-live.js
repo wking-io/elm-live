@@ -28,6 +28,8 @@ program
   .option('-S, --ssl [ssl]', `Start an https server instead of http. Defaults to false.`, false)
   .option('-b, --before-build [before-build]', `Run EXECUTABLE before every rebuild. This way you can easily use other tools like ${chalk.cyan.underline('elm-css')} or ${chalk.cyan.underline('browserify')} in your workflow.`)
   .option('-a, --after-build [after-build]', `Just like ${chalk.cyan.underline('--before-build')}, but runs after ${chalk.cyan.underline('elm make')}.`)
+  .option('-v, --verbose [verbose]', 'Will log more steps as your server starts up. Default: false', false)
+  .option('-i, --ide [ide]', 'Set the ide that you use so that the errors in the browser will open the file the error is found in. Default: atom', 'atom')
   .on('--help', help)
   .parse(process.argv)
 
