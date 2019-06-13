@@ -13,7 +13,6 @@ program
   .option('-h, --host [host]', 'Set the host interface to attach the server to.', 'localhost')
   .option('-d, --dir [dir]', 'The base for static content.', process.cwd())
   .option('-o, --open [open]', 'Open in browser when server starts.', false)
-  .option('-H, --no-hot [no-hot]', 'Turns off hot reloading in elm.')
   .option('-r, --no-recover [no-recover]', `Stop server when ${chalk.cyan.underline('elm make')} runs into an issue.`)
   .option('-u, --pushstate [pushstate]', `Forces the index.html file to always be served. Must be used when building with ${chalk.cyan.underline('Browser.application')}.`, false)
   .option('-s, --start-page [start-page]', 'Specify a custom HTML file', 'index.html')
