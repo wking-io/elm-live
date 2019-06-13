@@ -28,6 +28,11 @@
       "pre-commit": "npm run format"
     }
   },
+  "standard" : {
+    "ignore": [
+      "websocket.js"
+    ]
+  },
   "engines": {
     "node": ">= 6.0.0"
   },
