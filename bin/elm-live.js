@@ -2,7 +2,7 @@
 
 const program = require('commander')
 const chalk = require('chalk')
-const { badOutput, help } = require('../lib/src/messages')
+const { badOutput, badProxy, help } = require('../lib/src/messages')
 
 program
   .version(require('../package.json').version)
@@ -29,6 +29,8 @@ program
   .option('-a, --after-build [after-build]', `Just like ${chalk.cyan.underline('--before-build')}, but runs after ${chalk.cyan.underline('elm make')}.`)
   .option('-v, --verbose [verbose]', 'Will log more steps as your server starts up. Default: false', false)
   .option('-i, --ide [ide]', 'Set the ide that you use so that the errors in the browser will open the file the error is found in. Default: atom', 'atom')
+  .option('-H, --no-hot [no-hot]', 'Turn off hot module reloading.')
+  .option('-n, --no-notify-browser [no-notify]', 'Turn off the compiling message in the browser.')
   .on('--help', help)
   .parse(process.argv)
 
@@ -46,6 +48,11 @@ const [ isBadOutput ] = program.rawArgs.reduce(hasBadOutput, [false, false])
 
 if (isBadOutput) {
   process.stdout.write(badOutput)
+} else if (
+  (program.proxyPrefix && !program.proxyHost) ||
+  (program.proxyHost && !program.proxyPrefix)
+) {
+  process.stdout.write(badProxy)
 } else {
   const elmLive = require('../lib')
   elmLive({ program, input: process.stdin, output: process.stdout })
