@@ -12,6 +12,7 @@
     "commander": "2.17.1",
     "crocks": "0.11.1",
     "cross-spawn": "5.0.1",
+    "elm-hot": "1.1.0",
     "elm-serve": "0.4.0",
     "mime": "2.4.3"
   },
@@ -28,7 +29,7 @@
       "pre-commit": "npm run format"
     }
   },
-  "standard" : {
+  "standard": {
     "ignore": [
       "websocket.js"
     ]
