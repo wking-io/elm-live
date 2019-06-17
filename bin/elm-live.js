@@ -29,7 +29,7 @@ program
   .option('-a, --after-build [after-build]', `Just like ${chalk.cyan.underline('--before-build')}, but runs after ${chalk.cyan.underline('elm make')}.`)
   .option('-v, --verbose [verbose]', 'Will log more steps as your server starts up. Default: false', false)
   .option('-i, --ide [ide]', 'Set the ide that you use so that the errors in the browser will open the file the error is found in. Default: atom', 'atom')
-  .option('-H, --no-hot [no-hot]', 'Turn off hot module reloading.')
+  .option('-H, --hot [hot]', 'Turn on hot module reloading. Defaults to false', false)
   .option('-n, --no-notify-browser [no-notify]', 'Turn off the compiling message in the browser.')
   .on('--help', help)
   .parse(process.argv)
