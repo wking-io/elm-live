@@ -20,11 +20,11 @@ program
   .option('-s, --start-page [start-page]', 'Specify a custom HTML file', 'index.html')
   .option(
     '-x, --proxyPrefix [prefix]',
-    `Proxy requests to paths starting with the passed prefix to another server. Requires ${chalk.cyan.underline('--proxyHost')} and should be a string like ${chalk.cyan.underline('/api')}.`
+    `Proxy requests for paths starting with the passed in prefix to another server. Requires ${chalk.cyan.underline('--proxyHost')} and should be a string like ${chalk.cyan.underline('/api')}.`
   )
   .option(
     '-y, --proxyHost [proxyhost]',
-    `Proxy requests to another server running at host. Requires ${chalk.cyan.underline('--proxyPrefix')} and should be a full URL, eg. http://localhost:9000.`
+    `The location to proxy the requests captured under ${chalk.cyan.underline('--proxyPrefix')}. Requires ${chalk.cyan.underline('--proxyPrefix')} and should be a full URL, eg. http://localhost:9000.`
   )
   .option('-S, --ssl [ssl]', 'Start an https server instead of http.', false)
   .option('-b, --before-build [before-build]', `Run EXECUTABLE before every rebuild. This way you can easily use other tools like ${chalk.cyan.underline('elm-css')} or ${chalk.cyan.underline('browserify')} in your workflow.`)
@@ -38,31 +38,31 @@ program
 
 const errorReducer = isHot => ([past, flags], arg) => {
   const isOutput = arg.includes('--output')
-  if (!past) {
-    update(flags, { wrongLocation: isOutput })
+  if (!past && isOutput) {
+    flags.wrongLocation = true
   }
 
   if (isHot && isOutput) {
     const target = arg.split('=')[1]
     const outputType = mime.getType(target)
     if (outputType !== 'application/javascript') {
-      update(flags, { needsJs: true })
+      flags.needsJs = true
     }
   }
 
   return [past || arg === '--', flags]
 }
 
-const flagErrors = program.rawArgs.reduce(errorReducer(program.hot), {
+const flagErrors = Object.entries(program.rawArgs.reduce(errorReducer(program.hot), [false, {
   wrongLocation: false,
   needsJs: false,
   missingProxy: (program.proxyPrefix && !program.proxyHost) ||
   (program.proxyHost && !program.proxyPrefix)
-}).entries.reduce((acc, [key, value]) => value ? [...acc, flagErrorMsgs[key]] : acc)
+}]).pop()).reduce((acc, [key, value]) => value ? [...acc, flagErrorMsgs[key]] : acc, [])
 
 if (flagErrors.length > 0) {
-  process.stdout.write(flagError)
-  flagErrors.forEach(process.stdout.write)
+  console.log(flagError)
+  flagErrors.forEach(msg => console.log(msg))
 } else {
   const elmLive = require('../lib')
   elmLive({ program, input: process.stdin, output: process.stdout })
