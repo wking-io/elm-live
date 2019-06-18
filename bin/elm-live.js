@@ -4,7 +4,6 @@ const program = require('commander')
 const chalk = require('chalk')
 const mime = require('mime')
 const { flagError, flagErrorMsgs, help } = require('../lib/src/messages')
-const { update } = require('../lib/src/utils')
 
 program
   .version(require('../package.json').version)
