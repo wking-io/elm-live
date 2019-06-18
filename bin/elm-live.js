@@ -43,7 +43,7 @@ const errorReducer = isHot => ([past, flags], arg) => {
   }
 
   if (isHot && isOutput) {
-    const [_, target] = arg.split('=')
+    const target = arg.split('=')[1]
     const outputType = mime.getType(target)
     if (outputType !== 'application/javascript') {
       update(flags, { needsJs: true })
