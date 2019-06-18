@@ -3,7 +3,7 @@
 const program = require('commander')
 const chalk = require('chalk')
 const mime = require('mime')
-const { flagError, flagErrorMsgs, help } = require('../lib/src/messages')
+const { hotReloadOn, flagError, flagErrorMsgs, help } = require('../lib/src/messages')
 
 program
   .version(require('../package.json').version)
@@ -63,6 +63,9 @@ if (flagErrors.length > 0) {
   console.log(flagError)
   flagErrors.forEach(msg => console.log(msg))
 } else {
+  if (program.hot) {
+    console.log(hotReloadOn)
+  }
   const elmLive = require('../lib')
   elmLive({ program, input: process.stdin, output: process.stdout })
 }
