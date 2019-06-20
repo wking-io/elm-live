@@ -31,7 +31,8 @@
   },
   "standard": {
     "ignore": [
-      "websocket.js"
+      "websocket.js",
+      "www/"
     ]
   },
   "engines": {
