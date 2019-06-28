@@ -29,7 +29,8 @@ program
   .option('-v, --verbose [verbose]', 'Will log more steps as your server starts up.', false)
   .option('-H, --hot [hot]', 'Turn on hot module reloading.', false)
   .option('--no-notify-browser [no-notify]', 'Turn off the compiling message in the browser.')
-  .option('--no-reload [no-releoad]', 'Turn off live reload. This means you will need to manual reeload your website after each build to see the changes.')
+  .option('--no-reload [no-releoad]', 'Turn off live reload. This means you will need to manual reload your website after each build to see the changes.')
+  .option('--no-server [no-server]', 'Turn off the server for elm-live. This is useful when you are using elm inside of another development ecosystem.')
   .on('--help', help)
   .parse(process.argv)
 
