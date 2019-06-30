@@ -4,7 +4,9 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    title: 'elm-live | Live reloading server for Elm development'
+    title: 'elm-live | Live reloading server for Elm development',
+    description: 'Documentation and more for elm-live, a dev server for elm development with live reloading.',
+    author: '@wking__',
   },
   plugins: [
     'gatsby-plugin-react-helmet',

@@ -1,0 +1,4 @@
+[build]
+  base = "www/"
+  publish = "www/public/"
+  command = "npm run build"

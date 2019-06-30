@@ -5,7 +5,6 @@ import Either from 'data.either'
 import { safePath } from 'safe-prop'
 
 // Components
-import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { GithubIcon, LogoIcon, MenuIcon, WebIcon } from "../components/icons"
 
@@ -41,13 +40,13 @@ const renderStats = stats => (
   </ul>
 )
 
-const IndexPage = () => {
+const IndexPage = ({ data }) => {
 
-  const stats = getStats(this.props.data.github)
-  const repoUrl = getRepoUrl(this.props.data.github)
+  const stats = getStats(data.github)
+  const repoUrl = getRepoUrl(data.github)
 
   return (
-    <Layout>
+    <div>
       <SEO title="elm-live | Live reloading server for Elm development" />
       <header>
         <h1><span>elm-live</span><LogoIcon /></h1>
@@ -77,7 +76,7 @@ const IndexPage = () => {
         <pre>elm-live &gt;elm-file&lt; [other-elm-files...] [flags] [--] [elm make flags]</pre>
         <p>Although all the flags are broken down in the documentation below I want to cover the different parts of the command you see above so that there is nothing left you need to assume or guess at:</p>
       </main>
-    </Layout>
+    </div>
   )
 }
 
