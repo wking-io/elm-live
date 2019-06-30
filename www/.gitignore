@@ -61,9 +61,8 @@ public
 # Mac files
 .DS_Store
 
-# Yarn
-yarn-error.log
-.pnp/
-.pnp.js
-# Yarn Integrity file
-.yarn-integrity
+# Elm Stuff
+elm-stuff
+
+# ENV
+.env.*
