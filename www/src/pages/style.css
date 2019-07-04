@@ -1,5 +1,43 @@
 @tailwind base;
 
 /* Main Styles here */
+.link {
+  background-image: linear-gradient(to right, rgba(255, 160, 28, 1) 0%, rgba(239, 99, 0, 1) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 0.2em;
+  background-position: 0 88%;
+  transition: background-image 0.25s ease-in;
+}
+
+.link:hover {
+  background-image: linear-gradient(to right, rgba(239, 99, 0, 1) 0%, rgba(239, 99, 0, 1) 100%);
+}
+
+.btn {
+  @apply text-white bg-black leading-none text-center inline-block py-3 px-6 font-medium;
+}
+
+.btn:hover {
+  @apply bg-grey;
+}
+
+.btn--primary {
+  background-image: linear-gradient(to right, rgba(255, 160, 28, 1) 0%, rgba(239, 99, 0, 1) 100%);
+  background-repeat: no-repeat;
+  transition: background-image 0.25s ease-in;
+}
+
+.btn--primary:hover {
+  background-image: linear-gradient(to right, rgba(255, 160, 28, 1) 0%, rgba(239, 99, 0, 1) 50%);
+}
+
+.stat:not(:last-child) {
+  @apply border-r border-grey;
+}
+
+.code {
+  @apply p-6;
+  padding-bottom: 1.4rem;
+}
 
 @tailwind utilities;
