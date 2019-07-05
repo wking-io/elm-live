@@ -9,14 +9,19 @@ program
   .version(require('../package.json').version)
   .arguments('<elm-main>')
   .usage(`${chalk.magenta('<elm-main>')} [options] [--] [elm make options]`)
-  .option('-p, --port [port]', 'The port to bind to.', Math.floor, 8000)
+  // Elm executable
   .option('-e, --path-to-elm [path-to-elm]', `An absolute or relative path to elm. If you’ve installed elm locally with npm you’ll want to set this to ${chalk.cyan.underline('node_modules/.bin/elm')}.`, 'elm')
+
+  // Server
+  .option('-p, --port [port]', 'The port to bind to.', Math.floor, 8000)
   .option('-h, --host [host]', 'Set the host interface to attach the server to.', 'localhost')
-  .option('-d, --dir [dir]', 'The base for static content.', process.cwd())
-  .option('-o, --open [open]', 'Open in browser when server starts.', false)
-  .option('--no-recover [no-recover]', `Stop server when ${chalk.cyan.underline('elm make')} runs into an issue.`)
-  .option('-u, --pushstate [pushstate]', `Forces the index.html file to always be served. Must be used when building with ${chalk.cyan.underline('Browser.application')}.`, false)
-  .option('-s, --start-page [start-page]', 'Specify a custom HTML file', 'index.html')
+
+  // SSL
+  .option('-S, --ssl [ssl]', 'Start an https server instead of http.', false)
+  .option('-c, --sslCert [cert]', 'Pass in a relative path to your own ssl cert.', false)
+  .option('-k, --sslKey [key]', 'Pass in a relative path to your own ssl key.', false)
+
+  // Proxy
   .option(
     '-x, --proxyPrefix [prefix]',
     `Proxy requests for paths starting with the passed in prefix to another server. Requires ${chalk.cyan.underline('--proxyHost')} and should be a string like ${chalk.cyan.underline('/api')}.`
@@ -25,10 +30,16 @@ program
     '-y, --proxyHost [proxyhost]',
     `The location to proxy the requests captured under ${chalk.cyan.underline('--proxyPrefix')}. Requires ${chalk.cyan.underline('--proxyPrefix')} and should be a full URL, eg. http://localhost:9000.`
   )
-  .option('-S, --ssl [ssl]', 'Start an https server instead of http.', false)
+
+  // File System
+  .option('-d, --dir [dir]', 'The base for static content.', process.cwd())
+  .option('-s, --start-page [start-page]', 'Specify a custom HTML file', 'index.html')
+
+  // Booleans
+  .option('-u, --pushstate [pushstate]', `Forces the index.html file to always be served. Must be used when building with ${chalk.cyan.underline('Browser.application')}.`, false)
+  .option('-o, --open [open]', 'Open in browser when server starts.', false)
   .option('-v, --verbose [verbose]', 'Will log more steps as your server starts up.', false)
   .option('-H, --hot [hot]', 'Turn on hot module reloading.', false)
-  .option('--no-notify-browser [no-notify]', 'Turn off the compiling message in the browser.')
   .option('--no-reload [no-releoad]', 'Turn off live reload. This means you will need to manual reload your website after each build to see the changes.')
   .option('--no-server [no-server]', 'Turn off the server for elm-live. This is useful when you are using elm inside of another development ecosystem.')
   .on('--help', help)
