@@ -40,4 +40,21 @@
   padding-bottom: 1.4rem;
 }
 
+.heading-link:hover .heading-link__icon {
+  @apply opacity-100;
+}
+
+.heading-link__icon {
+  top: 50%;
+  transform: rotate(45deg) translateY(-50%);
+  left: -2rem;
+}
+
 @tailwind utilities;
+
+@media screen and (min-width: 1344px) {
+  .nav,
+  .content {
+    width: calc(100% - 28rem);
+  }
+}

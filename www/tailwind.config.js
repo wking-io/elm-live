@@ -6,6 +6,7 @@ const colors = {
   "primary-light": "#FFA01C",
   grey: "#D3DEE2",
   "grey-light": "#F3F4F5",
+  "grey-dark": "#96B1BA",
 }
 module.exports = {
   theme: {
