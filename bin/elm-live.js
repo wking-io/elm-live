@@ -77,5 +77,5 @@ if (flagErrors.length > 0) {
     console.log(hotReloadOn)
   }
   const elmLive = require('../lib')
-  elmLive({ program, input: process.stdin, output: process.stdout })
+  elmLive(program)
 }
