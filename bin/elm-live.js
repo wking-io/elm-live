@@ -18,16 +18,16 @@ program
 
   // SSL
   .option('-S, --ssl [ssl]', 'Start an https server instead of http.', false)
-  .option('-c, --sslCert [cert]', 'Pass in a relative path to your own ssl cert.', false)
-  .option('-k, --sslKey [key]', 'Pass in a relative path to your own ssl key.', false)
+  .option('-c, --ssl-cert [cert]', 'Pass in a relative path to your own ssl cert.', false)
+  .option('-k, --ssl-key [key]', 'Pass in a relative path to your own ssl key.', false)
 
   // Proxy
   .option(
-    '-x, --proxyPrefix [prefix]',
+    '-x, --proxy-prefix [prefix]',
     `Proxy requests for paths starting with the passed in prefix to another server. Requires ${chalk.cyan.underline('--proxyHost')} and should be a string like ${chalk.cyan.underline('/api')}.`
   )
   .option(
-    '-y, --proxyHost [proxyhost]',
+    '-y, --proxy-host [proxyhost]',
     `The location to proxy the requests captured under ${chalk.cyan.underline('--proxyPrefix')}. Requires ${chalk.cyan.underline('--proxyPrefix')} and should be a full URL, eg. http://localhost:9000.`
   )
 
@@ -37,9 +37,9 @@ program
 
   // Booleans
   .option('-u, --pushstate [pushstate]', `Forces the index.html or whatever filename you have passed to the --start-page flag to always be served. Must be used when building with ${chalk.cyan.underline('Browser.application')}.`, false)
+  .option('-H, --hot [hot]', 'Turn on hot module reloading.', false)
   .option('-o, --open [open]', 'Open in browser when server starts.', false)
   .option('-v, --verbose [verbose]', 'Will log more steps as your server starts up.', false)
-  .option('-H, --hot [hot]', 'Turn on hot module reloading.', false)
   .option('--no-reload [no-releoad]', 'Turn off live reload. This means you will need to manual reload your website after each build to see the changes.')
   .option('--no-server [no-server]', 'Turn off the server for elm-live. This is useful when you are using elm inside of another development ecosystem.')
   .on('--help', help)

@@ -92,7 +92,7 @@ const Layout = ({ children }) => {
           </ul>
         </div>
       </nav>
-      <main className="content relative bg-grey-light pt-32 px-12 xl:px-16 w-2/3 ml-auto">
+      <main className="content relative bg-grey-light mt-16 p-12 xl:p-16 w-2/3 ml-auto">
         {children}
       </main>
     </div>
