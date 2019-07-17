@@ -11,10 +11,12 @@ const SurveyThankYouPage = () => (
     <div className="max-w-xl mx-auto px-8">
       <nav className="bg-grey-light w-full mb-16">
         <div className="flex justify-between items-center pt-8 border-b-2 border-black max-w-4xl mx-auto">
-          <h1 className="flex items-center font-bold mb-4">
-            <span className="h-8 mr-2"><LogoIcon /></span>
-            <span className="leading-none">elm-live</span>
-          </h1>
+          <Link to="/">
+            <h1 className="flex items-center font-bold mb-4">
+              <span className="h-8 mr-2"><LogoIcon /></span>
+              <span className="leading-none">elm-live</span>
+            </h1>
+          </Link>
           <ul className="flex">
             <li className="h-4 w-auto"><a href="https://wking.io"><WebIcon/></a></li>
           </ul>
