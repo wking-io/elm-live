@@ -5,7 +5,7 @@ import SEO from "../../components/seo"
 
 import { LogoIcon, WebIcon } from "../../components/icons"
 
-const SecondPage = () => {
+const Page = () => {
   const [showHow, updateHow] = useState(null)
   return (
   <div className="bg-grey-light font-sans">
@@ -162,4 +162,4 @@ const SecondPage = () => {
   )
 }
 
-export default SecondPage
+export default Page

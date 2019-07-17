@@ -87,8 +87,7 @@ const Layout = ({ children }) => {
           </ul>
           <ul className="flex">
             <li className="h-4 w-auto mr-4"><a href="https://wking.io"><WebIcon/></a></li>
-            <li className="h-4 w-auto mr-4"><a href={repoUrl} ><GithubIcon/></a></li>
-            <li className="h-4 w-auto"><button className="w-4"><MenuIcon/></button></li>
+            <li className="h-4 w-auto"><a href={repoUrl} ><GithubIcon/></a></li>
           </ul>
         </div>
       </nav>

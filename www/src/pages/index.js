@@ -12,7 +12,7 @@ import './style.css'
 export const HeadingLinkBase = location => ({ children, linkId, className }) => (
   <div className={`heading-link flex relative ${className}`}>
     <a className="heading-link__icon absolute w-5 opacity-0" href={`${location}#${linkId}`}>
-      <svg class="w-full h-auto" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12'>
+      <svg className="w-full h-auto" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12'>
         <path className="text-grey-dark fill-current" d='M18,0H13.2V2.4H18a3.6,3.6,0,1,1,0,7.2H13.2V12H18A6,6,0,0,0,18,0ZM10.8,9.6H6A3.6,3.6,0,0,1,6,2.4h4.8V0H6A6,6,0,0,0,6,12h4.8ZM7.2,4.8h9.6V7.2H7.2Z' />
       </svg>
     </a>
@@ -21,7 +21,8 @@ export const HeadingLinkBase = location => ({ children, linkId, className }) => 
 )
 
 const IndexPage = ({ location }) => {
-  const HeadingLink = HeadingLinkBase(location.href);
+  console.log(location);
+  const HeadingLink = HeadingLinkBase(location.origin);
   return (
     <Layout>
       <SEO title="elm-live | Live reloading server for Elm development" />
@@ -178,8 +179,8 @@ const IndexPage = ({ location }) => {
         <p className="leading-relaxed mb-4">This is a very important flag. This flag allows you to change both the name and the file type of your compiled Elm code. You can name your output anything you want, but the file type must be either <code>html</code> or <code>js</code>. You can also check out this section of the Elm guide for an overview of why you might want to do this: <a className="link" href="https://guide.elm-lang.org/interop/">https://guide.elm-lang.org/interop/</a></p>
         <p className="leading-relaxed mb-20"><strong>NOTE:</strong> This flag can affect other <code>elm-live</code> flags you may be using. Since the <code>--dir</code> flag sets the root folder for the server you will need to make sure that the <code>--output</code> is inside that directory. The <code>--start-page</code> flag allows you to give a custom html file name for the server to use. So, if you are outputting html from the compiler the <code>--output</code> filename will need to match the <code>--start-page</code>.</p>
         <HeadingLink className="mb-4" linkId="feedback"><h2 className="text-3xl font-bold" id="feedback"># If you have feedback</h2></HeadingLink>
-        <p className="leading-relaxed mb-12">I would love to hear from you. I want to make sure that <code>elm-live</code> is the most helpful tool it can be for the Elm community. You can reach out to me on Twitter at <a className="link" href="https://twitter.com/wking__">@wking__</a> or add an issue on the <a className="link" href="https://github.com/wking-io/elm-live">Github repo</a>.</p>
-        <p className="leading-relaxed mb-12">Also, if you haven't had a chance to take the survey yet that would be a huge help to making <code>elm-live</code> better: <Link to="/surveys/2019" className="link">Take the quick survey</Link></p>
+        <p className="leading-relaxed mb-4">I would love to hear from you. I want to make sure that <code>elm-live</code> is the most helpful tool it can be for the Elm community. You can reach out to me on Twitter at <a className="link" href="https://twitter.com/wking__">@wking__</a> or add an issue on the <a className="link" href="https://github.com/wking-io/elm-live">Github repo</a>.</p>
+        <p className="leading-relaxed mb-12">Also, if you haven't had a chance to take the survey yet that would be a huge help to making <code>elm-live</code> better: <Link to="/surveys/2019" className="link font-bold">Take the quick survey</Link></p>
       </div>
     </Layout>
   )
