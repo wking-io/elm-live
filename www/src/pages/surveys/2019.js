@@ -37,97 +37,97 @@ const SurveyPage = () => {
         <fieldset className="mb-8">
           <legend className="mb-4">What <code>elm-live</code> flags do you use consistently? (Select as many as apply)</legend>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="path-to-elm" value="path-to-elm" name="flags-used[]" />
+            <input className="ui-checkbox__input" type="checkbox" id="path-to-elm" value="1" name="path-to-elm" />
             <label className="ui-checkbox__label w-full" htmlFor="path-to-elm">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--path-to-elm</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="port" value="port" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="port" value="1" name="port" />
             <label className="ui-checkbox__label w-full" htmlFor="port">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--port</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="host" value="host" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="host" value="1" name="host" />
             <label className="ui-checkbox__label w-full" htmlFor="host">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--host</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="dir" value="dir" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="dir" value="1" name="dir" />
             <label className="ui-checkbox__label w-full" htmlFor="dir">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--dir</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="start-page" value="start-page" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="start-page" value="1" name="start-page" />
             <label className="ui-checkbox__label w-full" htmlFor="start-page">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--start-page</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="ssl" value="ssl" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="ssl" value="1" name="ssl" />
             <label className="ui-checkbox__label w-full" htmlFor="ssl">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--ssl</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="ssl-cert" value="ssl-cert" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="ssl-cert" value="1" name="ssl-cert" />
             <label className="ui-checkbox__label w-full" htmlFor="ssl-cert">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--ssl-cert</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="ssl-key" value="ssl-key" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="ssl-key" value="1" name="ssl-key" />
             <label className="ui-checkbox__label w-full" htmlFor="ssl-key">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--ssl-key</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="proxy-prefix" value="proxy-prefix" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="proxy-prefix" value="1" name="proxy=prefix" />
             <label className="ui-checkbox__label w-full" htmlFor="proxy-prefix">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--proxy-prefix</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="proxy-host" value="proxy-host" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="proxy-host" value="1" name="proxy-host" />
             <label className="ui-checkbox__label w-full" htmlFor="proxy-host">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--proxy-host</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="hot" value="hot" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="hot" value="1" name="hot" />
             <label className="ui-checkbox__label w-full" htmlFor="hot">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--hot</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="verbose" value="verbose" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="verbose" value="1" name="verbose" />
             <label className="ui-checkbox__label w-full" htmlFor="verbose">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--verbose</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="open" value="open" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="open" value="1" name="open" />
             <label className="ui-checkbox__label w-full" htmlFor="open">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--open</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="pushstate" value="pushstate" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="pushstate" value="1" name="pushstate" />
             <label className="ui-checkbox__label w-full" htmlFor="pushstate">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--pushstate</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="no-reload" value="no-reload" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="no-reload" value="1" name="no-reload" />
             <label className="ui-checkbox__label w-full" htmlFor="no-reload">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--no-reload</code></span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="no-server" value="no-server" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="no-server" value="1" name="no-server" />
             <label className="ui-checkbox__label w-full" htmlFor="no-server">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--no-server</code></span>
             </label>
