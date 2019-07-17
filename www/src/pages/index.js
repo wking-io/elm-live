@@ -6,9 +6,6 @@ import { Link } from "gatsby"
 import SEO from "../components/seo"
 import Layout from "../components/layout"
 
-// Assets
-import './style.css'
-
 export const HeadingLinkBase = location => ({ children, linkId, className }) => (
   <div className={`heading-link flex relative ${className}`}>
     <a className="heading-link__icon absolute w-5 opacity-0" href={`${location}#${linkId}`}>

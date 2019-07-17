@@ -149,7 +149,7 @@ const Page = () => {
         </fieldset>
         { showHow ? <div className="flex flex-col mb-8">
           <label className="mb-4" htmlFor="before-after-how">Which one did you use and how?</label>
-          <textarea className="border-2 border-grey rounded h-32" name="before-after-how" id="before-after-how"></textarea>
+          <textarea className="p-3 border-2 border-grey rounded h-32" name="before-after-how" id="before-after-how"></textarea>
         </div> : null }
         <div className="flex flex-col mb-8">
           <label className="mb-4" htmlFor="other-thoughts">Do you have anything else you would like to share about development in elm?</label>
