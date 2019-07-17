@@ -8,15 +8,17 @@ import { LogoIcon, WebIcon } from "../../components/icons"
 const Page = () => {
   const [showHow, updateHow] = useState(null)
   return (
-  <div className="bg-grey-light font-sans">
+  <div className="bg-grey-light font-sans px-8">
     <SEO title="2019 Survey | elm-live" />
     <div className="max-w-xl mx-auto">
       <nav className="bg-grey-light w-full mb-16">
-        <div className="flex justify-between items-center pt-8 border-b-2 border-black max-w-4xl mx-auto">
-          <h1 className="flex items-center font-bold mb-4">
-            <span className="h-8 mr-2"><LogoIcon /></span>
-            <span className="leading-none">elm-live</span>
-          </h1>
+        <div className="flex justify-between items-center pt-8 border-b-2 border-black max-w-4xl mx-auto pb-4">
+          <Link to='/'>
+            <h1 className="flex items-center font-bold">
+              <span className="h-8 mr-2"><LogoIcon /></span>
+              <span className="leading-none">elm-live</span>
+            </h1>
+          </Link>
           <ul className="flex">
             <li className="h-4 w-auto"><a href="https://wking.io"><WebIcon/></a></li>
           </ul>
@@ -29,7 +31,7 @@ const Page = () => {
         </p>
         <div className="flex flex-col mb-8">
           <label className="mb-4" htmlFor="biggest-problem">What is the biggest problem you have with Elm development?</label>
-          <textarea className="border-2 border-grey rounded h-32" name="biggest-problem" id="biggest-problem"></textarea>
+          <textarea className="p-3 border-2 border-grey rounded h-32" name="biggest-problem" id="biggest-problem"></textarea>
         </div>
         <fieldset className="mb-8">
           <legend className="mb-4">What <code>elm-live</code> flags do you use consistently? (Select as many as apply)</legend>
@@ -151,9 +153,9 @@ const Page = () => {
         </div> : null }
         <div className="flex flex-col mb-8">
           <label className="mb-4" htmlFor="other-thoughts">Do you have anything else you would like to share about development in elm?</label>
-          <textarea className="border-2 border-grey rounded h-32" name="other-thoughts" id="other-thoughts"></textarea>
+          <textarea className="p-3 border-2 border-grey rounded h-32" name="other-thoughts" id="other-thoughts"></textarea>
         </div>
-        <input className="btn btn--primary block mb-12 rounded" type="submit" value="Submit Survey" />
+        <input className="btn btn--primary block mb-12 rounded cursor-pointer" type="submit" value="Submit Survey" />
       </form>
       <div className="h-px bg-black mb-6"></div>
       <p className="text-center pb-12"><Link className="underline hover:no-underline" to="/">Go back to the homepage</Link></p>

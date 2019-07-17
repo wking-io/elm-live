@@ -16,11 +16,12 @@
 }
 
 .btn {
-  @apply text-white bg-black leading-none text-center inline-block py-3 px-6 font-medium;
+  @apply text-white bg-black leading-none text-center inline-block py-3 px-6 font-medium shadow;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn:hover {
-  @apply bg-grey;
+  @apply bg-grey shadow-md;
 }
 
 .btn--primary {
@@ -91,8 +92,8 @@
 }
 
 @media screen and (min-width: 1344px) {
-  .nav,
-  .content {
+  nav.nav,
+  main.content {
     width: calc(100% - 28rem);
   }
 }

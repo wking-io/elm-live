@@ -8,7 +8,7 @@ import { LogoIcon, WebIcon } from "../../components/icons"
 const SecondPage = () => (
   <div className="bg-grey-light font-sans min-h-screen">
     <SEO title="2019 Survey | elm-live" />
-    <div className="max-w-xl mx-auto">
+    <div className="max-w-xl mx-auto px-8">
       <nav className="bg-grey-light w-full mb-16">
         <div className="flex justify-between items-center pt-8 border-b-2 border-black max-w-4xl mx-auto">
           <h1 className="flex items-center font-bold mb-4">
@@ -26,8 +26,8 @@ const SecondPage = () => (
         <p className="font-bold mb-4">
           <label htmlFor="tlemail">Enter your email address</label>
         </p>
-        <p className="mb-4">
-          <input className="w-full p-3 border border-grey-dark rounded" type="email" name="email" id="tlemail" />
+        <p className="mb-6">
+          <input className="border-2 border-grey w-full p-3 rounded" type="email" name="email" id="tlemail" />
         </p>
         <input type="hidden" value="1" name="embed"/>
         <input className="btn btn--primary block mb-12 rounded" type="submit" value="Subscribe" />

@@ -5,7 +5,7 @@ import Either from 'data.either'
 import { safePath } from 'safe-prop'
 
 // Components
-import { GithubIcon, LogoIcon, MenuIcon, WebIcon } from "../components/icons"
+import { GithubIcon, LogoIcon, WebIcon } from "../components/icons"
 
 function getStats (data) {
   const forks = safePath(['repository', 'forkCount'], data)
@@ -63,15 +63,15 @@ const Layout = ({ children }) => {
   const repoUrl = getRepoUrl(data.github).getOrElse('https://github.com/wking-io/elm-live')
 
   return (
-    <div className="font-sans text-black flex">
-      <header className="p-8 w-1/3 max-w-md flex-shrink-0 flex flex-col space-between h-screen fixed z-10 bg-white">
+    <div className="font-sans text-black flex flex-col md:flex-row">
+      <header className="p-8 md:w-2/5 lg:w-1/3 md:max-w-md flex-shrink-0 flex flex-col space-between md:h-screen md:fixed z-10 bg-white">
         <h1 className="flex items-center font-bold mb-12">
           <span className="h-8 mr-2"><LogoIcon /></span>
           <span className="leading-none">elm-live</span>
         </h1>
         <div className="flex-1">
           <h2 className="text-2xl mb-4 font-bold leading-tight">A flexible dev server for Elm. Live reload included.</h2>
-          <p>A thin wrapper around elm make, elm-live is a dev server that gives you a few extra convenience features during development. Features include pushstate for SPA development, proxies, and more. Usage and API documentation is below. Check out <a className="link" href="#getting-started">how to get started</a> or jump straight to the <a className="link" href="#documentation">API Documentation</a>.</p>
+          <p className="leading-relaxed mb-12">A thin wrapper around elm make, elm-live is a dev server that gives you a few extra convenience features during development. Features include pushstate for SPA development, proxies, and more. Usage and API documentation is below. Check out <a className="link" href="#getting-started">how to get started</a> or jump straight to the <a className="link" href="#documentation">API Documentation</a>.</p>
         </div>
         <div>
           <p className="mb-4"><strong>Would you be willing to answer a few questions to help improve development in elm?</strong></p>
@@ -79,7 +79,7 @@ const Layout = ({ children }) => {
         </div>
         {stats.fold(console.log, renderStats)}
       </header>
-      <nav className="fixed w-2/3 right-0 nav bg-grey-light px-12 z-10 xl:px-16">
+      <nav className="md:fixed md:w-3/5 lg:w-2/3 right-0 nav bg-grey-light px-8 md:px-12 z-10 xl:px-16">
         <div className="flex pt-8 border-b-2 border-black max-w-4xl mx-auto">
           <ul className="flex flex-1">
             <li className="text-sm"><a className="block mr-6 pb-3 border-b-2 border-grey-light hover:border-black" href="#getting-started">Getting Started</a></li>
@@ -91,7 +91,7 @@ const Layout = ({ children }) => {
           </ul>
         </div>
       </nav>
-      <main className="content relative bg-grey-light mt-16 p-12 xl:p-16 w-2/3 ml-auto">
+      <main className="content relative bg-grey-light md:mt-16 p-8 md:p-12 xl:p-16 w-full md:w-3/5 lg:w-2/3 ml-auto">
         {children}
       </main>
     </div>
