@@ -75,7 +75,7 @@ const Layout = ({ children }) => {
         </div>
         <div>
           <p className="mb-4"><strong>Would you be willing to answer a few questions to help improve development in elm?</strong></p>
-          <Link to="/surveys/2019" className="btn btn--primary block mb-6">Take the quick survey</Link>
+          <Link to="/surveys/2019" className="btn btn--primary block mb-6 rounded">Take the quick survey</Link>
         </div>
         {stats.fold(console.log, renderStats)}
       </header>

@@ -1,5 +1,7 @@
 @tailwind base;
 
+
+
 /* Main Styles here */
 .link {
   background-image: linear-gradient(to right, rgba(255, 160, 28, 1) 0%, rgba(239, 99, 0, 1) 100%);
@@ -50,7 +52,43 @@
   left: -2rem;
 }
 
+.ui-checkbox__input {
+  @apply absolute opacity-0;
+  left: -99999px;
+}
+
+.ui-checkbox__label {
+  @apply bg-white rounded cursor-pointer;
+  position: relative;
+  background-clip: padding-box;
+  border: solid 2px transparent;
+}
+
+.ui-checkbox__input ~ .ui-checkbox__label:before {
+  @apply bg-grey;
+  content: '';
+  position: absolute;
+  top: 0px; right: 0px; bottom: 0px; left: 0px;
+  margin: -2px;
+  border-radius: 5px;
+}
+
+.ui-checkbox__input:checked ~ .ui-checkbox__label:before {
+  @apply bg-gradient;
+  content: '';
+  position: absolute;
+  top: 0px; right: 0px; bottom: 0px; left: 0px;
+  margin: -2px;
+  border-radius: 5px;
+}
+
 @tailwind utilities;
+
+@responsive {
+  .bg-gradient {
+    background-image: linear-gradient(to right, rgba(255, 160, 28, 1) 0%, rgba(239, 99, 0, 1) 100%);
+  }
+}
 
 @media screen and (min-width: 1344px) {
   .nav,
