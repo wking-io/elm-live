@@ -2,7 +2,18 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/24d05688-7775-4ce8-86fa-c071d7ae909a/deploy-status)](https://app.netlify.com/sites/elm-live/deploys)
 
-**A flexible dev server for Elm. Live reload included!**
+# elm-live | A flexible dev server for Elm. Live reload included.
+
+**New Version Available**
+
+Thanks to the help of @lucamug and others a new version of elm-live is available! With the following changes:
+
+* Hot reloading
+* Local SSL
+* No reload mode
+* No server mode
+* Removed before and after build commands. If you used these and cannot imagine using elm-live without them make an issue and let's discuss!
+* and more!
 
 <p align="center"><img
   alt="Screencast"
@@ -12,6 +23,18 @@
 /></p>
 
 ## INSTALLATION
+
+To use the new version of elm-live while it is in alpha you can run one of the following commands:
+
+```sh
+# Globally for a user:
+npm install --global elm elm-live@next
+
+# …or locally for a project:
+npm install --save-dev elm elm-live@next
+```
+
+Otherwise, to use the latest stable version:
 
 ```sh
 # Globally for a user:
@@ -33,7 +56,7 @@ npm install --save-dev elm elm-live@prev
 
 If you’d rather bring your own global `elm`, `npm install --global elm-live` will do.
 
-Note that you need *node 6.0+* to run the tool natively. But if you’re stuck on an older version, don’t worry! [Rumour has it](https://github.com/wking-io/elm-live/issues/2#issuecomment-156698732) that you can transpile the code to ES5!
+Note that you need *node 10.0+* to run the tool natively.
 
 ## SYNOPSIS
 
@@ -52,48 +75,56 @@ We also watch all `*.elm` files in the current directory and its subdirectories.
 
 ## OPTIONS
 
-#### `-p, --port [PORT]`
-Set the port to start the server at. If the port is taken, we’ll use the next available one. `PORT` should be a valid port number. Default: `8000`.
-
-#### `-e, --path-to-elm [PATH]`
+#### `-e, --path-to-elm=PATH`
 An absolute or relative path to `elm`. If you’ve installed _elm-platform_ locally with _npm_ (`npm install --save-dev elm`), you’ll likely want to set this to `node_modules/.bin/elm`. Default: `elm`.
 
-#### `-h, --host [HOSTNAME|IP]`
+#### `-p, --port=PORT`
+Set the port to start the server at. If the port is taken, we’ll use the next available one. `PORT` should be a valid port number. Default: `8000`.
+
+#### `-h, --host=HOST`
 Set the host interface to attach the server to. Default: `localhost`.
+
+#### `-S, --ssl`
+Start an https server instead of http. Default: `false`.
+
+#### `-S, --ssl-cert=PATH`
+Pass in a relative path to your own ssl cert. Default: `false`.
+
+#### `-S, --ssl-key=PATH`
+Pass in a relative path to your own ssl key. Default: `false`.
+
+#### `-x, --proxy-prefix=PREFIX`
+Proxy requests to paths starting with `PREFIX` to another server. Requires `--proxy-host` and should be a string like `/api`. Defaults to not proxying
+
+#### `-y, --proxy-host=HOST`
+Proxy requests to another server running at `HOST`. Requires `--proxy-prefix` and should be a full URL, eg. `http://localhost:9000`. Defaults to not proxying
 
 #### `-d, --dir=PATH`
 The base for static content. Default: `.`.
 
-#### `-o, --open`
-We’ll open the app in your default browser as soon as the server is up.
-
-#### `-r, --no-recover`
-When _elm make_ encounters a compile error, we keep _elm-live_ running and give you time to fix your code. Pass `--no-recover` if you want the server to exit immediately whenever it encounters a compile error.
+#### `-s, --start-page=PATH`
+A custom html file to serve other than the default `index.html`.
 
 #### `-u, --pushstate`
 Serve `index.html` on 404 errors. This lets us use client-side routing in Elm. For instance, we can have a URL like `http://localhost:8000/account` get handled by the Elm _navigation_ package instead of failing with a 404 error.
 
-#### `-s, --start-page [STARTPAGE]`
-A custom html file to serve other than the default `index.html`.
+#### `-H, --hot`
+Turn on hot module reloading.
 
-#### `-x, --proxy-prefix [PREFIX]`
-Proxy requests to paths starting with `prefix` to another server. Requires `--proxyHost` and should be a string like `/api`. Defaults to not proxying
+#### `-o, --open`
+We’ll open the app in your default browser as soon as the server is up.
 
-#### `-y, --proxy-host`
-Proxy requests to another server running at `host`. Requires `--proxyPrefix` and should be a full URL, eg. `http://localhost:9000`. Defaults to not proxying
+#### `-v, --verbose`
+Log more stuff!
 
-#### `-b, --before-build [EXECUTABLE]`
-Run `EXECUTABLE` before every rebuild. This way you can easily use other tools like _elm-css_ or _browserify_ in your workflow.
+#### `-r, --no-reload`
+Turn off live reload. This means you will need to manual reload your website after each build to see the changes.
 
-Heads up! At the moment, we only allow running a single executable without parameters. If you need more than that, please give us a shout at https://git.io/elm-live.before-build-args.
-
-#### `-a, --after-build [EXECUTABLE]`
-Just like `--before-build`, but runs after `elm make`.
+#### `-r, --no-server`
+Turn off the server for `elm-live`. This is useful when you are using elm inside of another development ecosystem.
 
 #### `--help`
 You’re looking at it.
-
-
 
 
 <a id="/examples"></a>&nbsp;
