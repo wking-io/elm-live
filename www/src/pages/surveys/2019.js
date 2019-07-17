@@ -37,7 +37,7 @@ const SurveyPage = () => {
         <fieldset className="mb-8">
           <legend className="mb-4">What <code>elm-live</code> flags do you use consistently? (Select as many as apply)</legend>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="checkbox" id="path-to-elm" value="path-to-elm" name="flags-used" />
+            <input className="ui-checkbox__input" type="checkbox" id="path-to-elm" value="path-to-elm" name="flags-used[]" />
             <label className="ui-checkbox__label w-full" htmlFor="path-to-elm">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm"><code>--path-to-elm</code></span>
             </label>
@@ -136,13 +136,13 @@ const SurveyPage = () => {
         <fieldset className="mb-8">
           <legend className="mb-4">Have you ever used the <code>--before-build</code> or <code>--after-build</code> flags?</legend>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="radio" value="yes" id="yes" name="before-after" onChange={() => updateHow(true)} checked={showHow} />
+            <input className="ui-checkbox__input" type="radio" value="yes" id="yes" name="before-after[]" onChange={() => updateHow(true)} checked={showHow} />
             <label className="ui-checkbox__label w-full" htmlFor="yes">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm">Yes</span>
             </label>
           </div>
           <div className="ui-checkbox mb-2 flex">
-            <input className="ui-checkbox__input" type="radio" value="no" id="no" name="before-after" onChange={() => updateHow(false)} checked={showHow === false} />
+            <input className="ui-checkbox__input" type="radio" value="no" id="no" name="before-after[]" onChange={() => updateHow(false)} checked={showHow === false} />
             <label className="ui-checkbox__label w-full" htmlFor="no">
               <span className="block relative z-10 bg-white rounded py-3 px-6 text-sm">No</span>
             </label>
