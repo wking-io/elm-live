@@ -5,7 +5,7 @@ import SEO from "../../components/seo"
 
 import { LogoIcon, WebIcon } from "../../components/icons"
 
-const SecondPage = () => (
+const SurveyThankYouPage = () => (
   <div className="bg-grey-light font-sans min-h-screen">
     <SEO title="2019 Survey | elm-live" />
     <div className="max-w-xl mx-auto px-8">
@@ -38,4 +38,4 @@ const SecondPage = () => (
   </div>
   )
 
-export default SecondPage
+export default SurveyThankYouPage

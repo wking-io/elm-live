@@ -5,7 +5,7 @@ import SEO from "../../components/seo"
 
 import { LogoIcon, WebIcon } from "../../components/icons"
 
-const Page = () => {
+const SurveyPage = () => {
   const [showHow, updateHow] = useState(null)
   return (
   <div className="bg-grey-light font-sans px-8">
@@ -26,6 +26,7 @@ const Page = () => {
       </nav>
       <h1 className="font-bold text-2xl mb-8">2019 Survey</h1>
       <form name="2019-survey" method="POST" action="/surveys/2019-thank-you" netlify-honeypot="bot-field" data-netlify="true" className="w-full">
+        <input type="hidden" name="form-name" value="2019-survey" />
         <p class="absolute h-0 w-0 left-0 opacity-0">
           <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
         </p>
@@ -164,4 +165,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default SurveyPage

@@ -18,7 +18,6 @@ export const HeadingLinkBase = location => ({ children, linkId, className }) => 
 )
 
 const IndexPage = ({ location }) => {
-  console.log(location);
   const HeadingLink = HeadingLinkBase(location.origin);
   return (
     <Layout>
