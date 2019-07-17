@@ -1,18 +1,19 @@
-[![Build Status](https://travis-ci.org/wking-io/elm-live.svg?branch=master)](https://travis-ci.org/wking-io/elm-live)
-[![Coverage Status](https://coveralls.io/repos/github/wking-io/elm-live/badge.svg?branch=master)](https://coveralls.io/github/wking-io/elm-live?branch=master)
+<img alt="elm-live" src="./elm-live-logo.png" width="100%" height="auto" />
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/24d05688-7775-4ce8-86fa-c071d7ae909a/deploy-status)](https://app.netlify.com/sites/elm-live/deploys)
 
+# elm-live | A flexible dev server for Elm. Live reload included.
 
+**New Version Available**
 
-# elm-live
+Thanks to the help of @lucamug and others a new version of elm-live is available! With the following changes:
 
-**A flexible dev server for Elm  
-Live reload included!**
-
-
-
-
-<a id="/screenshot"></a>&nbsp;
+* Hot reloading
+* Local SSL
+* No reload mode
+* No server mode
+* Removed before and after build commands. If you used these and cannot imagine using elm-live without them make an issue and let's discuss!
+* and more!
 
 <p align="center"><img
   alt="Screencast"
@@ -21,12 +22,19 @@ Live reload included!**
   width="405"
 /></p>
 
-
-
-
-<a id="/installation"></a>&nbsp;
-
 ## INSTALLATION
+
+To use the new version of elm-live while it is in alpha you can run one of the following commands:
+
+```sh
+# Globally for a user:
+npm install --global elm elm-live@next
+
+# …or locally for a project:
+npm install --save-dev elm elm-live@next
+```
+
+Otherwise, to use the latest stable version:
 
 ```sh
 # Globally for a user:
@@ -48,12 +56,7 @@ npm install --save-dev elm elm-live@prev
 
 If you’d rather bring your own global `elm`, `npm install --global elm-live` will do.
 
-Note that you need *node 6.0+* to run the tool natively. But if you’re stuck on an older version, don’t worry! [Rumour has it](https://github.com/wking-io/elm-live/issues/2#issuecomment-156698732) that you can transpile the code to ES5!
-
-
-
-
-<a id="/synopsis"></a>&nbsp;
+Note that you need *node 10.0+* to run the tool natively.
 
 ## SYNOPSIS
 
@@ -61,11 +64,6 @@ Note that you need *node 6.0+* to run the tool natively. But if you’re stuck o
 elm-live [...<options>] [--] ...<elm make args>  
 elm-live --help
 ```
-
-
-
-
-<a id="/description"></a>&nbsp;
 
 ## DESCRIPTION
 
@@ -75,58 +73,58 @@ When the build is ready, we start a static HTTP server in the current directory.
 
 We also watch all `*.elm` files in the current directory and its subdirectories. Whenever you change, add or remove one of them, we’ll rebuild your program and reload the page.
 
-
-
-
-<a id="/options"></a>&nbsp;
-
 ## OPTIONS
 
-#### `-p, --port [PORT]`
-Set the port to start the server at. If the port is taken, we’ll use the next available one. `PORT` should be a valid port number. Default: `8000`.
-
-#### `-e, --path-to-elm [PATH]`
+#### `-e, --path-to-elm=PATH`
 An absolute or relative path to `elm`. If you’ve installed _elm-platform_ locally with _npm_ (`npm install --save-dev elm`), you’ll likely want to set this to `node_modules/.bin/elm`. Default: `elm`.
 
-#### `-h, --host [HOSTNAME|IP]`
+#### `-p, --port=PORT`
+Set the port to start the server at. If the port is taken, we’ll use the next available one. `PORT` should be a valid port number. Default: `8000`.
+
+#### `-h, --host=HOST`
 Set the host interface to attach the server to. Default: `localhost`.
 
 #### `-S, --ssl`
-Start an https server instead of http. Defaults to false.
+Start an https server instead of http. Default: `false`.
+
+#### `-S, --ssl-cert=PATH`
+Pass in a relative path to your own ssl cert. Default: `false`.
+
+#### `-S, --ssl-key=PATH`
+Pass in a relative path to your own ssl key. Default: `false`.
+
+#### `-x, --proxy-prefix=PREFIX`
+Proxy requests to paths starting with `PREFIX` to another server. Requires `--proxy-host` and should be a string like `/api`. Defaults to not proxying
+
+#### `-y, --proxy-host=HOST`
+Proxy requests to another server running at `HOST`. Requires `--proxy-prefix` and should be a full URL, eg. `http://localhost:9000`. Defaults to not proxying
 
 #### `-d, --dir=PATH`
 The base for static content. Default: `.`.
 
-#### `-o, --open`
-We’ll open the app in your default browser as soon as the server is up.
-
-#### `-r, --no-recover`
-When _elm make_ encounters a compile error, we keep _elm-live_ running and give you time to fix your code. Pass `--no-recover` if you want the server to exit immediately whenever it encounters a compile error.
+#### `-s, --start-page=PATH`
+A custom html file to serve other than the default `index.html`.
 
 #### `-u, --pushstate`
 Serve `index.html` on 404 errors. This lets us use client-side routing in Elm. For instance, we can have a URL like `http://localhost:8000/account` get handled by the Elm _navigation_ package instead of failing with a 404 error.
 
-#### `-s, --start-page [STARTPAGE]`
-A custom html file to serve other than the default `index.html`.
+#### `-H, --hot`
+Turn on hot module reloading.
 
-#### `-x, --proxyPrefix [PREFIX]`
-Proxy requests to paths starting with `prefix` to another server. Requires `--proxyHost` and should be a string like `/api`. Defaults to not proxying
+#### `-o, --open`
+We’ll open the app in your default browser as soon as the server is up.
 
-#### `-y, --proxyHost`
-Proxy requests to another server running at `host`. Requires `--proxyPrefix` and should be a full URL, eg. `http://localhost:9000`. Defaults to not proxying
+#### `-v, --verbose`
+Log more stuff!
 
-#### `-b, --before-build [EXECUTABLE]`
-Run `EXECUTABLE` before every rebuild. This way you can easily use other tools like _elm-css_ or _browserify_ in your workflow.
+#### `-r, --no-reload`
+Turn off live reload. This means you will need to manual reload your website after each build to see the changes.
 
-Heads up! At the moment, we only allow running a single executable without parameters. If you need more than that, please give us a shout at https://git.io/elm-live.before-build-args.
-
-#### `-a, --after-build [EXECUTABLE]`
-Just like `--before-build`, but runs after `elm make`.
+#### `-r, --no-server`
+Turn off the server for `elm-live`. This is useful when you are using elm inside of another development ecosystem.
 
 #### `--help`
 You’re looking at it.
-
-
 
 
 <a id="/examples"></a>&nbsp;
@@ -135,7 +133,7 @@ You’re looking at it.
 
 ### Have the compiler generate your index.html for you.
 
-This command will start the server at http://localhost:8000 and compile your elm code to an index.html file in the folder you are running the command from. Note: the `--open` flag will open the page in the browser for you. 
+This command will start the server at https://localhost:8000 and compile your elm code to an index.html file in the folder you are running the command from. Note: the `--open` flag will open the page in the browser for you. 
 
 ```sh
 $ elm-live src/Main.elm --open
@@ -171,9 +169,6 @@ All possible `elm make` flags are available in `elm-live`. You just need to make
 elm-live src/Main.elm --open -- --debug
 ```
 
-
-<a id="/troubleshooting"></a>&nbsp;
-
 ## TROUBLESHOOTING
 
 #### I’m seeing a SyntaxError about block-scoped declarations
@@ -188,13 +183,8 @@ make sure you’re running on node 6+. If you can’t upgrade, consider [transpi
 
 By the way, [yarn](https://github.com/yarnpkg/yarn) should be warning you about installing incompatible packages. To get the same behavior in npm, [set the `engine-strict`](https://docs.npmjs.com/misc/config#engine-strict) flag.
 
-
-
-
-<a id="/credits"></a>&nbsp;
-
 ## Original Author
-Huge shoutout to the creator [Tomek Wiszniewski](https://github.com/architectcodes)!
+Huge shoutout to the creator [Tomek Wiszniewski](https://github.com/tomekwi)!
 
 ## Current Owner
 [Will King](https://github.com/wking-io)
@@ -206,11 +196,6 @@ Many thanks to [Evan Czaplicki](https://github.com/evancz), the creator of Elm, 
 Many thanks to [Matt DesLauriers](https://github.com/mattdesl) for the wonderful [budo](https://github.com/mattdesl/budo). That’s what does the heavy lifting on the static server side.
 
 Warm thanks to our amazing contributors! Credits to [Brian](https://github.com/bdukes) for making Windows support possible, [Kurt](https://github.com/kbsymanz) for allowing a configurable `--host` and [Josh](https://github.com/joshmh) for his work on enabling client-side navigation. Thanks to [Ryan](https://github.com/Ryan1729) batch updates are nice and fast. Kudos to [Mathieu](https://github.com/magopian), [Rémy](https://github.com/natim) and [Nicolas](https://github.com/n1k0) for making the developer experience smoother and to [Gabriel](https://github.com/peacememories) for the `--before-build` option. Many thanks to [Noah](https://github.com/eeue56) for making sure elm-live works smoothly with [elm-test](https://github.com/elm-community/elm-test). Thanks to [Darren](https://github.com/darrensiegel) for finding and fixing the bug with `--port` options on the 3.0.0 release.
-
-
-
-
-<a id="/license"></a>&nbsp;
 
 ## LICENSE
 

@@ -2,68 +2,80 @@
 
 const program = require('commander')
 const chalk = require('chalk')
+const mime = require('mime')
+const { hotReloadOn, flagError, flagErrorMsgs, help } = require('../lib/src/messages')
 
 program
   .version(require('../package.json').version)
   .arguments('<elm-main>')
   .usage(`${chalk.magenta('<elm-main>')} [options] [--] [elm make options]`)
+  // Elm executable
+  .option('-e, --path-to-elm [path-to-elm]', `An absolute or relative path to elm. If you’ve installed elm locally with npm you’ll want to set this to ${chalk.cyan.underline('node_modules/.bin/elm')}.`, 'elm')
+
+  // Server
   .option('-p, --port [port]', 'The port to bind to.', Math.floor, 8000)
-  .option('-e, --path-to-elm [path-to-elm]', 'An absolute or relative path to elm. If you’ve installed elm locally with npm you’ll want to set this to `node_modules/.bin/elm`.', 'elm')
   .option('-h, --host [host]', 'Set the host interface to attach the server to.', 'localhost')
+
+  // SSL
+  .option('-S, --ssl [ssl]', 'Start an https server instead of http.', false)
+  .option('-c, --ssl-cert [cert]', 'Pass in a relative path to your own ssl cert.', false)
+  .option('-k, --ssl-key [key]', 'Pass in a relative path to your own ssl key.', false)
+
+  // Proxy
+  .option(
+    '-x, --proxy-prefix [prefix]',
+    `Proxy requests for paths starting with the passed in prefix to another server. Requires ${chalk.cyan.underline('--proxyHost')} and should be a string like ${chalk.cyan.underline('/api')}.`
+  )
+  .option(
+    '-y, --proxy-host [proxyhost]',
+    `The location to proxy the requests captured under ${chalk.cyan.underline('--proxyPrefix')}. Requires ${chalk.cyan.underline('--proxyPrefix')} and should be a full URL, eg. http://localhost:9000.`
+  )
+
+  // File System
   .option('-d, --dir [dir]', 'The base for static content.', process.cwd())
-  .option('-o, --open [open]', 'Open in browser when server starts.', false)
-  .option('-r, --no-recover [no-recover]', `Stop server when ${chalk.cyan.underline('elm make')} runs into an issue.`)
-  .option('-u, --pushstate [pushstate]', `Forces the index.html file to always be served. Must be used when building with ${chalk.cyan.underline('Browser.application')}.`, false)
   .option('-s, --start-page [start-page]', 'Specify a custom HTML file', 'index.html')
-  .option(
-    '-x, --proxyPrefix [prefix]',
-    'Proxy requests to paths starting with `prefix` to another server. Requires `--proxyHost` and should be a string like `/api`. Defaults to not proxying'
-  )
-  .option(
-    '-y, --proxyHost [proxyhost]',
-    'Proxy requests to another server running at `host`. Requires `--proxyHost` and should be a full URL, eg. `http://localhost:9000`. Defaults to not proxying'
-  )
-  .option('-S, --ssl [ssl]', `Start an https server instead of http. Defaults to false.`, false)
-  .option('-b, --before-build [before-build]', `Run EXECUTABLE before every rebuild. This way you can easily use other tools like ${chalk.cyan.underline('elm-css')} or ${chalk.cyan.underline('browserify')} in your workflow.`)
-  .option('-a, --after-build [after-build]', `Just like ${chalk.cyan.underline('--before-build')}, but runs after ${chalk.cyan.underline('elm make')}.`)
-  .on('--help', () => {
-    console.log(`    Only ${chalk.magenta('<elm-main>')} is required. If you want to pass on specific options to ${chalk.cyan.underline('elm make')} make sure they are passed after the -- in the command.`)
-    console.log()
-    console.log(
-      `    If you have any problems, do not hesitate to file an issue:`
-    )
-    console.log(
-      `      ${chalk.cyan('https://github.com/wking-io/elm-live')}`
-    )
-    console.log()
-  })
+
+  // Booleans
+  .option('-u, --pushstate [pushstate]', `Forces the index.html or whatever filename you have passed to the --start-page flag to always be served. Must be used when building with ${chalk.cyan.underline('Browser.application')}.`, false)
+  .option('-H, --hot [hot]', 'Turn on hot module reloading.', false)
+  .option('-o, --open [open]', 'Open in browser when server starts.', false)
+  .option('-v, --verbose [verbose]', 'Will log more steps as your server starts up.', false)
+  .option('--no-reload [no-releoad]', 'Turn off live reload. This means you will need to manual reload your website after each build to see the changes.')
+  .option('--no-server [no-server]', 'Turn off the server for elm-live. This is useful when you are using elm inside of another development ecosystem.')
+  .on('--help', help)
   .parse(process.argv)
 
-function hasBadOutput ([val, done], arg) {
-  if (done) {
-    return [val, done]
-  } else if (arg === '--') {
-    return [val, true]
+const errorReducer = isHot => ([past, flags], arg) => {
+  const isOutput = arg.includes('--output')
+  if (!past && isOutput) {
+    flags.wrongLocation = true
   }
 
-  return arg.includes('--output') ? [true, true] : [false, false]
+  if (isHot && isOutput) {
+    const target = arg.split('=')[1]
+    const outputType = mime.getType(target)
+    if (outputType !== 'application/javascript') {
+      flags.needsJs = true
+    }
+  }
+
+  return [past || arg === '--', flags]
 }
 
-const [ isBadOutput ] = program.rawArgs.reduce(hasBadOutput, [false, false])
+const flagErrors = Object.entries(program.rawArgs.reduce(errorReducer(program.hot), [false, {
+  wrongLocation: false,
+  needsJs: false,
+  missingProxy: (program.proxyPrefix && !program.proxyHost) ||
+  (program.proxyHost && !program.proxyPrefix)
+}]).pop()).reduce((acc, [key, value]) => value ? [...acc, flagErrorMsgs[key]] : acc, [])
 
-if (isBadOutput) {
-  console.log(``)
-  console.log(chalk.red.bold(`----------------------`))
-  console.log(chalk.red.bold(`|| ERROR IN COMMAND ||`))
-  console.log(chalk.red.bold(`----------------------`))
-  console.log(``)
-  console.log(`Usage: ${chalk.blue('<elm-main> [options] [--] [elm make options]')}`)
-  console.log(``)
-  console.log(`You have used the ${chalk.blue('elm make')} flag --output in the wrong location. As seen in the usage example about, all ${chalk.blue('elm make')} flags must be added to your command after the -- separator.`)
-  console.log(``)
-  console.log(``)
-  console.log(``)
+if (flagErrors.length > 0) {
+  console.log(flagError)
+  flagErrors.forEach(msg => console.log(msg))
 } else {
-  const elmLive = require('../lib/src/elm-live')
-  elmLive(program, { inputStream: process.stdin, outputStream: process.stdout })
+  if (program.hot) {
+    console.log(hotReloadOn)
+  }
+  const elmLive = require('../lib')
+  elmLive(program)
 }
