@@ -28,7 +28,7 @@ const IndexPage = ({ location }) => {
       <SEO title="elm-live | Live reloading server for Elm development" />
       <div className="max-w-4xl mx-auto">
         <HeadingLink className="mb-6" linkId="installation"><h2 className="text-3xl font-bold" id="installation"># Installation</h2></HeadingLink>
-        <p className="leading-relaxed mb-4">The new version of elm-live is currently is testing so you will need to install it using the commands below.</p>
+        <p className="leading-relaxed mb-4">The new version of elm-live is currently in testing so you will need to install it using one of the commands below.</p>
         <pre className="code overflow-auto bg-grey leading-none text-sm mb-6">
           <code className="block mb-2 opacity-50"># Using NPM</code>
           <code className="block mb-2">npm install elm-live@next --save-dev</code>
@@ -36,7 +36,7 @@ const IndexPage = ({ location }) => {
           <code className="block mb-2 opacity-50"># Using Yarn</code>
           <code className="block">yarn add elm-live@next --dev</code>
         </pre>
-        <p className="leading-relaxed mb-4">If you would like to install the older version you can use the commands below.</p>
+        <p className="leading-relaxed mb-4">If you would like to install the older version you can use one of the commands below.</p>
         <pre className="code overflow-auto bg-grey leading-none text-sm mb-0">
           <code className="block mb-2 opacity-50"># Using NPM</code>
           <code className="block mb-2">npm install elm-live --save-dev</code>
@@ -49,7 +49,7 @@ const IndexPage = ({ location }) => {
         <pre className="code overflow-auto bg-grey leading-none text-sm mb-6">
           <code>elm-live &lt;elm-file&gt; [other-elm-files...] [flags] [--] [elm make flags]</code>
         </pre>
-        <p className="leading-relaxed mb-12">Although all the flags are broken down in the documentation below I want to cover the different parts of the command you see above so that there is nothing left you need to assume or guess at:</p>
+        <p className="leading-relaxed mb-12">Although all the flags are explained in the documentation below I want to cover the different parts of the command you see above so that there is nothing left you need to assume or guess at:</p>
         <HeadingLink className="mb-4" linkId="geting-started-elm-live"><h3 className="text-2xl font-bold" id="geting-started-elm-live"># elm-live</h3></HeadingLink>
         <p className="leading-relaxed mb-12">This is the name of the binary that is installed either to your local or global path.</p>
         <HeadingLink className="mb-4" linkId="geting-started-elm-file"><h3 className="text-2xl font-bold" id="geting-started-elm-file"># &lt;elm-file&gt;</h3></HeadingLink>
