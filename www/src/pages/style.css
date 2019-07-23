@@ -1,6 +1,10 @@
 @tailwind base;
 
 
+.visually-hidden {
+  @apply absolute opacity-0;
+  left: -99999px;
+}
 
 /* Main Styles here */
 .link {
@@ -20,7 +24,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.btn:hover {
+.btn:hover:not(:disabled) {
   @apply bg-grey shadow-md;
 }
 
@@ -30,7 +34,7 @@
   transition: background-image 0.25s ease-in;
 }
 
-.btn--primary:hover {
+.btn--primary:hover:not(:disabled) {
   background-image: linear-gradient(to right, rgba(255, 160, 28, 1) 0%, rgba(239, 99, 0, 1) 50%);
 }
 
