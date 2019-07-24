@@ -43,6 +43,25 @@ module.exports = {
         fetchOptions: {}
       }
     },
+    {
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      options: {
+        fonts: [
+          {
+            family: `Fira Mono`,
+            subsets: [`latin`],
+            variants: [`400`],
+            formats: [`woff`, `woff2`],
+          },
+          {
+            family: `Fira Sans`,
+            subsets: [`latin`],
+            variants: [`400`, `400i`, `500`, `500i`, `700`, `700i`],
+            formats: [`woff`, `woff2`],
+          },
+        ],
+      },
+    },
     'gatsby-plugin-postcss'
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
