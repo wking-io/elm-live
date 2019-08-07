@@ -21,7 +21,7 @@ const IndexPage = ({ location }) => {
   const HeadingLink = HeadingLinkBase(location.origin);
   return (
     <Layout>
-      <SEO title="elm-live | Live reloading server for Elm development" />
+      <SEO />
       <div className="max-w-4xl mx-auto">
         <HeadingLink className="mb-6" linkId="installation"><h2 className="text-3xl font-bold" id="installation"># Installation</h2></HeadingLink>
         <p className="leading-relaxed mb-4">The new version of elm-live is currently in testing so you will need to install it using one of the commands below.</p>

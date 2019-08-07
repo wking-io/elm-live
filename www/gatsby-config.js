@@ -4,8 +4,11 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    title: 'elm-live | Live reloading server for Elm development',
+    title: 'Live reloading server for Elm development',
+    titleTemplate: "%s | elm-live",
     description: 'Documentation and more for elm-live, a dev server for elm development with live reloading.',
+    url: "https://www.elm-live.com",
+    image: "/images/elm-live.jpg",
     author: '@wking__',
   },
   plugins: [

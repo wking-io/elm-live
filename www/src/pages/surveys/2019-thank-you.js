@@ -8,7 +8,7 @@ import { NewsletterInput } from "../../components/newsletter"
 
 const SurveyThankYouPage = () => (
   <div className="bg-grey-light font-sans min-h-screen">
-    <SEO title="2019 Survey | elm-live" />
+    <SEO title="2019 Survey" />
     <div className="max-w-xl mx-auto px-8">
       <nav className="bg-grey-light w-full mb-16">
         <div className="flex justify-between items-center pt-8 border-b-2 border-black max-w-4xl mx-auto">
