@@ -1,3 +1,12 @@
+4.0.0@next:
+  date: 2019-07-22
+  new features:
+    - Hot reloading
+    - Browser errors
+    - Local ssl
+    - Ability to turn off reload and the server
+  fixed bugs:
+    - Watch error on Windows
 3.4.1:
   date: 2019-05-25
   new features:
