@@ -1,14 +1,14 @@
-sudo:
-  false
+# sudo:
+#   false
 
-branches:
-  only:
-    - master
+# branches:
+#   only:
+#     - master
 
-language:
-  node_js
-node_js:
-  - stable
+# language:
+#   node_js
+# node_js:
+#   - stable
 
-after_success:
-  - 'node_modules/.bin/nyc report --reporter=text-lcov | node_modules/.bin/coveralls'
+# after_success:
+#   - 'node_modules/.bin/nyc report --reporter=text-lcov | node_modules/.bin/coveralls'
