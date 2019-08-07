@@ -9,7 +9,7 @@ module.exports = {
     description: 'Documentation and more for elm-live, a dev server for elm development with live reloading.',
     url: "https://www.elm-live.com",
     image: "/images/elm-live.jpg",
-    author: '@wking__',
+    twitterUsername: "@wking__",
   },
   plugins: [
     'gatsby-plugin-react-helmet',
