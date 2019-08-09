@@ -8,7 +8,7 @@
   "main": "./lib/index.js",
   "dependencies": {
     "chalk": "^1.1.1",
-    "chokidar": "3.0.0",
+    "chokidar": "3.0.2",
     "commander": "2.17.1",
     "crocks": "0.12.1",
     "cross-spawn": "5.0.1",
