@@ -74,8 +74,8 @@ const Layout = ({ children }) => {
           <p className="leading-relaxed mb-12">A thin wrapper around elm make, elm-live is a dev server that gives you a few extra convenience features during development. Features include pushstate for SPA development, proxies, and more. Usage and API documentation is below. Check out <a className="link" href="#getting-started">how to get started</a> or jump straight to the <a className="link" href="#documentation">API Documentation</a>.</p>
         </div>
         <div>
-          <p className="mb-4"><strong>Would you be willing to answer a few questions to help improve development in elm?</strong></p>
-          <Link to="/surveys/2019" className="btn btn--primary block mb-6 rounded">Take the quick survey</Link>
+          <p className="mb-4"><strong>Interested in listening to real Elm implementation stories from members in the community?</strong></p>
+          <a to="https://www.implementingelm.com" className="btn btn--primary block mb-6 rounded">Check out a new Elm podcast</a>
         </div>
         {stats.fold(console.log, renderStats)}
       </header>
