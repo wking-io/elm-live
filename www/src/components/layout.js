@@ -1,6 +1,6 @@
 // Dependencies
 import React from "react"
-import { Link, graphql, useStaticQuery } from "gatsby"
+import { graphql, useStaticQuery } from "gatsby"
 import Either from 'data.either'
 import { safePath } from 'safe-prop'
 
@@ -75,7 +75,7 @@ const Layout = ({ children }) => {
         </div>
         <div>
           <p className="mb-4"><strong>Interested in listening to real Elm implementation stories from members in the community?</strong></p>
-          <a to="https://www.implementingelm.com" className="btn btn--primary block mb-6 rounded">Check out a new Elm podcast</a>
+          <a href="https://www.implementingelm.com" className="btn btn--primary block mb-6 rounded" target="_blank" rel="noopener noreferrer">Check out a new Elm podcast</a>
         </div>
         {stats.fold(console.log, renderStats)}
       </header>
