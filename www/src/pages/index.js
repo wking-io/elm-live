@@ -24,21 +24,21 @@ const IndexPage = ({ location }) => {
       <SEO />
       <div className="max-w-4xl mx-auto">
         <HeadingLink className="mb-6" linkId="installation"><h2 className="text-3xl font-bold" id="installation"># Installation</h2></HeadingLink>
-        <p className="leading-relaxed mb-4">The new version of elm-live is currently in testing so you will need to install it using one of the commands below.</p>
+        <p className="leading-relaxed mb-4">Install the latest version of <code>elm-live</code> using one of the commands below.</p>
         <pre className="code overflow-auto bg-grey leading-none text-sm mb-6">
           <code className="block mb-2 opacity-50"># Using NPM</code>
-          <code className="block mb-2">npm install elm-live@next --save-dev</code>
+          <code className="block mb-2">npm install elm-live</code>
           <code className="block mb-2"> </code>
           <code className="block mb-2 opacity-50"># Using Yarn</code>
-          <code className="block">yarn add elm-live@next --dev</code>
+          <code className="block">yarn add elm-live</code>
         </pre>
-        <p className="leading-relaxed mb-4">If you would like to install the older version you can use one of the commands below.</p>
+        <p className="leading-relaxed mb-4">If you need <code>elm-live</code> for Elm 0.18 you can install it using the following command:</p>
         <pre className="code overflow-auto bg-grey leading-none text-sm mb-0">
           <code className="block mb-2 opacity-50"># Using NPM</code>
-          <code className="block mb-2">npm install elm-live --save-dev</code>
+          <code className="block mb-2">npm install elm-live@prev --save-dev</code>
           <code className="block mb-2"> </code>
           <code className="block mb-2 opacity-50"># Using Yarn</code>
-          <code className="block">yarn add elm-live --dev</code>
+          <code className="block">yarn add elm-live@prev --dev</code>
         </pre>
         <div className="py-12" id="getting-started"></div>
         <HeadingLink className="mb-6" linkId="getting-started"><h2 className="text-3xl font-bold"># Getting Started</h2></HeadingLink>
