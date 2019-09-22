@@ -56,7 +56,13 @@ npm install --save-dev elm elm-live@prev
 
 If you’d rather bring your own global `elm`, `npm install --global elm-live` will do.
 
-Note that you need *node 10.0+* to run the tool natively.
+## Version Compatibility
+
+| Node Version   | elm-live Tag Version  |
+| -------------- | --------------------- |
+| 4              | <= v2.6.1             |
+| 6              | >= v2.6.2 && < v4.0.0 |
+| 10             | >= v4.0.0             |
 
 ## SYNOPSIS
 
