@@ -123,10 +123,10 @@ We’ll open the app in your default browser as soon as the server is up.
 #### `-v, --verbose`
 Log more stuff!
 
-#### `-r, --no-reload`
+#### `--no-reload`
 Turn off live reload. This means you will need to manual reload your website after each build to see the changes.
 
-#### `-r, --no-server`
+#### `--no-server`
 Turn off the server for `elm-live`. This is useful when you are using elm inside of another development ecosystem.
 
 #### `--help`
