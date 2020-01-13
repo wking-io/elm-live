@@ -79,20 +79,20 @@ const IndexPage = ({ location }) => {
           <code>elm-live src/Main.elm --ssl</code>
         </pre>
         <p className="mb-4"><strong>Default: false</strong></p>
-        <p className="leading-relaxed mb-4">Boolean flag that generates a self signed ssl cert and makes your project available at an <code>https://</code> url. Not needed if you are using <code>--sslKey</code> and <code>--sslCert</code> to use local ssl credentials.</p>
+        <p className="leading-relaxed mb-4">Boolean flag that generates a self signed ssl cert and makes your project available at an <code>https://</code> url. Not needed if you are using <code>--ssl-key</code> and <code>--ssl-cert</code> to use local ssl credentials.</p>
         <p className="leading-relaxed mb-12"><strong>NOTE:</strong> This is a self-signed cert so you will most likely see a warning in the browser when you first open your project.</p>
-        <HeadingLink className="mb-6" linkId="sslCert"><h3 className="text-2xl font-bold" id="sslCert"># --sslCert, -c</h3></HeadingLink>
+        <HeadingLink className="mb-6" linkId="ssl-cert"><h3 className="text-2xl font-bold" id="ssl-cert"># --ssl-cert, -c</h3></HeadingLink>
         <pre className="code overflow-auto bg-grey leading-none text-sm mb-6">
-          <code>elm-live src/Main.elm --sslCert=./mycert.pem --sslKey=./mykey.pem</code>
+          <code>elm-live src/Main.elm --ssl-cert=./mycert.pem --ssl-key=./mykey.pem</code>
         </pre>
         <p className="mb-4"><strong>Default: false</strong></p>
-        <p className="leading-relaxed mb-12">Relative path to your self generated certificate. If you are using this flag you must also use <code>--sslKey</code> otherwise it will not work.</p>
-        <HeadingLink className="mb-6" linkId="sslKey"><h3 className="text-2xl font-bold" id="sslKey"># --sslKey, -k</h3></HeadingLink>
+        <p className="leading-relaxed mb-12">Relative path to your self generated certificate. If you are using this flag you must also use <code>--ssl-key</code> otherwise it will not work.</p>
+        <HeadingLink className="mb-6" linkId="ssl-key"><h3 className="text-2xl font-bold" id="ssl-key"># --ssl-key, -k</h3></HeadingLink>
         <pre className="code overflow-auto bg-grey leading-none text-sm mb-6">
-          <code>elm-live src/Main.elm --sslCert=./mycert.pem --sslKey=./mykey.pem</code>
+          <code>elm-live src/Main.elm --ssl-cert=./mycert.pem --ssl-key=./mykey.pem</code>
         </pre>
         <p className="mb-4"><strong>Default: false</strong></p>
-        <p className="leading-relaxed mb-12">Relative path to your self generated key. If you are using this flag you must also use <code>--sslCert</code> otherwise it will not work.</p>
+        <p className="leading-relaxed mb-12">Relative path to your self generated key. If you are using this flag you must also use <code>--ssl-cert</code> otherwise it will not work.</p>
         <HeadingLink className="mb-6" linkId="dir"><h3 className="text-2xl font-bold" id="dir"># --dir, -d</h3></HeadingLink>
         <pre className="code overflow-auto bg-grey leading-none text-sm mb-6">
           <code>elm-live src/Main.elm --dir=./dist</code>
