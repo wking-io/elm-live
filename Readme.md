@@ -147,16 +147,16 @@ $ elm-live src/Main.elm --open
 
 ### Use a custom HTML file
 
-This command tells `elm make` to compile your elm code to a file named `elm.js` in the folder you are running the command from. From there you just need to include the script in default file of index.html as shown in the Elm guide here: https://guide.elm-lang.org/interop/
+This command tells `elm make` to compile your elm code to a file named `main.js` in the folder you are running the command from. From there you just need to include the script in default file of index.html as shown in the Elm guide here: https://guide.elm-lang.org/interop/
 
 ```sh
-$ elm-live src/Main.elm --open -- --output=elm.js
+$ elm-live src/Main.elm --open -- --output=main.js
 ```
 
 To specify an HTML file other than the default, you can use the `--start-page` flag. This is an easy way to avoid `elm make` accidentally overriding your custom HTML.
 
 ```sh
-$ elm-live src/Main.elm --open --start-page=custom.html -- --output=elm.js
+$ elm-live src/Main.elm --open --start-page=custom.html -- --output=main.js
 ```
 
 ### Support client-side routing in Elm
