@@ -14,7 +14,7 @@
     "cross-spawn": "5.0.1",
     "elm-hot": "1.1.4",
     "finalhandler": "1.1.2",
-    "http-proxy": "1.17.0",
+    "http-proxy": "1.18.1",
     "internal-ip": "4.3.0",
     "mime": "2.4.3",
     "open": "6.4.0",
@@ -60,7 +60,7 @@
     "url": "git@github.com:wking-io/elm-live"
   },
   "devDependencies": {
-    "eslint": "5.16.0",
+    "eslint": "7.3.1",
     "eslint-plugin-import": "2.14.0",
     "husky": "2.3.0",
     "standard": "12.0.1"
