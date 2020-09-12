@@ -99,11 +99,8 @@ Pass in a relative path to your own ssl cert. Default: `false`.
 #### `-S, --ssl-key=PATH`
 Pass in a relative path to your own ssl key. Default: `false`.
 
-#### `-x, --proxy-prefix=PREFIX`
-Proxy requests to paths starting with `PREFIX` to another server. Requires `--proxy-host` and should be a string like `/api`. Defaults to not proxying
-
-#### `-y, --proxy-host=HOST`
-Proxy requests to another server running at `HOST`. Requires `--proxy-prefix` and should be a full URL, eg. `http://localhost:9000`. Defaults to not proxying
+#### `--proxy=PREFIX:HOST`
+Proxy requests for paths starting with the passed in prefix to another server. Should be a string like `/api:http://localhost:3000`
 
 #### `-d, --dir=PATH`
 The base for static content. Default: `.`.
