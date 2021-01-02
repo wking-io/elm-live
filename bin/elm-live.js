@@ -34,6 +34,7 @@ program
   // File System
   .option('-d, --dir [dir]', 'The base for static content.', process.cwd())
   .option('-s, --start-page [start-page]', 'Specify a custom HTML file', 'index.html')
+  .option('--use-polling [use-polling]', 'Use polling to watch for file changes', false)
 
   // Booleans
   .option('-u, --pushstate [pushstate]', `Forces the index.html or whatever filename you have passed to the --start-page flag to always be served. Must be used when building with ${chalk.cyan.underline('Browser.application')}.`, false)
