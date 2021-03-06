@@ -5,6 +5,10 @@ const chalk = require('chalk')
 const mime = require('mime')
 const { hotReloadOn, flagError, flagErrorMsgs, help } = require('../lib/src/messages')
 
+function collect(value, previous) {
+  return previous.concat([value]);
+}
+
 program
   .version(require('../package.json').version)
   .arguments('<elm-main>')
@@ -22,6 +26,12 @@ program
   .option('-k, --ssl-key [key]', 'Pass in a relative path to your own ssl key.', false)
 
   // Proxy
+  .option(
+    '--proxy [proxy]',
+    `Proxy requests for paths starting with the passed in prefix to another server. Should be a string like ${chalk.cyan.underline('/api:http://localhost:3000')}.`,
+    collect,
+    []
+  )
   .option(
     '-x, --proxy-prefix [prefix]',
     `Proxy requests for paths starting with the passed in prefix to another server. Requires ${chalk.cyan.underline('--proxyHost')} and should be a string like ${chalk.cyan.underline('/api')}.`
