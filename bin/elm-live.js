@@ -37,6 +37,7 @@ program
 
   // Booleans
   .option('-u, --pushstate [pushstate]', `Forces the index.html or whatever filename you have passed to the --start-page flag to always be served. Must be used when building with ${chalk.cyan.underline('Browser.application')}.`, false)
+  .option('-w, --watch [watch]', 'Watches all files in the specified or default directory and triggers a reload if files change.', false)
   .option('-H, --hot [hot]', 'Turn on hot module reloading.', false)
   .option('-o, --open [open]', 'Open in browser when server starts.', false)
   .option('-v, --verbose [verbose]', 'Will log more steps as your server starts up.', false)

@@ -108,6 +108,9 @@ Proxy requests to another server running at `HOST`. Requires `--proxy-prefix` an
 #### `-d, --dir=PATH`
 The base for static content. Default: `.`.
 
+#### `-w, --watch`
+Watches all files in the specified or default directory and triggers a reload if files change.
+
 #### `-s, --start-page=PATH`
 A custom html file to serve other than the default `index.html`.
 
