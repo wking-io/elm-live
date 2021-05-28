@@ -20,7 +20,7 @@
     "open": "6.4.0",
     "pem": "1.14.2",
     "serve-static": "1.14.1",
-    "ws": "7.1.1"
+    "ws": "7.4.5"
   },
   "scripts": {
     "format": "npm run standard:fix && npm run standard",
