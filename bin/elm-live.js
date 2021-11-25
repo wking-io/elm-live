@@ -15,6 +15,7 @@ program
   // Server
   .option('-p, --port [port]', 'The port to bind to.', Math.floor, 8000)
   .option('-h, --host [host]', 'Set the host interface to attach the server to.', 'localhost')
+  .option('-w, --watch [to-watch]', 'Specify additional directories or files to watch for changes. (comma separated list)', v => v.split(','))
 
   // SSL
   .option('-S, --ssl [ssl]', 'Start an https server instead of http.', false)
