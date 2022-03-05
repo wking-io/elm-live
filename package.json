@@ -20,7 +20,7 @@
     "open": "6.4.0",
     "pem": "1.14.2",
     "serve-static": "1.14.1",
-    "ws": "7.1.1"
+    "ws": "7.4.6"
   },
   "scripts": {
     "format": "npm run standard:fix && npm run standard",
@@ -60,9 +60,9 @@
     "url": "git@github.com:wking-io/elm-live"
   },
   "devDependencies": {
-    "eslint": "7.3.1",
-    "eslint-plugin-import": "2.14.0",
+    "eslint": "7.32.0",
+    "eslint-plugin-import": "2.21.0",
     "husky": "2.3.0",
-    "standard": "12.0.1"
+    "standard": "16.0.4"
   }
 }
